@@ -320,7 +320,7 @@ export default function Home() {
             <article className="card timeline-card reveal-item">
               <span className="timeline-dot" />
               <p className="muted">Jul 2021 - Oct 2023 • Bangalore, India</p>
-              <h3>Cult.fit</h3>
+              <h3>Cult.fit (Unicorn Health and Fitness Startup)</h3>
               <p>Product Developer to Senior Product Developer</p>
               <p className="muted">Shipped user-facing app features across multiple products, worked closely across product and operations, and contributed during a high-growth phase as Cult.fit scaled into a unicorn startup.</p>
               <a href="https://www.cult.fit/" target="_blank" rel="noreferrer">Visit Cult.fit</a>
