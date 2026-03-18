@@ -104,6 +104,7 @@ export default function Home() {
   const preloaderRef = useRef<HTMLDivElement | null>(null);
   const cursorRef = useRef<HTMLDivElement | null>(null);
   const cursorRingRef = useRef<HTMLDivElement | null>(null);
+  const contactRef = useRef<HTMLElement | null>(null);
 
   const particles = useMemo(() => {
     const count = typeof window !== "undefined" && window.innerWidth < 768 ? 50 : 90;
@@ -178,14 +179,16 @@ export default function Home() {
     gsap.fromTo(".hero-line", { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.1, duration: 0.6, ease: "power3.out", delay: 1.1 });
     gsap.fromTo(".hero-bio", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, delay: 1.45, ease: "power1.inOut" });
 
-    gsap.to(".particle", {
-      x: "random(-28, 28)",
-      y: "random(-28, 28)",
-      duration: "random(5, 10)",
-      repeat: -1,
-      yoyo: true,
-      ease: "power1.inOut",
-      stagger: 0.02,
+    gsap.utils.toArray<HTMLElement>(".particle").forEach((particle) => {
+      gsap.to(particle, {
+        x: gsap.utils.random(-32, 32),
+        y: gsap.utils.random(-28, 28),
+        duration: gsap.utils.random(4, 10),
+        repeat: -1,
+        yoyo: true,
+        repeatRefresh: true,
+        ease: "power1.inOut",
+      });
     });
 
     gsap.utils.toArray<HTMLElement>(".reveal-section").forEach((section) => {
@@ -204,6 +207,10 @@ export default function Home() {
       );
     });
   });
+
+  const scrollToContact = () => {
+    contactRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <div className="site-shell">
@@ -233,7 +240,7 @@ export default function Home() {
         <nav className="container nav-inner">
           <a href="#top" className="logo">AR</a>
           <div className="desktop-links">
-            <a href="#about">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+            <a href="#about">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
             <Link href="/blog">Blog</Link>
           </div>
           <button className="menu-btn" onClick={() => setMenuOpen((p) => !p)}>Menu</button>
@@ -243,6 +250,7 @@ export default function Home() {
             <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
             <a href="#skills" onClick={() => setMenuOpen(false)}>Skills</a>
             <a href="#experience" onClick={() => setMenuOpen(false)}>Experience</a>
+            <a href="#education" onClick={() => setMenuOpen(false)}>Education</a>
             <a href="#projects" onClick={() => setMenuOpen(false)}>Projects</a>
             <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
             <Link href="/blog" onClick={() => setMenuOpen(false)}>Blog</Link>
@@ -260,7 +268,7 @@ export default function Home() {
             </h1>
             <p className="hero-bio reveal-item">I am Arihant. I build products from idea to execution across startup and enterprise teams. I am open to Product Developer and Software Developer roles, and in general any strong tech role where I can build and ship.</p>
             <div className="hero-actions reveal-item">
-              <a href="#contact" className="btn-neon">HIRE ME</a>
+              <button type="button" className="btn-neon" onClick={scrollToContact}>CONTACT ME</button>
               <a href="/resume/arihant-rawat-pm.pdf" target="_blank" rel="noreferrer" className="btn-ghost">Resume</a>
             </div>
           </div>
@@ -287,23 +295,44 @@ export default function Home() {
 
         <section id="experience" className="reveal-section section-gap">
           <h2 className="section-title reveal-item">Experience</h2>
-          <article className="card reveal-item">
-            <p className="muted">Oct 2023 - Jul 2025</p>
-            <h3>Salesforce</h3>
-            <p>Senior Product Developer (MTS)</p>
-            <a href="https://www.salesforce.com/" target="_blank" rel="noreferrer">Visit Salesforce</a>
-          </article>
-          <article className="card reveal-item">
-            <p className="muted">Jul 2021 - Oct 2023</p>
-            <h3>Cult.fit</h3>
-            <p>Product Developer to Senior Product Developer</p>
-            <a href="https://www.cult.fit/" target="_blank" rel="noreferrer">Visit Cult.fit</a>
-          </article>
-          <article className="card reveal-item">
-            <p className="muted">Education</p>
-            <p>USC Marshall (MBA STEM) - <a href="https://www.marshall.usc.edu/" target="_blank" rel="noreferrer">USC</a></p>
-            <p>NSIT (now NSUT) - <a href="https://www.nsut.ac.in/" target="_blank" rel="noreferrer">NSUT</a></p>
-          </article>
+          <div className="timeline reveal-item">
+            <article className="card timeline-card reveal-item">
+              <span className="timeline-dot" />
+              <p className="muted">Oct 2023 - Jul 2025 • Bangalore, India</p>
+              <h3>Salesforce</h3>
+              <p>Senior Product Developer (MTS)</p>
+              <p className="muted">Built enterprise APIs and product workflows across Context Service and Data Cloud with cross-functional teams.</p>
+              <a href="https://www.salesforce.com/" target="_blank" rel="noreferrer">Visit Salesforce</a>
+            </article>
+            <article className="card timeline-card reveal-item">
+              <span className="timeline-dot" />
+              <p className="muted">Jul 2021 - Oct 2023 • Bangalore, India</p>
+              <h3>Cult.fit</h3>
+              <p>Product Developer to Senior Product Developer</p>
+              <p className="muted">Shipped user-facing app features across multiple products and supported roadmap delivery in fast cycles.</p>
+              <a href="https://www.cult.fit/" target="_blank" rel="noreferrer">Visit Cult.fit</a>
+            </article>
+          </div>
+        </section>
+
+        <section id="education" className="reveal-section section-gap">
+          <h2 className="section-title reveal-item">Education</h2>
+          <div className="edu-grid">
+            <article className="card reveal-item">
+              <p className="muted">Los Angeles, CA • Expected May 2027</p>
+              <h3>University of Southern California (USC), Marshall School of Business</h3>
+              <p>MBA (STEM)</p>
+              <p className="muted">Dean’s Merit Scholarship (100%) • Prediger Endowed Scholarship • GMAT FE 705</p>
+              <a href="https://www.marshall.usc.edu/" target="_blank" rel="noreferrer">Visit USC Marshall</a>
+            </article>
+            <article className="card reveal-item">
+              <p className="muted">Delhi, India • May 2021</p>
+              <h3>NSIT (now NSUT), Netaji Subhas University of Technology</h3>
+              <p>B.E. in Information Technology (Computer Science)</p>
+              <p className="muted">First Class Distinction (CGPA 8.6/10.0)</p>
+              <a href="https://www.nsut.ac.in/" target="_blank" rel="noreferrer">Visit NSUT</a>
+            </article>
+          </div>
         </section>
 
         <section id="projects" className="reveal-section section-gap">
@@ -324,7 +353,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contact" className="reveal-section section-gap bottom-space">
+        <section id="contact" ref={contactRef} className="reveal-section section-gap bottom-space">
           <h2 className="section-title reveal-item">Contact</h2>
           <div className="contact-grid reveal-item">
             <a className="card" href="mailto:arihantr@usc.edu">arihantr@usc.edu</a>
