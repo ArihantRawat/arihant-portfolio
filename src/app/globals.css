@@ -59,3 +59,29 @@ body {
 .animate-float {
   animation: float 5s ease-in-out infinite;
 }
+
+main section {
+  animation: fadeUp 0.55s ease-out both;
+}
+
+main section:nth-of-type(2) { animation-delay: 0.05s; }
+main section:nth-of-type(3) { animation-delay: 0.1s; }
+main section:nth-of-type(4) { animation-delay: 0.15s; }
+main section:nth-of-type(5) { animation-delay: 0.2s; }
+main section:nth-of-type(6) { animation-delay: 0.25s; }
+
+a, button {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+a:hover, button:hover {
+  box-shadow: 0 0 0 1px rgba(244, 114, 182, 0.25), 0 8px 26px rgba(34, 211, 238, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

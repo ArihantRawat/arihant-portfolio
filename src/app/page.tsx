@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Project = {
   title: string;
@@ -74,11 +74,104 @@ const marketPositioning = [
   "I balance startup speed with enterprise-quality decision making and cross-functional communication.",
 ];
 
+function ParticleBackground() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isSmallScreen = window.innerWidth < 768;
+    if (prefersReducedMotion || isSmallScreen) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrame = 0;
+    const dpr = window.devicePixelRatio || 1;
+
+    type Particle = { x: number; y: number; vx: number; vy: number; r: number };
+    const particleCount = Math.min(55, Math.floor(window.innerWidth / 28));
+    const particles: Particle[] = [];
+
+    const resize = () => {
+      const { innerWidth, innerHeight } = window;
+      canvas.width = Math.floor(innerWidth * dpr);
+      canvas.height = Math.floor(innerHeight * dpr);
+      canvas.style.width = `${innerWidth}px`;
+      canvas.style.height = `${innerHeight}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    const init = () => {
+      particles.length = 0;
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          vx: (Math.random() - 0.5) * 0.35,
+          vy: (Math.random() - 0.5) * 0.35,
+          r: 0.8 + Math.random() * 1.8,
+        });
+      }
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
+        if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(167, 139, 250, 0.32)";
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const q = particles[j];
+          const dx = p.x - q.x;
+          const dy = p.y - q.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(34, 211, 238, ${0.09 - dist / 1800})`;
+            ctx.lineWidth = 0.6;
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      animationFrame = window.requestAnimationFrame(animate);
+    };
+
+    resize();
+    init();
+    animate();
+
+    window.addEventListener("resize", resize);
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 -z-10 opacity-45" aria-hidden="true" />;
+}
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 selection:bg-fuchsia-500/30">
+      <ParticleBackground />
       <header className="sticky top-0 z-30 border-b border-zinc-800/70 bg-zinc-950/90 backdrop-blur">
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-4">
           <a href="#top" className="text-sm font-semibold tracking-[0.2em] text-zinc-300">
