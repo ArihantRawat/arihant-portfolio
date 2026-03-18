@@ -286,7 +286,7 @@ export default function Home() {
               <span className="hero-line accent">BUILDING GOOD TECH</span>
               <span className="hero-line">FOR REAL USERS</span>
             </h1>
-            <p className="hero-bio reveal-item">I’m Arihant. I build user-centric products from idea to launch, with experience across startups and enterprise teams. I’m driven to build in the tech space, working on problems that matter and turning ideas into real, shipped outcomes.</p>
+            <p className="hero-bio reveal-item">I am Arihant Rawat. I build user-centric products from idea to launch, with experience across startups and enterprise teams. I am driven to build in the tech space, working on problems that matter and turning ideas into real, shipped outcomes.</p>
             <div className="hero-actions reveal-item">
               <button type="button" className="btn-neon" onClick={scrollToContact}>CONTACT ME</button>
               <a href="/resume/arihant-rawat-pm.pdf" target="_blank" rel="noreferrer" className="btn-ghost">Resume</a>
