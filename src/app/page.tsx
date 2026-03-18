@@ -278,7 +278,7 @@ export default function Home() {
               <span className="hero-line accent">BUILDING GOOD TECH</span>
               <span className="hero-line">FOR REAL USERS</span>
             </h1>
-            <p className="hero-bio reveal-item">I am Arihant. I build user-centric products from idea to launch across startup and enterprise teams. I am open to Product Developer and Software Developer roles where I can own problems, build fast, and ship meaningful outcomes.</p>
+            <p className="hero-bio reveal-item">I’m Arihant. I build user-centric products from idea to launch, with experience across startups and enterprise teams. I’m driven to build in the tech space, working on problems that matter and turning ideas into real, shipped outcomes.</p>
             <div className="hero-actions reveal-item">
               <button type="button" className="btn-neon" onClick={scrollToContact}>CONTACT ME</button>
               <a href="/resume/arihant-rawat-pm.pdf" target="_blank" rel="noreferrer" className="btn-ghost">Resume</a>
@@ -296,7 +296,9 @@ export default function Home() {
 
         <section id="about" className="reveal-section section-gap">
           <h2 className="section-title reveal-item">About Me</h2>
-          <p className="reveal-item">I am a first-year full-time MBA student at USC Marshall, focused on growing into a strong product manager. I completed my engineering degree at NSIT (now NSUT), then worked at Cult.fit and Salesforce where I built products across startup and large-scale environments. Across these roles, I learned to combine engineering depth, product thinking, and execution discipline to solve real user problems. I am from India, and my journey across Delhi, Bangalore, and now Los Angeles has shaped how I work with diverse teams to ship user-centered products.</p>
+          <p className="reveal-item">I’m currently a first-year MBA student at USC Marshall, focused on growing as a product builder in the tech space. I studied engineering at NSIT (now NSUT) and worked at Cult.fit and Salesforce, where I built products across both startup and large-scale environments.</p>
+          <p className="reveal-item">Across these experiences, I’ve learned to combine engineering depth, product thinking, and strong execution to solve real user problems. I enjoy taking ideas from early ambiguity to shipped products that create tangible impact.</p>
+          <p className="reveal-item">I grew up in India and have lived and worked across Delhi, Bangalore, and now Los Angeles. This journey has shaped how I think, collaborate, and build with diverse teams to create products that are thoughtful, practical, and user-centered.</p>
         </section>
 
         <section id="skills" className="reveal-section section-gap">
@@ -320,7 +322,7 @@ export default function Home() {
               <p className="muted">Jul 2021 - Oct 2023 • Bangalore, India</p>
               <h3>Cult.fit</h3>
               <p>Product Developer to Senior Product Developer</p>
-              <p className="muted">Shipped user-facing app features across multiple products and supported roadmap delivery in fast cycles.</p>
+              <p className="muted">Shipped user-facing app features across multiple products, worked closely across product and operations, and contributed during a high-growth phase as Cult.fit scaled into a unicorn startup.</p>
               <a href="https://www.cult.fit/" target="_blank" rel="noreferrer">Visit Cult.fit</a>
             </article>
           </div>

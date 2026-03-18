@@ -64,6 +64,7 @@ a { color: var(--text); text-decoration: none; }
   box-shadow: 0 16px 30px rgba(0,0,0,.33);
 }
 .card a { color: var(--accent); }
+.project-grid h3 { font-size: 1.32rem; line-height: 1.3; margin: .1rem 0 .35rem; }
 .muted { color: var(--muted); font-size: .9rem; }
 .small-title { font-weight: 700; margin: .8rem 0 .4rem; color: #e7e7e7; }
 ul { margin: .1rem 0 .7rem 1.1rem; color: #d9d9d9; }
