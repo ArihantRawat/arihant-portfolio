@@ -2,7 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type Project = {
   title: string;
@@ -10,8 +17,6 @@ type Project = {
   description: string;
   built: string[];
   quantifiedImpact: string[];
-  impact: string;
-  skillsShown: string[];
   link: string;
 };
 
@@ -19,489 +24,315 @@ const projects: Project[] = [
   {
     title: "OffGrid",
     repo: "ArihantRawat/OffGrid",
-    description:
-      "Mobile app built with Flutter to validate user journeys quickly and ship an MVP experience.",
-    built: ["Flutter app foundation", "Core UI flows", "Mobile release pipeline"],
-    quantifiedImpact: ["3+ end-to-end user flows implemented", "1 mobile MVP shipped", "100% cross-platform Flutter codebase"],
-    impact: "Turned product ideas into testable mobile experiences with fast iteration cycles.",
-    skillsShown: ["Flutter", "Dart", "MVP Delivery"],
+    description: "Mobile app built with Flutter for fast MVP validation and user flow testing.",
+    built: ["Flutter app foundation", "Core user flows", "Mobile release pipeline"],
+    quantifiedImpact: ["3+ complete user journeys", "1 MVP shipped", "100% cross-platform codebase"],
     link: "https://github.com/ArihantRawat/OffGrid",
   },
   {
     title: "To-Do-List-V1",
     repo: "ArihantRawat/To-Do-List-V1",
-    description:
-      "Task management app focused on useful UX, clear interactions, and execution fundamentals.",
-    built: ["Task CRUD interactions", "Simple productivity UX", "Frontend state flow"],
-    quantifiedImpact: ["4 core CRUD actions (create/read/update/delete)", "1 focused productivity workflow", "100% client-side state handling"],
-    impact: "Improved day-to-day usability through focused, low-friction task workflows.",
-    skillsShown: ["JavaScript", "Web Fundamentals", "UX Thinking"],
+    description: "Task app focused on simple UX and clean interaction patterns.",
+    built: ["CRUD flows", "Frontend state logic", "Responsive layout"],
+    quantifiedImpact: ["4 CRUD operations", "1 focused productivity workflow", "100% client-side execution"],
     link: "https://github.com/ArihantRawat/To-Do-List-V1",
   },
   {
     title: "Sarcasm-Detector",
     repo: "ArihantRawat/Sarcasm-Detector",
-    description: "NLP experimentation for sarcasm classification and model behavior analysis.",
-    built: ["Text processing pipeline", "Model experimentation", "Prediction workflow"],
-    quantifiedImpact: ["3-stage ML pipeline (preprocess/train/infer)", "Multiple model experiments compared", "1 reusable prediction workflow"],
-    impact: "Explored model quality trade-offs and practical ML evaluation patterns.",
-    skillsShown: ["Python", "NLP", "AI/ML"],
+    description: "NLP project for sarcasm classification and model behavior testing.",
+    built: ["Text preprocessing", "Model experiments", "Prediction pipeline"],
+    quantifiedImpact: ["3-stage ML flow", "Multiple model runs", "1 reusable inference path"],
     link: "https://github.com/ArihantRawat/Sarcasm-Detector",
   },
   {
     title: "Image Captioning",
     repo: "ArihantRawat/Image-Captioning",
-    description: "Computer vision experiments around generating natural-language captions from visual input.",
-    built: ["Captioning pipeline", "Notebook-based experimentation", "Output quality evaluation"],
-    quantifiedImpact: ["2 visual AI stages (feature extraction + caption generation)", "Multiple notebook experiments documented", "1 end-to-end captioning prototype"],
-    impact: "Demonstrated practical CV prototyping and fast iteration in research-style projects.",
-    skillsShown: ["Python", "Deep Learning", "Computer Vision"],
+    description: "Computer vision prototype for generating natural-language captions.",
+    built: ["Captioning pipeline", "Notebook experiments", "Output quality checks"],
+    quantifiedImpact: ["2-stage CV architecture", "Multiple experiment notebooks", "1 end-to-end prototype"],
     link: "https://github.com/ArihantRawat/Image-Captioning",
   },
 ];
 
 const skills = [
+  "Product Development",
   "Product Strategy",
-  "Roadmapping & Prioritization",
+  "Roadmapping",
   "Cross-functional Leadership",
-  "User Discovery & Interviews",
-  "A/B Testing",
+  "User Research",
   "SQL + Analytics",
-  "Java + TypeScript + Python",
+  "Java / TypeScript / Python",
+  "React / Next.js / Flutter",
   "REST API Design",
-  "Flutter / React / React Native",
-  "Predictive Analysis Product Thinking",
+  "AI Product Prototyping",
 ];
 
-const marketPositioning = [
-  "I connect product strategy with technical execution so teams move from idea to shipped outcomes faster.",
-  "I like turning complex systems into simple product experiences people can actually use.",
-  "I balance startup speed with enterprise quality and clear cross-functional communication.",
-];
+function Counter({ end, suffix, label }: { end: number; suffix: string; label: string }) {
+  const valueRef = useRef<HTMLSpanElement | null>(null);
 
-function ParticleBackground() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  useGSAP(() => {
+    const obj = { value: 0 };
+    gsap.to(obj, {
+      value: end,
+      duration: 1.2,
+      ease: "power3.out",
+      onUpdate: () => {
+        if (valueRef.current) valueRef.current.textContent = `${Math.floor(obj.value)}${suffix}`;
+      },
+      scrollTrigger: {
+        trigger: valueRef.current,
+        start: "top 85%",
+      },
+    });
+  }, { scope: valueRef });
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isSmallScreen = window.innerWidth < 768;
-    if (prefersReducedMotion || isSmallScreen) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animationFrame = 0;
-    const dpr = window.devicePixelRatio || 1;
-
-    type Particle = { x: number; y: number; vx: number; vy: number; r: number };
-    const particleCount = Math.min(55, Math.floor(window.innerWidth / 28));
-    const particles: Particle[] = [];
-
-    const resize = () => {
-      const { innerWidth, innerHeight } = window;
-      canvas.width = Math.floor(innerWidth * dpr);
-      canvas.height = Math.floor(innerHeight * dpr);
-      canvas.style.width = `${innerWidth}px`;
-      canvas.style.height = `${innerHeight}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    const init = () => {
-      particles.length = 0;
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
-          x: Math.random() * window.innerWidth,
-          y: Math.random() * window.innerHeight,
-          vx: (Math.random() - 0.5) * 0.35,
-          vy: (Math.random() - 0.5) * 0.35,
-          r: 0.8 + Math.random() * 1.8,
-        });
-      }
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
-        if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.fillStyle = "rgba(167, 139, 250, 0.32)";
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const q = particles[j];
-          const dx = p.x - q.x;
-          const dy = p.y - q.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(34, 211, 238, ${0.09 - dist / 1800})`;
-            ctx.lineWidth = 0.6;
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      animationFrame = window.requestAnimationFrame(animate);
-    };
-
-    resize();
-    init();
-    animate();
-
-    window.addEventListener("resize", resize);
-    return () => {
-      window.cancelAnimationFrame(animationFrame);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 -z-10 opacity-45" aria-hidden="true" />;
+  return (
+    <div className="stat-card reveal-item">
+      <p className="stat-number"><span ref={valueRef}>0{suffix}</span></p>
+      <p className="stat-label">{label}</p>
+    </div>
+  );
 }
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const name = "Arihant Rawat";
+  const letters = useMemo(() => name.split(""), [name]);
+
+  const preloaderRef = useRef<HTMLDivElement | null>(null);
+  const cursorRef = useRef<HTMLDivElement | null>(null);
+  const cursorRingRef = useRef<HTMLDivElement | null>(null);
+
+  const particles = useMemo(() => {
+    const count = typeof window !== "undefined" && window.innerWidth < 768 ? 50 : 90;
+    return Array.from({ length: count }).map((_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      size: 1 + Math.random() * 3,
+      opacity: 0.2 + Math.random() * 0.4,
+    }));
+  }, []);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.1,
+      smoothWheel: true,
+    });
+
+    const raf = (time: number) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+      setProgress(Math.min(100, Math.max(0, pct)));
+    };
+
+    window.addEventListener("scroll", onScroll);
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      lenis.destroy();
+    };
+  }, []);
+
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      gsap.to(cursorRef.current, { x: e.clientX, y: e.clientY, duration: 0.15, ease: "power1.out" });
+      gsap.to(cursorRingRef.current, { x: e.clientX, y: e.clientY, duration: 0.3, ease: "power1.out" });
+    };
+
+    const enter = () => gsap.to(cursorRingRef.current, { scale: 2, duration: 0.2, ease: "power1.inOut" });
+    const leave = () => gsap.to(cursorRingRef.current, { scale: 1, duration: 0.2, ease: "power1.inOut" });
+
+    window.addEventListener("mousemove", move);
+    const targets = document.querySelectorAll("a, button");
+    targets.forEach((el) => {
+      el.addEventListener("mouseenter", enter);
+      el.addEventListener("mouseleave", leave);
+    });
+
+    return () => {
+      window.removeEventListener("mousemove", move);
+      targets.forEach((el) => {
+        el.removeEventListener("mouseenter", enter);
+        el.removeEventListener("mouseleave", leave);
+      });
+    };
+  }, []);
+
+  useGSAP(() => {
+    gsap.fromTo(".name-letter", { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.05, ease: "power3.out" });
+
+    const tl = gsap.timeline();
+    tl.fromTo(".load-bar", { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.35, ease: "power1.inOut" })
+      .to(".load-bar", { y: -8, autoAlpha: 0, duration: 0.4, ease: "power1.inOut" })
+      .to(preloaderRef.current, { yPercent: -100, autoAlpha: 0, duration: 0.7, delay: 1, ease: "power1.inOut" });
+
+    gsap.fromTo(".hero-line", { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.1, duration: 0.6, ease: "power3.out", delay: 1.1 });
+    gsap.fromTo(".hero-bio", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, delay: 1.45, ease: "power1.inOut" });
+
+    gsap.to(".particle", {
+      x: "random(-28, 28)",
+      y: "random(-28, 28)",
+      duration: "random(5, 10)",
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut",
+      stagger: 0.02,
+    });
+
+    gsap.utils.toArray<HTMLElement>(".reveal-section").forEach((section) => {
+      const items = section.querySelectorAll(".reveal-item");
+      gsap.fromTo(
+        items,
+        { y: 40, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          stagger: 0.08,
+          duration: 0.6,
+          ease: "power3.out",
+          scrollTrigger: { trigger: section, start: "top 80%" },
+        }
+      );
+    });
+  });
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 selection:bg-fuchsia-500/30">
-      <ParticleBackground />
-      <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="gradient-blob blob-a" />
-        <div className="gradient-blob blob-b" />
+    <div className="site-shell">
+      <div className="cursor-dot" ref={cursorRef} />
+      <div className="cursor-ring" ref={cursorRingRef} />
+
+      <div className="progress-wrap"><div className="progress-bar" style={{ height: `${progress}%` }} /></div>
+
+      <div className="preloader" ref={preloaderRef}>
+        <h1 className="preloader-name">
+          {letters.map((char, i) => <span className="name-letter" key={`${char}-${i}`}>{char === " " ? "\u00A0" : char}</span>)}
+        </h1>
+        <div className="load-bar" />
       </div>
-      <header className="sticky top-0 z-30 border-b border-zinc-800/70 bg-zinc-950/90 backdrop-blur">
-        <nav className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-4">
-          <a href="#top" className="text-sm font-semibold tracking-[0.2em] text-zinc-300">
-            AR
-          </a>
 
-          <div className="hidden items-center gap-4 text-sm md:flex">
-            <a className="text-zinc-300 transition hover:text-white" href="#about">About</a>
-            <a className="text-zinc-300 transition hover:text-white" href="#skills">Skills</a>
-            <a className="text-zinc-300 transition hover:text-white" href="#experience">Experience</a>
-            <a className="text-zinc-300 transition hover:text-white" href="#education">Education</a>
-            <a className="text-zinc-300 transition hover:text-white" href="#projects">Projects</a>
-            <a className="text-zinc-300 transition hover:text-white" href="#contact">Contact</a>
+      <div className="particle-field" aria-hidden="true">
+        {particles.map((p) => (
+          <span
+            key={p.id}
+            className="particle"
+            style={{ left: `${p.left}%`, top: `${p.top}%`, width: p.size, height: p.size, opacity: p.opacity }}
+          />
+        ))}
+      </div>
+
+      <header className="top-nav">
+        <nav className="container nav-inner">
+          <a href="#top" className="logo">AR</a>
+          <div className="desktop-links">
+            <a href="#about">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+            <Link href="/blog">Blog</Link>
           </div>
-
-          <div className="hidden items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900 p-1 text-sm md:flex">
-            <a className="rounded-full bg-zinc-800 px-4 py-1.5 font-medium text-zinc-100" href="#top">
-              Home
-            </a>
-            <Link className="rounded-full px-4 py-1.5 font-medium text-zinc-300 hover:text-white" href="/blog">
-              Blog
-            </Link>
-          </div>
-
-          <button
-            className="rounded-lg border border-zinc-700 px-3 py-1.5 text-sm text-zinc-200 md:hidden"
-            onClick={() => setMenuOpen((p) => !p)}
-            aria-label="Toggle menu"
-          >
-            Menu
-          </button>
+          <button className="menu-btn" onClick={() => setMenuOpen((p) => !p)}>Menu</button>
         </nav>
-
-        {menuOpen ? (
-          <div className="border-t border-zinc-800 bg-zinc-950 px-6 py-3 md:hidden">
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              {[
-                ["About", "#about"],
-                ["Skills", "#skills"],
-                ["Experience", "#experience"],
-                ["Education", "#education"],
-                ["Projects", "#projects"],
-                ["Contact", "#contact"],
-              ].map(([label, href]) => (
-                <a
-                  key={href}
-                  className="rounded-md border border-zinc-800 px-3 py-2 text-zinc-300"
-                  href={href}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {label}
-                </a>
-              ))}
-              <Link
-                className="rounded-md border border-zinc-800 px-3 py-2 text-zinc-300"
-                href="/blog"
-                onClick={() => setMenuOpen(false)}
-              >
-                Blog
-              </Link>
-            </div>
+        {menuOpen && (
+          <div className="mobile-links">
+            <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+            <a href="#skills" onClick={() => setMenuOpen(false)}>Skills</a>
+            <a href="#experience" onClick={() => setMenuOpen(false)}>Experience</a>
+            <a href="#projects" onClick={() => setMenuOpen(false)}>Projects</a>
+            <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+            <Link href="/blog" onClick={() => setMenuOpen(false)}>Blog</Link>
           </div>
-        ) : null}
+        )}
       </header>
 
-      <main id="top" className="mx-auto flex w-full max-w-6xl flex-col gap-20 px-6 py-14 md:py-20">
-        <section className="grid gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-center">
-          <div className="space-y-6 animate-fade-up">
-            <p className="inline-flex rounded-full border border-fuchsia-400/40 bg-fuchsia-400/10 px-4 py-1 text-xs font-semibold tracking-[0.15em] text-fuchsia-200">
-              TECHNICAL PRODUCT + ENGINEERING PROFILE
-            </p>
-            <h1 className="text-4xl font-bold leading-tight text-white md:text-6xl">
-              Arihant Rawat
-              <span className="mt-2 block bg-gradient-to-r from-cyan-300 via-fuchsia-300 to-violet-300 bg-clip-text text-2xl text-transparent md:text-3xl">
-                I build products that are useful, simple, and fast to ship.
-              </span>
+      <main id="top" className="container main-space">
+        <section className="hero reveal-section">
+          <div>
+            <p className="badge reveal-item">PRODUCT DEVELOPER</p>
+            <h1 className="hero-title reveal-item">
+              <span className="hero-line accent">BUILDING GOOD TECH</span>
+              <span className="hero-line">FOR REAL USERS</span>
             </h1>
-            <p className="max-w-2xl text-lg text-zinc-300">
-              I am a product developer with startup and enterprise experience, currently doing my MBA at USC Marshall. I enjoy
-              taking messy problems, clarifying them, and shipping solid product outcomes.
-            </p>
-            <p className="max-w-2xl text-sm text-zinc-400">
-              From Delhi to Bangalore to Los Angeles, I have worked across different teams and product cultures.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <a className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:scale-[1.03] hover:bg-zinc-200" href="#projects">
-                See Project Impact
-              </a>
-              <a className="rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition hover:scale-[1.03] hover:border-zinc-500" href="/resume/arihant-rawat-pm.pdf" target="_blank" rel="noreferrer">
-                Resume
-              </a>
-              <a className="rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition hover:scale-[1.03] hover:border-zinc-500" href="https://github.com/ArihantRawat" target="_blank" rel="noreferrer">
-                GitHub
-              </a>
-              <a className="rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition hover:scale-[1.03] hover:border-zinc-500" href="https://www.linkedin.com/in/arihantrawat" target="_blank" rel="noreferrer">
-                LinkedIn
-              </a>
+            <p className="hero-bio reveal-item">I am Arihant. I build products from idea to execution across startup and enterprise teams. I am open to Product Developer and Software Developer roles, and in general any strong tech role where I can build and ship.</p>
+            <div className="hero-actions reveal-item">
+              <a href="#contact" className="btn-neon">HIRE ME</a>
+              <a href="/resume/arihant-rawat-pm.pdf" target="_blank" rel="noreferrer" className="btn-ghost">Resume</a>
             </div>
           </div>
-
-          <div className="mx-auto w-full max-w-sm rounded-3xl border border-zinc-800 bg-zinc-900/80 p-4 shadow-2xl shadow-fuchsia-900/20 animate-float">
-            <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950">
-              <Image
-                src="/images/arihant-headshot.jpg"
-                alt="Arihant Rawat"
-                width={720}
-                height={900}
-                className="h-auto w-full object-cover"
-                priority
-              />
+          <div className="hero-right reveal-item">
+            <div className="photo-wrap"><Image src="/images/arihant-headshot.jpg" alt="Arihant Rawat" width={720} height={900} /></div>
+            <div className="stats">
+              <Counter end={3} suffix="+" label="Years" />
+              <Counter end={7} suffix="+" label="Projects" />
+              <Counter end={10} suffix="K+" label="Hours" />
             </div>
-            <p className="mt-3 text-center text-xs text-zinc-400">Los Angeles, CA • Open to Product + Technical roles</p>
           </div>
         </section>
 
-        <section id="about" className="space-y-4">
-          <h2 className="text-2xl font-semibold text-white md:text-3xl">About Me</h2>
-          <p className="max-w-4xl text-zinc-300">
-            I am a product developer who enjoys building at the intersection of users, business, and engineering. I care about
-            clear thinking, fast learning loops, and shipping work that people actually find useful.
-          </p>
-          <p className="max-w-4xl text-zinc-300">
-            I am strongest when the problem is ambiguous. I can break it down, align teams, and move from idea to execution
-            without losing focus on quality.
-          </p>
-          <div className="grid gap-4 md:grid-cols-3">
-            {marketPositioning.map((point) => (
-              <article key={point} className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5 transition hover:-translate-y-1 hover:border-cyan-400/40">
-                <p className="text-sm text-zinc-200">{point}</p>
-              </article>
-            ))}
-          </div>
+        <section id="about" className="reveal-section section-gap">
+          <h2 className="section-title reveal-item">About</h2>
+          <p className="reveal-item">I am from India and have lived and worked across Delhi, Bangalore, and now Los Angeles. I like solving messy product problems with clear structure and strong execution.</p>
+          <p className="reveal-item">My strength is connecting product thinking with technical delivery. I can work with users, business teams, and engineers to ship practical outcomes.</p>
         </section>
 
-        <section id="skills" className="space-y-5">
-          <h2 className="text-2xl font-semibold text-white md:text-3xl">Core Skills</h2>
-          <div className="flex flex-wrap gap-3">
-            {skills.map((skill) => (
-              <span
-                key={skill}
-                className="rounded-full border border-zinc-700 bg-zinc-900/70 px-4 py-2 text-sm text-zinc-200 transition hover:border-fuchsia-400/40"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
+        <section id="skills" className="reveal-section section-gap">
+          <h2 className="section-title reveal-item">Skills</h2>
+          <div className="chips reveal-item">{skills.map((s) => <span key={s}>{s}</span>)}</div>
         </section>
 
-        <section id="experience" className="space-y-6">
-          <h2 className="text-2xl font-semibold text-white md:text-3xl">Experience</h2>
-          <div className="relative space-y-5 border-l border-zinc-800 pl-6">
-            <article className="relative rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
-              <span className="absolute -left-[33px] top-7 h-3 w-3 rounded-full bg-cyan-300" />
-              <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">Oct 2023 – Jul 2025 • Bangalore, India</p>
-              <h3 className="mt-2 text-xl font-semibold text-white">Salesforce</h3>
-              <p className="mt-1 text-sm text-zinc-300">Senior Product Developer (MTS)</p>
-              <a className="mt-2 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200" href="https://www.salesforce.com/" target="_blank" rel="noreferrer">Visit Salesforce</a>
-              <p className="mt-3 text-zinc-300">
-                Built enterprise APIs and UI workflows across Context Service and Data Cloud initiatives, partnering with
-                design, operations, and product stakeholders across clouds.
-              </p>
-            </article>
-
-            <article className="relative rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
-              <span className="absolute -left-[33px] top-7 h-3 w-3 rounded-full bg-fuchsia-300" />
-              <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">Jul 2021 – Oct 2023 • Bangalore, India</p>
-              <h3 className="mt-2 text-xl font-semibold text-white">Cult.fit</h3>
-              <p className="mt-1 text-sm text-zinc-300">Product Developer to Senior Product Developer</p>
-              <a className="mt-2 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200" href="https://www.cult.fit/" target="_blank" rel="noreferrer">Visit Cult.fit</a>
-              <p className="mt-3 text-zinc-300">
-                Led app-side delivery across multiple consumer products, collaborated on roadmap priorities, and shipped in
-                fast startup cycles with strong cross-functional execution.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section id="education" className="space-y-6">
-          <h2 className="text-2xl font-semibold text-white md:text-3xl">Education</h2>
-          <div className="grid gap-5 md:grid-cols-2">
-            <article className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
-              <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">Los Angeles, CA • Expected May 2027</p>
-              <h3 className="mt-2 text-lg font-semibold text-white">University of Southern California (USC), Marshall School of Business</h3>
-              <p className="mt-2 text-zinc-300">MBA (STEM)</p>
-              <p className="mt-2 text-sm text-zinc-400">Dean’s Merit Scholarship (100%) • Prediger Endowed Scholarship • GMAT FE 705</p>
-              <a className="mt-2 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200" href="https://www.marshall.usc.edu/" target="_blank" rel="noreferrer">Visit USC Marshall</a>
-            </article>
-
-            <article className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
-              <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">Delhi, India • May 2021</p>
-              <h3 className="mt-2 text-lg font-semibold text-white">NSIT (now NSUT), Netaji Subhas University of Technology</h3>
-              <p className="mt-2 text-zinc-300">B.E. in Information Technology (Computer Science)</p>
-              <p className="mt-2 text-sm text-zinc-400">First Class Distinction (CGPA 8.6/10.0)</p>
-              <a className="mt-2 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200" href="https://www.nsut.ac.in/" target="_blank" rel="noreferrer">Visit NSUT</a>
-            </article>
-          </div>
-        </section>
-
-        <section id="projects" className="space-y-6">
-          <div className="flex items-center justify-between gap-4">
-            <h2 className="text-2xl font-semibold text-white md:text-3xl">Projects</h2>
-            <a
-              className="text-sm font-semibold text-cyan-300 hover:text-cyan-200"
-              href="https://github.com/ArihantRawat"
-              target="_blank"
-              rel="noreferrer"
-            >
-              View profile →
-            </a>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2">
-            {projects.map((project) => (
-              <article
-                key={project.title}
-                className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 transition hover:-translate-y-1 hover:border-fuchsia-400/40"
-              >
-                <h3 className="text-xl font-semibold text-white">{project.title}</h3>
-                <p className="mt-1 text-xs uppercase tracking-[0.15em] text-zinc-500">{project.repo}</p>
-                <p className="mt-3 text-zinc-300">{project.description}</p>
-
-                <div className="mt-4">
-                  <p className="text-sm font-semibold text-zinc-200">What I built</p>
-                  <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-zinc-300">
-                    {project.built.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <p className="mt-4 rounded-xl border border-zinc-800 bg-zinc-950/60 p-3 text-sm text-zinc-300">
-                  <span className="font-semibold text-zinc-100">Impact:</span> {project.impact}
-                </p>
-
-                <div className="mt-4">
-                  <p className="text-sm font-semibold text-zinc-200">Quantified highlights</p>
-                  <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-zinc-300">
-                    {project.quantifiedImpact.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.skillsShown.map((item) => (
-                    <span key={item} className="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-300">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-5 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200"
-                >
-                  Open repository →
-                </a>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="blog" className="space-y-4">
-          <div className="flex items-center justify-between gap-4">
-            <h2 className="text-2xl font-semibold text-white md:text-3xl">Featured Blog</h2>
-            <Link className="text-sm font-semibold text-cyan-300 hover:text-cyan-200" href="/blog">
-              Read post →
-            </Link>
-          </div>
-          <article className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
-            <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">March 2026 • 8 min read</p>
-            <h3 className="mt-2 text-2xl font-semibold text-white">Operation Water: How Cinelytic Can Fit Into the Industry</h3>
-            <p className="mt-3 text-zinc-300">
-              A research-backed GTM and product strategy memo: launch a comps-first tier, make analytics controllable, and
-              frame the product as predictive analysis (not AI replacement) to improve trust and adoption.
-            </p>
+        <section id="experience" className="reveal-section section-gap">
+          <h2 className="section-title reveal-item">Experience</h2>
+          <article className="card reveal-item">
+            <p className="muted">Oct 2023 - Jul 2025</p>
+            <h3>Salesforce</h3>
+            <p>Senior Product Developer (MTS)</p>
+            <a href="https://www.salesforce.com/" target="_blank" rel="noreferrer">Visit Salesforce</a>
+          </article>
+          <article className="card reveal-item">
+            <p className="muted">Jul 2021 - Oct 2023</p>
+            <h3>Cult.fit</h3>
+            <p>Product Developer to Senior Product Developer</p>
+            <a href="https://www.cult.fit/" target="_blank" rel="noreferrer">Visit Cult.fit</a>
+          </article>
+          <article className="card reveal-item">
+            <p className="muted">Education</p>
+            <p>USC Marshall (MBA STEM) - <a href="https://www.marshall.usc.edu/" target="_blank" rel="noreferrer">USC</a></p>
+            <p>NSIT (now NSUT) - <a href="https://www.nsut.ac.in/" target="_blank" rel="noreferrer">NSUT</a></p>
           </article>
         </section>
 
-        <section id="contact" className="space-y-4 pb-24 md:pb-10">
-          <h2 className="text-2xl font-semibold text-white md:text-3xl">Let’s Build Something Great</h2>
-          <p className="text-zinc-300">Open to Product Management, Technical PM, and Product-focused Engineering opportunities in the US.</p>
-          <div className="grid gap-4 sm:grid-cols-3">
-            <a className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 hover:border-zinc-700" href="mailto:arihantr@usc.edu">
-              <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">Email</p>
-              <p className="mt-1 text-sm font-medium text-zinc-100">arihantr@usc.edu</p>
-            </a>
-            <a
-              className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 hover:border-zinc-700"
-              href="https://www.linkedin.com/in/arihantrawat"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">LinkedIn</p>
-              <p className="mt-1 text-sm font-medium text-zinc-100">linkedin.com/in/arihantrawat</p>
-            </a>
-            <a className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 hover:border-zinc-700" href="tel:+12135636483">
-              <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">Phone</p>
-              <p className="mt-1 text-sm font-medium text-zinc-100">(213) 563-6483</p>
-            </a>
+        <section id="projects" className="reveal-section section-gap">
+          <div className="section-head reveal-item"><h2 className="section-title">Projects</h2><a href="https://github.com/ArihantRawat" target="_blank" rel="noreferrer">GitHub</a></div>
+          <div className="project-grid">
+            {projects.map((project) => (
+              <article key={project.title} className="card reveal-item">
+                <h3>{project.title}</h3>
+                <p className="muted">{project.repo}</p>
+                <p>{project.description}</p>
+                <p className="small-title">What I built</p>
+                <ul>{project.built.map((item) => <li key={item}>{item}</li>)}</ul>
+                <p className="small-title">Quantified highlights</p>
+                <ul>{project.quantifiedImpact.map((item) => <li key={item}>{item}</li>)}</ul>
+                <a href={project.link} target="_blank" rel="noreferrer">Open repository</a>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="contact" className="reveal-section section-gap bottom-space">
+          <h2 className="section-title reveal-item">Contact</h2>
+          <div className="contact-grid reveal-item">
+            <a className="card" href="mailto:arihantr@usc.edu">arihantr@usc.edu</a>
+            <a className="card" href="https://www.linkedin.com/in/arihantrawat" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a className="card" href="tel:+12135636483">(213) 563-6483</a>
           </div>
         </section>
       </main>
-
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-zinc-800 bg-zinc-950/95 p-3 backdrop-blur md:hidden">
-        <div className="mx-auto flex w-full max-w-6xl gap-2">
-          <a
-            className="flex-1 rounded-full bg-white px-4 py-2.5 text-center text-sm font-semibold text-zinc-900"
-            href="/resume/arihant-rawat-pm.pdf"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Download Resume
-          </a>
-          <a className="rounded-full border border-zinc-700 px-4 py-2.5 text-sm font-semibold text-zinc-100" href="mailto:arihantr@usc.edu">
-            Contact
-          </a>
-        </div>
-      </div>
     </div>
   );
 }
