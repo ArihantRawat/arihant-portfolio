@@ -9,6 +9,7 @@ type Project = {
   repo: string;
   description: string;
   built: string[];
+  quantifiedImpact: string[];
   impact: string;
   skillsShown: string[];
   link: string;
@@ -21,6 +22,7 @@ const projects: Project[] = [
     description:
       "Mobile app built with Flutter to validate user journeys quickly and ship an MVP experience.",
     built: ["Flutter app foundation", "Core UI flows", "Mobile release pipeline"],
+    quantifiedImpact: ["3+ end-to-end user flows implemented", "1 mobile MVP shipped", "100% cross-platform Flutter codebase"],
     impact: "Turned product ideas into testable mobile experiences with fast iteration cycles.",
     skillsShown: ["Flutter", "Dart", "MVP Delivery"],
     link: "https://github.com/ArihantRawat/OffGrid",
@@ -31,6 +33,7 @@ const projects: Project[] = [
     description:
       "Task management app focused on useful UX, clear interactions, and execution fundamentals.",
     built: ["Task CRUD interactions", "Simple productivity UX", "Frontend state flow"],
+    quantifiedImpact: ["4 core CRUD actions (create/read/update/delete)", "1 focused productivity workflow", "100% client-side state handling"],
     impact: "Improved day-to-day usability through focused, low-friction task workflows.",
     skillsShown: ["JavaScript", "Web Fundamentals", "UX Thinking"],
     link: "https://github.com/ArihantRawat/To-Do-List-V1",
@@ -40,6 +43,7 @@ const projects: Project[] = [
     repo: "ArihantRawat/Sarcasm-Detector",
     description: "NLP experimentation for sarcasm classification and model behavior analysis.",
     built: ["Text processing pipeline", "Model experimentation", "Prediction workflow"],
+    quantifiedImpact: ["3-stage ML pipeline (preprocess/train/infer)", "Multiple model experiments compared", "1 reusable prediction workflow"],
     impact: "Explored model quality trade-offs and practical ML evaluation patterns.",
     skillsShown: ["Python", "NLP", "AI/ML"],
     link: "https://github.com/ArihantRawat/Sarcasm-Detector",
@@ -49,6 +53,7 @@ const projects: Project[] = [
     repo: "ArihantRawat/Image-Captioning",
     description: "Computer vision experiments around generating natural-language captions from visual input.",
     built: ["Captioning pipeline", "Notebook-based experimentation", "Output quality evaluation"],
+    quantifiedImpact: ["2 visual AI stages (feature extraction + caption generation)", "Multiple notebook experiments documented", "1 end-to-end captioning prototype"],
     impact: "Demonstrated practical CV prototyping and fast iteration in research-style projects.",
     skillsShown: ["Python", "Deep Learning", "Computer Vision"],
     link: "https://github.com/ArihantRawat/Image-Captioning",
@@ -250,12 +255,15 @@ export default function Home() {
               </span>
             </h1>
             <p className="max-w-2xl text-lg text-zinc-300">
-              Product-minded engineer with startup + enterprise experience, now at USC Marshall (MBA). I build and communicate
-              products in a way that makes technical depth legible to business and hiring stakeholders.
+              Product-minded engineer with startup + enterprise experience, now at USC Marshall (MBA). I turn ambiguous ideas
+              into shipped products through clear prioritization, technical depth, and measurable execution.
+            </p>
+            <p className="max-w-2xl text-sm text-zinc-400">
+              Looking for Product, Technical PM, and product-focused engineering roles in the US.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:scale-[1.03] hover:bg-zinc-200" href="#contact">
-                Let’s Connect
+              <a className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:scale-[1.03] hover:bg-zinc-200" href="#projects">
+                See Project Impact
               </a>
               <a className="rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition hover:scale-[1.03] hover:border-zinc-500" href="/resume/arihant-rawat-pm.pdf" target="_blank" rel="noreferrer">
                 Resume
@@ -394,6 +402,15 @@ export default function Home() {
                 <p className="mt-4 rounded-xl border border-zinc-800 bg-zinc-950/60 p-3 text-sm text-zinc-300">
                   <span className="font-semibold text-zinc-100">Impact:</span> {project.impact}
                 </p>
+
+                <div className="mt-4">
+                  <p className="text-sm font-semibold text-zinc-200">Quantified highlights</p>
+                  <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-zinc-300">
+                    {project.quantifiedImpact.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
 
                 <div className="mt-4 flex flex-wrap gap-2">
                   {project.skillsShown.map((item) => (
