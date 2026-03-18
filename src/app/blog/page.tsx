@@ -1,69 +1,116 @@
 import Link from "next/link";
 
-const posts = [
-  {
-    slug: "turning-engineering-work-into-product-signal",
-    title: "Turning Engineering Work Into Product Signal",
-    excerpt:
-      "How I translate architecture and API decisions into user and business outcomes that recruiters and stakeholders can quickly understand.",
-    date: "March 2026",
-    readTime: "4 min",
-  },
-  {
-    slug: "startup-vs-enterprise-shipping",
-    title: "Startup vs Enterprise: How My Shipping Style Changes",
-    excerpt:
-      "A practical comparison of speed, quality bars, and decision-making at Cult.fit and Salesforce.",
-    date: "March 2026",
-    readTime: "5 min",
-  },
-  {
-    slug: "building-ai-with-user-trust",
-    title: "Building AI Features Without Losing User Trust",
-    excerpt:
-      "Notes from health and enterprise contexts on privacy, explainability, and responsible rollout.",
-    date: "March 2026",
-    readTime: "6 min",
-  },
-];
-
 export default function BlogPage() {
   return (
     <main className="min-h-screen bg-zinc-950 px-6 py-16 text-zinc-100">
-      <div className="mx-auto w-full max-w-5xl space-y-8">
+      <div className="mx-auto w-full max-w-4xl space-y-8">
         <div className="flex items-center justify-between gap-4">
           <Link className="text-sm font-semibold text-cyan-300 hover:text-cyan-200" href="/">
             ← Home
           </Link>
-          <div className="rounded-full border border-zinc-700 bg-zinc-900 p-1 text-sm">
-            <Link className="rounded-full px-4 py-1.5 font-medium text-zinc-300 hover:text-white" href="/">
-              Home
-            </Link>
-            <span className="rounded-full bg-zinc-800 px-4 py-1.5 font-medium text-zinc-100">Blog</span>
-          </div>
+          <span className="rounded-full border border-zinc-700 bg-zinc-900 px-4 py-1.5 text-sm font-medium text-zinc-200">Blog</span>
         </div>
 
-        <div className="space-y-3">
-          <h1 className="text-4xl font-bold text-white">Blog & Insights</h1>
-          <p className="max-w-2xl text-zinc-300">
-            Quick, practical writing on product execution, technical tradeoffs, and lessons from startup + enterprise builds.
-          </p>
-        </div>
+        <article className="space-y-6 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-7">
+          <header className="space-y-3">
+            <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">March 2026 • 8 min read</p>
+            <h1 className="text-3xl font-bold text-white md:text-4xl">
+              Operation Water — How Cinelytic Can Flow Into the Industry
+            </h1>
+            <p className="text-zinc-300">
+              <strong>TL;DR:</strong> Operation Water recommends a Persistent Flow Strategy for Cinelytic: enter the
+              entertainment market through a familiar, lower-priced comps product, give users modular control so the tool
+              feels like theirs, and reposition messaging away from “AI” toward “predictive analysis.” Our research (10
+              interviews across 12 companies + academic/industry literature) shows studios want efficient, controllable
+              comps and sensitivity tools — not an algorithm that replaces human judgment.
+            </p>
+          </header>
 
-        <div className="grid gap-5">
-          {posts.map((post) => (
-            <article key={post.slug} className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 transition hover:-translate-y-1 hover:border-fuchsia-400/40">
-              <div className="flex items-center gap-3 text-xs uppercase tracking-[0.15em] text-zinc-400">
-                <span>{post.date}</span>
-                <span>•</span>
-                <span>{post.readTime}</span>
-              </div>
-              <h2 className="mt-3 text-2xl font-semibold text-white">{post.title}</h2>
-              <p className="mt-2 text-zinc-300">{post.excerpt}</p>
-              <p className="mt-4 text-sm text-zinc-500">Draft mode — I can convert this to full MDX posts next.</p>
-            </article>
-          ))}
-        </div>
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold text-white">The Problem</h2>
+            <p className="text-zinc-300">
+              Studios and creatives are skeptical of AI-driven decision-making. Even when teams use data, “AI” triggers
+              resistance — creatives worry it threatens their craft, while finance teams need trustworthy, customizable
+              workflows. Cinelytic already produces useful comp data and forecasts, but adoption stalls because the product
+              feels unfamiliar, too black-box, or too AI-forward.
+            </p>
+          </section>
+
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold text-white">The Strategy: Be Like Water</h2>
+            <p className="text-zinc-300">
+              Borrowing from Laozi and Bruce Lee, Operation Water proposes flowing into existing workflows instead of forcing
+              a revolution. The goal is to penetrate the industry via what people already value — comp analysis — then expand
+              trust and usage from the bottom up.
+            </p>
+          </section>
+
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold text-white">How We Worked</h2>
+            <ul className="list-disc space-y-2 pl-5 text-zinc-300">
+              <li>
+                <strong>Primary research:</strong> 10 semi-structured interviews with professionals across finance,
+                forecasting, content strategy, creative, and talent.
+              </li>
+              <li>
+                <strong>Secondary research:</strong> Academic and industry studies on forecasting accuracy, user ownership
+                of digital tools, and AI adoption in media.
+              </li>
+            </ul>
+          </section>
+
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold text-white">Key Findings</h2>
+            <ul className="list-disc space-y-2 pl-5 text-zinc-300">
+              <li>Comps are familiar and valuable for budgeting, forecasting, and greenlight support.</li>
+              <li>Manual SAP/Excel workflows still dominate in many teams, creating an efficiency gap.</li>
+              <li>Comps are being commoditized through general tools, but outputs still need verification.</li>
+              <li>Control builds trust: users want custom filters, momentum inputs, and sensitivity analysis.</li>
+              <li>AI-forward messaging is a liability in creative departments.</li>
+            </ul>
+          </section>
+
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold text-white">Three High-Impact Recommendations</h2>
+            <ol className="list-decimal space-y-3 pl-5 text-zinc-300">
+              <li>
+                <strong>Launch a lower-priced comps tier:</strong> A standalone product that attracts finance/forecasting
+                users and acts as a gateway to the full platform.
+              </li>
+              <li>
+                <strong>Make the model feel like the users’ model:</strong> Add modular controls, what-if knobs,
+                sensitivity analysis, and highly portable exports.
+              </li>
+              <li>
+                <strong>Reposition messaging:</strong> Lead with “predictive analysis” and decision support, not AI
+                replacement.
+              </li>
+            </ol>
+          </section>
+
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold text-white">Target Personas</h2>
+            <ul className="list-disc space-y-2 pl-5 text-zinc-300">
+              <li>
+                <strong>Kathleen — VP of Finance (Power User):</strong> Wants defensible comps, customizable inputs, and
+                portable data for internal models.
+              </li>
+              <li>
+                <strong>Walt — Producer/Creative:</strong> Uses data for benchmarking but needs transparent,
+                non-threatening framing.
+              </li>
+            </ul>
+          </section>
+
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold text-white">Bottom Line</h2>
+            <p className="text-zinc-300">
+              Start small, be flexible, and speak the industry’s language. Release a comps-first, user-controllable product
+              at a lower price to win finance teams. Give users ownership through adjustable analytics so the tool becomes
+              theirs. And swap “AI” for “predictive analysis” so creatives stop fighting the tool and start using the data.
+            </p>
+          </section>
+        </article>
       </div>
     </main>
   );

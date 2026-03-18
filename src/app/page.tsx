@@ -9,6 +9,7 @@ type Project = {
   repo: string;
   description: string;
   built: string[];
+  impact: string;
   skillsShown: string[];
   link: string;
 };
@@ -18,35 +19,37 @@ const projects: Project[] = [
     title: "OffGrid",
     repo: "ArihantRawat/OffGrid",
     description:
-      "Mobile app project built with Flutter. Demonstrates product-minded mobile engineering and rapid prototyping workflows.",
-    built: ["Flutter app foundation", "UI flows", "Mobile delivery setup"],
-    skillsShown: ["Flutter", "Dart", "Mobile Product Thinking"],
+      "Mobile app built with Flutter to validate user journeys quickly and ship an MVP experience.",
+    built: ["Flutter app foundation", "Core UI flows", "Mobile release pipeline"],
+    impact: "Turned product ideas into testable mobile experiences with fast iteration cycles.",
+    skillsShown: ["Flutter", "Dart", "MVP Delivery"],
     link: "https://github.com/ArihantRawat/OffGrid",
   },
   {
     title: "To-Do-List-V1",
     repo: "ArihantRawat/To-Do-List-V1",
     description:
-      "Task management web app for adding and tracking daily work. A practical project focused on usability and execution basics.",
-    built: ["Task CRUD interactions", "Simple productivity UX", "Frontend logic"],
-    skillsShown: ["JavaScript", "Web Fundamentals", "Product UX"],
+      "Task management app focused on useful UX, clear interactions, and execution fundamentals.",
+    built: ["Task CRUD interactions", "Simple productivity UX", "Frontend state flow"],
+    impact: "Improved day-to-day usability through focused, low-friction task workflows.",
+    skillsShown: ["JavaScript", "Web Fundamentals", "UX Thinking"],
     link: "https://github.com/ArihantRawat/To-Do-List-V1",
   },
   {
     title: "Sarcasm-Detector",
     repo: "ArihantRawat/Sarcasm-Detector",
-    description:
-      "NLP-focused experimentation project for sarcasm classification use cases.",
+    description: "NLP experimentation for sarcasm classification and model behavior analysis.",
     built: ["Text processing pipeline", "Model experimentation", "Prediction workflow"],
+    impact: "Explored model quality trade-offs and practical ML evaluation patterns.",
     skillsShown: ["Python", "NLP", "AI/ML"],
     link: "https://github.com/ArihantRawat/Sarcasm-Detector",
   },
   {
-    title: "Image-Captioning & Video_Captioning",
-    repo: "ArihantRawat/Image-Captioning + ArihantRawat/Video_Captioning",
-    description:
-      "Computer vision experiments around generating captions from image/video input.",
-    built: ["Caption generation pipeline", "Notebook-based experimentation", "Model output evaluation"],
+    title: "Image Captioning",
+    repo: "ArihantRawat/Image-Captioning",
+    description: "Computer vision experiments around generating natural-language captions from visual input.",
+    built: ["Captioning pipeline", "Notebook-based experimentation", "Output quality evaluation"],
+    impact: "Demonstrated practical CV prototyping and fast iteration in research-style projects.",
     skillsShown: ["Python", "Deep Learning", "Computer Vision"],
     link: "https://github.com/ArihantRawat/Image-Captioning",
   },
@@ -56,13 +59,19 @@ const skills = [
   "Product Strategy",
   "Roadmapping & Prioritization",
   "Cross-functional Leadership",
-  "User Discovery",
+  "User Discovery & Interviews",
   "A/B Testing",
   "SQL + Analytics",
   "Java + TypeScript + Python",
   "REST API Design",
   "Flutter / React / React Native",
-  "AI Product Prototyping",
+  "Predictive Analysis Product Thinking",
+];
+
+const marketPositioning = [
+  "I connect product strategy with technical execution so teams move from idea to shipped outcomes faster.",
+  "I present work in a Problem → Approach → Impact format that US recruiters and hiring managers can scan quickly.",
+  "I balance startup speed with enterprise-quality decision making and cross-functional communication.",
 ];
 
 export default function Home() {
@@ -137,7 +146,7 @@ export default function Home() {
 
       <main id="top" className="mx-auto flex w-full max-w-6xl flex-col gap-20 px-6 py-14 md:py-20">
         <section className="grid gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-center">
-          <div className="space-y-6">
+          <div className="space-y-6 animate-fade-up">
             <p className="inline-flex rounded-full border border-fuchsia-400/40 bg-fuchsia-400/10 px-4 py-1 text-xs font-semibold tracking-[0.15em] text-fuchsia-200">
               TECHNICAL PRODUCT + ENGINEERING PROFILE
             </p>
@@ -148,26 +157,26 @@ export default function Home() {
               </span>
             </h1>
             <p className="max-w-2xl text-lg text-zinc-300">
-              I’ve built across both startup and enterprise environments — from fast 0→1 product launches to scalable
-              platform workflows. If your team needs someone who can define the "what" and drive the "how," we should talk.
+              Product-minded engineer with startup + enterprise experience, now at USC Marshall (MBA). I build and communicate
+              products in a way that makes technical depth legible to business and hiring stakeholders.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:bg-zinc-200" href="#contact">
+              <a className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:scale-[1.03] hover:bg-zinc-200" href="#contact">
                 Let’s Connect
               </a>
-              <a className="rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition hover:border-zinc-500" href="/resume/arihant-rawat-pm.pdf" target="_blank" rel="noreferrer">
+              <a className="rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition hover:scale-[1.03] hover:border-zinc-500" href="/resume/arihant-rawat-pm.pdf" target="_blank" rel="noreferrer">
                 Resume
               </a>
-              <a className="rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition hover:border-zinc-500" href="https://github.com/ArihantRawat" target="_blank" rel="noreferrer">
+              <a className="rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition hover:scale-[1.03] hover:border-zinc-500" href="https://github.com/ArihantRawat" target="_blank" rel="noreferrer">
                 GitHub
               </a>
-              <a className="rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition hover:border-zinc-500" href="https://www.linkedin.com/in/arihantrawat" target="_blank" rel="noreferrer">
+              <a className="rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition hover:scale-[1.03] hover:border-zinc-500" href="https://www.linkedin.com/in/arihantrawat" target="_blank" rel="noreferrer">
                 LinkedIn
               </a>
             </div>
           </div>
 
-          <div className="mx-auto w-full max-w-sm rounded-3xl border border-zinc-800 bg-zinc-900/80 p-4 shadow-2xl shadow-fuchsia-900/20">
+          <div className="mx-auto w-full max-w-sm rounded-3xl border border-zinc-800 bg-zinc-900/80 p-4 shadow-2xl shadow-fuchsia-900/20 animate-float">
             <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950">
               <Image
                 src="/images/arihant-headshot.jpg"
@@ -185,14 +194,16 @@ export default function Home() {
         <section id="about" className="space-y-4">
           <h2 className="text-2xl font-semibold text-white md:text-3xl">About Me</h2>
           <p className="max-w-4xl text-zinc-300">
-            I’m a product-driven technologist currently pursuing my MBA at USC Marshall, with prior experience at
-            Salesforce and Cult.fit. My edge is bridging user understanding, business priorities, and technical delivery.
-            I enjoy converting ambiguity into clear plans, and plans into shipped outcomes.
+            I’m a product-driven technologist pursuing my MBA at USC Marshall, with prior experience at Salesforce and Cult.fit.
+            My edge is bridging user understanding, business priorities, and technical delivery.
           </p>
-          <p className="max-w-4xl text-zinc-300">
-            My long-term focus is building high-impact products in AI, productivity, and consumer or B2B experiences where
-            thoughtful product decisions and strong execution both matter.
-          </p>
+          <div className="grid gap-4 md:grid-cols-3">
+            {marketPositioning.map((point) => (
+              <article key={point} className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5 transition hover:-translate-y-1 hover:border-cyan-400/40">
+                <p className="text-sm text-zinc-200">{point}</p>
+              </article>
+            ))}
+          </div>
         </section>
 
         <section id="skills" className="space-y-5">
@@ -244,36 +255,20 @@ export default function Home() {
               <h3 className="mt-2 text-lg font-semibold text-white">University of Southern California (USC) — Marshall School of Business</h3>
               <p className="mt-2 text-zinc-300">MBA (STEM)</p>
               <p className="mt-2 text-sm text-zinc-400">Dean’s Merit Scholarship (100%) • Prediger Endowed Scholarship • GMAT FE 705</p>
-              <a
-                className="mt-3 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200"
-                href="https://www.marshall.usc.edu/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                About USC Marshall →
-              </a>
             </article>
 
             <article className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
               <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">Delhi, India • May 2021</p>
-              <h3 className="mt-2 text-lg font-semibold text-white">Netaji Subhas University of Technology (formerly NSIT)</h3>
+              <h3 className="mt-2 text-lg font-semibold text-white">NSIT (now NSUT) — Netaji Subhas University of Technology</h3>
               <p className="mt-2 text-zinc-300">B.E. in Information Technology (Computer Science)</p>
               <p className="mt-2 text-sm text-zinc-400">First Class Distinction (CGPA 8.6/10.0)</p>
-              <a
-                className="mt-3 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200"
-                href="https://www.nsut.ac.in/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                About NSUT →
-              </a>
             </article>
           </div>
         </section>
 
         <section id="projects" className="space-y-6">
           <div className="flex items-center justify-between gap-4">
-            <h2 className="text-2xl font-semibold text-white md:text-3xl">Projects from GitHub</h2>
+            <h2 className="text-2xl font-semibold text-white md:text-3xl">Projects (Problem → Build → Impact)</h2>
             <a
               className="text-sm font-semibold text-cyan-300 hover:text-cyan-200"
               href="https://github.com/ArihantRawat"
@@ -303,6 +298,10 @@ export default function Home() {
                   </ul>
                 </div>
 
+                <p className="mt-4 rounded-xl border border-zinc-800 bg-zinc-950/60 p-3 text-sm text-zinc-300">
+                  <span className="font-semibold text-zinc-100">Impact:</span> {project.impact}
+                </p>
+
                 <div className="mt-4 flex flex-wrap gap-2">
                   {project.skillsShown.map((item) => (
                     <span key={item} className="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-300">
@@ -326,19 +325,24 @@ export default function Home() {
 
         <section id="blog" className="space-y-4">
           <div className="flex items-center justify-between gap-4">
-            <h2 className="text-2xl font-semibold text-white md:text-3xl">Blog</h2>
+            <h2 className="text-2xl font-semibold text-white md:text-3xl">Featured Blog</h2>
             <Link className="text-sm font-semibold text-cyan-300 hover:text-cyan-200" href="/blog">
-              Read posts →
+              Read post →
             </Link>
           </div>
-          <p className="text-zinc-300">
-            I share quick writing on product decisions, technical tradeoffs, and lessons from startup + enterprise builds.
-          </p>
+          <article className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
+            <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">March 2026 • 8 min read</p>
+            <h3 className="mt-2 text-2xl font-semibold text-white">Operation Water — How Cinelytic Can Flow Into the Industry</h3>
+            <p className="mt-3 text-zinc-300">
+              A research-backed GTM and product strategy memo: launch a comps-first tier, make analytics controllable, and
+              frame the product as predictive analysis (not AI replacement) to improve trust and adoption.
+            </p>
+          </article>
         </section>
 
         <section id="contact" className="space-y-4 pb-24 md:pb-10">
           <h2 className="text-2xl font-semibold text-white md:text-3xl">Let’s Build Something Great</h2>
-          <p className="text-zinc-300">Open to conversations around Product Management, Technical PM, and Product-focused Engineering roles.</p>
+          <p className="text-zinc-300">Open to Product Management, Technical PM, and Product-focused Engineering opportunities in the US.</p>
           <div className="grid gap-4 sm:grid-cols-3">
             <a className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 hover:border-zinc-700" href="mailto:arihantr@usc.edu">
               <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">Email</p>
