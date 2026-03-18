@@ -16,7 +16,7 @@ type Project = {
   repo: string;
   description: string;
   built: string[];
-  quantifiedImpact: string[];
+  techStack: string[];
   link: string;
 };
 
@@ -24,48 +24,53 @@ const projects: Project[] = [
   {
     title: "OffGrid",
     repo: "ArihantRawat/OffGrid",
-    description: "Mobile app built with Flutter for fast MVP validation and user flow testing.",
-    built: ["Flutter app foundation", "Core user flows", "Mobile release pipeline"],
-    quantifiedImpact: ["3+ complete user journeys", "1 MVP shipped", "100% cross-platform codebase"],
+    description: "Mobile app built to test real user behavior quickly. I focused on fast iteration, clean onboarding flow, and practical MVP delivery.",
+    built: ["Flutter app foundation", "Core user journeys", "Release-ready mobile structure"],
+    techStack: ["Flutter", "Dart", "Mobile UI"],
     link: "https://github.com/ArihantRawat/OffGrid",
   },
   {
     title: "To-Do-List-V1",
     repo: "ArihantRawat/To-Do-List-V1",
-    description: "Task app focused on simple UX and clean interaction patterns.",
-    built: ["CRUD flows", "Frontend state logic", "Responsive layout"],
-    quantifiedImpact: ["4 CRUD operations", "1 focused productivity workflow", "100% client-side execution"],
+    description: "Productivity web app designed for simple daily use. I focused on frictionless task flows and clear state updates.",
+    built: ["Task CRUD flow", "Responsive interaction patterns", "State handling"],
+    techStack: ["JavaScript", "HTML/CSS", "Frontend Logic"],
     link: "https://github.com/ArihantRawat/To-Do-List-V1",
   },
   {
     title: "Sarcasm-Detector",
     repo: "ArihantRawat/Sarcasm-Detector",
-    description: "NLP project for sarcasm classification and model behavior testing.",
-    built: ["Text preprocessing", "Model experiments", "Prediction pipeline"],
-    quantifiedImpact: ["3-stage ML flow", "Multiple model runs", "1 reusable inference path"],
+    description: "AI/NLP project for text classification. I explored how model performance changes with preprocessing and feature choices.",
+    built: ["Text preprocessing pipeline", "Training and evaluation workflow", "Reusable prediction path"],
+    techStack: ["Python", "NLP", "Classification Models"],
     link: "https://github.com/ArihantRawat/Sarcasm-Detector",
   },
   {
     title: "Image Captioning",
     repo: "ArihantRawat/Image-Captioning",
-    description: "Computer vision prototype for generating natural-language captions.",
-    built: ["Captioning pipeline", "Notebook experiments", "Output quality checks"],
-    quantifiedImpact: ["2-stage CV architecture", "Multiple experiment notebooks", "1 end-to-end prototype"],
+    description: "Computer vision project to generate natural language from images. The focus was combining vision features with language output quality.",
+    built: ["Caption generation pipeline", "Experiment notebooks", "Model output evaluation"],
+    techStack: ["Python", "Image Processing", "Deep Learning"],
     link: "https://github.com/ArihantRawat/Image-Captioning",
   },
 ];
 
 const skills = [
-  "Product Development",
-  "Product Strategy",
-  "Roadmapping",
-  "Cross-functional Leadership",
-  "User Research",
-  "SQL + Analytics",
-  "Java / TypeScript / Python",
-  "React / Next.js / Flutter",
-  "REST API Design",
-  "AI Product Prototyping",
+  "🚀 Product Development",
+  "🧭 Product Strategy",
+  "🗺️ Roadmapping",
+  "🤝 Cross-functional Leadership",
+  "🔍 User Research",
+  "📊 SQL + Analytics",
+  "💻 Java / TypeScript / Python",
+  "⚛️ React / Next.js / Flutter",
+  "🔌 REST API Design",
+  "🧠 AI Product Prototyping",
+  "🗣️ NLP",
+  "🖼️ Image Processing",
+  "🧪 Classification Models",
+  "🤖 OpenClaw Workflows",
+  "🧩 LLM Integration in Products",
 ];
 
 function Counter({ end, suffix, label }: { end: number; suffix: string; label: string }) {
@@ -77,19 +82,16 @@ function Counter({ end, suffix, label }: { end: number; suffix: string; label: s
       value: end,
       duration: 1.2,
       ease: "power3.out",
+      delay: 1.45,
       onUpdate: () => {
         if (valueRef.current) valueRef.current.textContent = `${Math.floor(obj.value)}${suffix}`;
-      },
-      scrollTrigger: {
-        trigger: valueRef.current,
-        start: "top 85%",
       },
     });
   }, { scope: valueRef });
 
   return (
     <div className="stat-card reveal-item">
-      <p className="stat-number"><span ref={valueRef}>0{suffix}</span></p>
+      <p className="stat-number"><span ref={valueRef}>{end}{suffix}</span></p>
       <p className="stat-label">{label}</p>
     </div>
   );
@@ -98,6 +100,8 @@ function Counter({ end, suffix, label }: { end: number; suffix: string; label: s
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [showPreloader, setShowPreloader] = useState(false);
+  const [particles, setParticles] = useState<Array<{ id: number; left: number; top: number; size: number; opacity: number }>>([]);
   const name = "Arihant Rawat";
   const letters = useMemo(() => name.split(""), [name]);
 
@@ -106,15 +110,20 @@ export default function Home() {
   const cursorRingRef = useRef<HTMLDivElement | null>(null);
   const contactRef = useRef<HTMLElement | null>(null);
 
-  const particles = useMemo(() => {
-    const count = typeof window !== "undefined" && window.innerWidth < 768 ? 50 : 90;
-    return Array.from({ length: count }).map((_, i) => ({
+  useEffect(() => {
+    const seen = sessionStorage.getItem("ar-intro-seen") === "1";
+    setShowPreloader(!seen);
+    if (!seen) sessionStorage.setItem("ar-intro-seen", "1");
+
+    const count = window.innerWidth < 768 ? 50 : 90;
+    const generated = Array.from({ length: count }).map((_, i) => ({
       id: i,
       left: Math.random() * 100,
       top: Math.random() * 100,
       size: 1 + Math.random() * 3,
       opacity: 0.2 + Math.random() * 0.4,
     }));
+    setParticles(generated);
   }, []);
 
   useEffect(() => {
@@ -169,15 +178,16 @@ export default function Home() {
   }, []);
 
   useGSAP(() => {
-    gsap.fromTo(".name-letter", { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.05, ease: "power3.out" });
+    if (showPreloader) {
+      gsap.fromTo(".name-letter", { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.05, ease: "power3.out" });
+      const tl = gsap.timeline();
+      tl.fromTo(".load-bar", { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.35, ease: "power1.inOut" })
+        .to(".load-bar", { y: -8, autoAlpha: 0, duration: 0.4, ease: "power1.inOut" })
+        .to(preloaderRef.current, { yPercent: -100, autoAlpha: 0, duration: 0.7, delay: 1, ease: "power1.inOut" });
+    }
 
-    const tl = gsap.timeline();
-    tl.fromTo(".load-bar", { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.35, ease: "power1.inOut" })
-      .to(".load-bar", { y: -8, autoAlpha: 0, duration: 0.4, ease: "power1.inOut" })
-      .to(preloaderRef.current, { yPercent: -100, autoAlpha: 0, duration: 0.7, delay: 1, ease: "power1.inOut" });
-
-    gsap.fromTo(".hero-line", { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.1, duration: 0.6, ease: "power3.out", delay: 1.1 });
-    gsap.fromTo(".hero-bio", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, delay: 1.45, ease: "power1.inOut" });
+    gsap.fromTo(".hero-line", { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.1, duration: 0.6, ease: "power3.out", delay: showPreloader ? 1.1 : 0.2 });
+    gsap.fromTo(".hero-bio", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, delay: showPreloader ? 1.45 : 0.45, ease: "power1.inOut" });
 
     gsap.utils.toArray<HTMLElement>(".particle").forEach((particle) => {
       gsap.to(particle, {
@@ -206,7 +216,7 @@ export default function Home() {
         }
       );
     });
-  });
+  }, { dependencies: [showPreloader, particles.length] });
 
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -219,12 +229,14 @@ export default function Home() {
 
       <div className="progress-wrap"><div className="progress-bar" style={{ height: `${progress}%` }} /></div>
 
-      <div className="preloader" ref={preloaderRef}>
-        <h1 className="preloader-name">
-          {letters.map((char, i) => <span className="name-letter" key={`${char}-${i}`}>{char === " " ? "\u00A0" : char}</span>)}
-        </h1>
-        <div className="load-bar" />
-      </div>
+      {showPreloader ? (
+        <div className="preloader" ref={preloaderRef}>
+          <h1 className="preloader-name">
+            {letters.map((char, i) => <span className="name-letter" key={`${char}-${i}`}>{char === " " ? "\u00A0" : char}</span>)}
+          </h1>
+          <div className="load-bar" />
+        </div>
+      ) : null}
 
       <div className="particle-field" aria-hidden="true">
         {particles.map((p) => (
@@ -275,8 +287,8 @@ export default function Home() {
           <div className="hero-right reveal-item">
             <div className="photo-wrap"><Image src="/images/arihant-headshot.jpg" alt="Arihant Rawat" width={720} height={900} /></div>
             <div className="stats">
-              <Counter end={3} suffix="+" label="Years" />
-              <Counter end={7} suffix="+" label="Projects" />
+              <Counter end={4} suffix="+" label="Years of Experience" />
+              <Counter end={7} suffix="+" label="Completed Projects" />
               <Counter end={10} suffix="K+" label="Hours" />
             </div>
           </div>
@@ -345,8 +357,8 @@ export default function Home() {
                 <p>{project.description}</p>
                 <p className="small-title">What I built</p>
                 <ul>{project.built.map((item) => <li key={item}>{item}</li>)}</ul>
-                <p className="small-title">Quantified highlights</p>
-                <ul>{project.quantifiedImpact.map((item) => <li key={item}>{item}</li>)}</ul>
+                <p className="small-title">Tech stack</p>
+                <ul>{project.techStack.map((item) => <li key={item}>{item}</li>)}</ul>
                 <a href={project.link} target="_blank" rel="noreferrer">Open repository</a>
               </article>
             ))}
@@ -356,12 +368,14 @@ export default function Home() {
         <section id="contact" ref={contactRef} className="reveal-section section-gap bottom-space">
           <h2 className="section-title reveal-item">Contact</h2>
           <div className="contact-grid reveal-item">
-            <a className="card" href="mailto:arihantr@usc.edu">arihantr@usc.edu</a>
+            <a className="card" href="mailto:arihantrawat@gmail.com">arihantrawat@gmail.com</a>
             <a className="card" href="https://www.linkedin.com/in/arihantrawat" target="_blank" rel="noreferrer">LinkedIn</a>
             <a className="card" href="tel:+12135636483">(213) 563-6483</a>
           </div>
         </section>
       </main>
+
+      <footer className="site-footer">Designed and built by Arihant Rawat</footer>
     </div>
   );
 }
