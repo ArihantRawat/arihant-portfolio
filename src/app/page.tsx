@@ -278,7 +278,7 @@ export default function Home() {
               <span className="hero-line accent">BUILDING GOOD TECH</span>
               <span className="hero-line">FOR REAL USERS</span>
             </h1>
-            <p className="hero-bio reveal-item">I am Arihant. I build products from idea to execution across startup and enterprise teams. I am open to Product Developer and Software Developer roles, and in general any strong tech role where I can build and ship.</p>
+            <p className="hero-bio reveal-item">I am Arihant. I build user-centric products from idea to launch across startup and enterprise teams. I am open to Product Developer and Software Developer roles where I can own problems, build fast, and ship meaningful outcomes.</p>
             <div className="hero-actions reveal-item">
               <button type="button" className="btn-neon" onClick={scrollToContact}>CONTACT ME</button>
               <a href="/resume/arihant-rawat-pm.pdf" target="_blank" rel="noreferrer" className="btn-ghost">Resume</a>
@@ -296,12 +296,7 @@ export default function Home() {
 
         <section id="about" className="reveal-section section-gap">
           <h2 className="section-title reveal-item">About Me</h2>
-          <p className="reveal-item">I am currently a first year full-time MBA student at USC Marshall, where I am building the business and leadership skills I need to grow as a product manager.</p>
-          <p className="reveal-item">Before my MBA, I completed my engineering degree at NSIT (now NSUT), one of India’s top engineering colleges. That gave me a strong base in software development and artificial intelligence.</p>
-          <p className="reveal-item">I started my career at Cult.fit, an early-stage health and fitness startup, as a product developer. In that environment I worked across engineering, product, operations, and customer support. I helped build products from scratch, understand user pain points, prioritize features, and scale platform experiences as the company grew into a unicorn.</p>
-          <p className="reveal-item">I later moved to Salesforce as a product developer to grow in a more structured global setup. I learned how large-scale products are built, how cross-functional teams work across geographies, and how to balance speed with quality.</p>
-          <p className="reveal-item">Today, I am focused on transitioning into product management. I want to combine my engineering background, startup execution experience, and MBA training to build impactful, user-centered products.</p>
-          <p className="reveal-item">I am from India and have lived and worked across Delhi, Bangalore, and now Los Angeles. I enjoy turning messy product problems into clear plans and shipped outcomes by connecting product thinking with technical execution.</p>
+          <p className="reveal-item">I am a first-year full-time MBA student at USC Marshall, focused on growing into a strong product manager. I completed my engineering degree at NSIT (now NSUT), then worked at Cult.fit and Salesforce where I built products across startup and large-scale environments. Across these roles, I learned to combine engineering depth, product thinking, and execution discipline to solve real user problems. I am from India, and my journey across Delhi, Bangalore, and now Los Angeles has shaped how I work with diverse teams to ship user-centered products.</p>
         </section>
 
         <section id="skills" className="reveal-section section-gap">
@@ -370,7 +365,7 @@ export default function Home() {
         </section>
 
         <section id="contact" ref={contactRef} className="reveal-section section-gap bottom-space">
-          <h2 className="section-title reveal-item">Contact</h2>
+          <h2 className="section-title reveal-item">Contact Me</h2>
           <div className="contact-grid reveal-item">
             <a className="card" href="mailto:arihantrawat@gmail.com">arihantrawat@gmail.com</a>
             <a className="card" href="https://www.linkedin.com/in/arihantrawat" target="_blank" rel="noreferrer">LinkedIn</a>
