@@ -154,12 +154,12 @@ export default function Home() {
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
-      gsap.to(cursorRef.current, { x: e.clientX, y: e.clientY, duration: 0.15, ease: "power1.out" });
-      gsap.to(cursorRingRef.current, { x: e.clientX, y: e.clientY, duration: 0.3, ease: "power1.out" });
+      gsap.to(cursorRef.current, { x: e.clientX, y: e.clientY, duration: 0.12, ease: "power2.out" });
+      gsap.to(cursorRingRef.current, { x: e.clientX, y: e.clientY, duration: 0.24, ease: "power2.out" });
     };
 
-    const enter = () => gsap.to(cursorRingRef.current, { scale: 2, duration: 0.2, ease: "power1.inOut" });
-    const leave = () => gsap.to(cursorRingRef.current, { scale: 1, duration: 0.2, ease: "power1.inOut" });
+    const enter = () => gsap.to(cursorRingRef.current, { scale: 2, duration: 0.18, ease: "power2.inOut" });
+    const leave = () => gsap.to(cursorRingRef.current, { scale: 1, duration: 0.18, ease: "power2.inOut" });
 
     window.addEventListener("mousemove", move);
     const targets = document.querySelectorAll("a, button");
@@ -191,9 +191,9 @@ export default function Home() {
 
     gsap.utils.toArray<HTMLElement>(".particle").forEach((particle) => {
       gsap.to(particle, {
-        x: gsap.utils.random(-32, 32),
-        y: gsap.utils.random(-28, 28),
-        duration: gsap.utils.random(4, 10),
+        x: gsap.utils.random(-36, 36),
+        y: gsap.utils.random(-30, 30),
+        duration: gsap.utils.random(5.5, 12),
         repeat: -1,
         yoyo: true,
         repeatRefresh: true,
@@ -209,8 +209,8 @@ export default function Home() {
         {
           y: 0,
           autoAlpha: 1,
-          stagger: 0.08,
-          duration: 0.6,
+          stagger: 0.1,
+          duration: 0.75,
           ease: "power3.out",
           scrollTrigger: { trigger: section, start: "top 80%" },
         }
@@ -295,9 +295,13 @@ export default function Home() {
         </section>
 
         <section id="about" className="reveal-section section-gap">
-          <h2 className="section-title reveal-item">About</h2>
-          <p className="reveal-item">I am from India and have lived and worked across Delhi, Bangalore, and now Los Angeles. I like solving messy product problems with clear structure and strong execution.</p>
-          <p className="reveal-item">My strength is connecting product thinking with technical delivery. I can work with users, business teams, and engineers to ship practical outcomes.</p>
+          <h2 className="section-title reveal-item">About Me</h2>
+          <p className="reveal-item">I am currently a first year full-time MBA student at USC Marshall, where I am building the business and leadership skills I need to grow as a product manager.</p>
+          <p className="reveal-item">Before my MBA, I completed my engineering degree at NSIT (now NSUT), one of India’s top engineering colleges. That gave me a strong base in software development and artificial intelligence.</p>
+          <p className="reveal-item">I started my career at Cult.fit, an early-stage health and fitness startup, as a product developer. In that environment I worked across engineering, product, operations, and customer support. I helped build products from scratch, understand user pain points, prioritize features, and scale platform experiences as the company grew into a unicorn.</p>
+          <p className="reveal-item">I later moved to Salesforce as a product developer to grow in a more structured global setup. I learned how large-scale products are built, how cross-functional teams work across geographies, and how to balance speed with quality.</p>
+          <p className="reveal-item">Today, I am focused on transitioning into product management. I want to combine my engineering background, startup execution experience, and MBA training to build impactful, user-centered products.</p>
+          <p className="reveal-item">I am from India and have lived and worked across Delhi, Bangalore, and now Los Angeles. I enjoy turning messy product problems into clear plans and shipped outcomes by connecting product thinking with technical execution.</p>
         </section>
 
         <section id="skills" className="reveal-section section-gap">
