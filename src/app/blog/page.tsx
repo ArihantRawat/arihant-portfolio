@@ -15,99 +15,78 @@ export default function BlogPage() {
           <header className="space-y-3">
             <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">March 2026 • 8 min read</p>
             <h1 className="text-3xl font-bold text-white md:text-4xl">
-              Operation Water — How Cinelytic Can Flow Into the Industry
+              Operation Water: How Cinelytic Can Fit Into the Industry
             </h1>
             <p className="text-zinc-300">
-              <strong>TL;DR:</strong> Operation Water recommends a Persistent Flow Strategy for Cinelytic: enter the
-              entertainment market through a familiar, lower-priced comps product, give users modular control so the tool
-              feels like theirs, and reposition messaging away from “AI” toward “predictive analysis.” Our research (10
-              interviews across 12 companies + academic/industry literature) shows studios want efficient, controllable
-              comps and sensitivity tools — not an algorithm that replaces human judgment.
+              This project started with one simple question: if the data is useful, why are teams still hesitant to use the
+              product every day?
             </p>
           </header>
 
           <section className="space-y-3">
-            <h2 className="text-2xl font-semibold text-white">The Problem</h2>
+            <h2 className="text-2xl font-semibold text-white">Problem Statement</h2>
             <p className="text-zinc-300">
-              Studios and creatives are skeptical of AI-driven decision-making. Even when teams use data, “AI” triggers
-              resistance — creatives worry it threatens their craft, while finance teams need trustworthy, customizable
-              workflows. Cinelytic already produces useful comp data and forecasts, but adoption stalls because the product
-              feels unfamiliar, too black-box, or too AI-forward.
+              Cinelytic already produces strong comp data and forecasting outputs. But adoption was slower than expected,
+              especially in creative teams. In interviews, we kept hearing the same concerns: workflows felt unfamiliar,
+              controls felt limited, and AI-heavy messaging made people feel like judgment was being replaced.
+            </p>
+            <p className="text-zinc-300">
+              So the core problem was not a lack of analytics. The real problem was trust, control, and fit with existing
+              studio workflows.
             </p>
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-2xl font-semibold text-white">The Strategy: Be Like Water</h2>
+            <h2 className="text-2xl font-semibold text-white">What We Did</h2>
             <p className="text-zinc-300">
-              Borrowing from Laozi and Bruce Lee, Operation Water proposes flowing into existing workflows instead of forcing
-              a revolution. The goal is to penetrate the industry via what people already value — comp analysis — then expand
-              trust and usage from the bottom up.
+              We ran a focused research sprint and combined qualitative interviews with secondary research.
             </p>
-          </section>
-
-          <section className="space-y-3">
-            <h2 className="text-2xl font-semibold text-white">How We Worked</h2>
             <ul className="list-disc space-y-2 pl-5 text-zinc-300">
-              <li>
-                <strong>Primary research:</strong> 10 semi-structured interviews with professionals across finance,
-                forecasting, content strategy, creative, and talent.
-              </li>
-              <li>
-                <strong>Secondary research:</strong> Academic and industry studies on forecasting accuracy, user ownership
-                of digital tools, and AI adoption in media.
-              </li>
+              <li>10 semi-structured interviews across finance, forecasting, creative, content, and talent functions.</li>
+              <li>Coverage across 12 companies, including leaders from studios and streaming backgrounds.</li>
+              <li>Secondary review of forecasting literature, user ownership behavior, and AI adoption patterns in media.</li>
             </ul>
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-2xl font-semibold text-white">Key Findings</h2>
+            <h2 className="text-2xl font-semibold text-white">What We Found</h2>
             <ul className="list-disc space-y-2 pl-5 text-zinc-300">
-              <li>Comps are familiar and valuable for budgeting, forecasting, and greenlight support.</li>
-              <li>Manual SAP/Excel workflows still dominate in many teams, creating an efficiency gap.</li>
-              <li>Comps are being commoditized through general tools, but outputs still need verification.</li>
-              <li>Control builds trust: users want custom filters, momentum inputs, and sensitivity analysis.</li>
-              <li>AI-forward messaging is a liability in creative departments.</li>
+              <li>Comps are already trusted and widely used for budgeting and greenlight discussions.</li>
+              <li>Many teams still rely on manual workflows in SAP and Excel, which is slow and repetitive.</li>
+              <li>Users want control over assumptions, filters, and what-if analysis before trusting outputs.</li>
+              <li>Creative teams respond better to practical decision support language than AI-first language.</li>
             </ul>
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-2xl font-semibold text-white">Three High-Impact Recommendations</h2>
-            <ol className="list-decimal space-y-3 pl-5 text-zinc-300">
+            <h2 className="text-2xl font-semibold text-white">Our Recommendation</h2>
+            <p className="text-zinc-300">
+              We proposed a comps-first entry strategy called <strong>Operation Water</strong>. The idea was to enter through
+              familiar use cases, then expand over time as trust grows.
+            </p>
+            <ol className="list-decimal space-y-2 pl-5 text-zinc-300">
               <li>
-                <strong>Launch a lower-priced comps tier:</strong> A standalone product that attracts finance/forecasting
-                users and acts as a gateway to the full platform.
+                Launch a lower-priced comps tier so finance and forecasting teams can adopt quickly without a full platform
+                commitment.
               </li>
               <li>
-                <strong>Make the model feel like the users’ model:</strong> Add modular controls, what-if knobs,
-                sensitivity analysis, and highly portable exports.
+                Add modular controls and sensitivity tools so users can shape assumptions and feel ownership of the model.
               </li>
               <li>
-                <strong>Reposition messaging:</strong> Lead with “predictive analysis” and decision support, not AI
-                replacement.
+                Reframe messaging from AI replacement to predictive analysis and decision support.
               </li>
             </ol>
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-2xl font-semibold text-white">Target Personas</h2>
-            <ul className="list-disc space-y-2 pl-5 text-zinc-300">
-              <li>
-                <strong>Kathleen — VP of Finance (Power User):</strong> Wants defensible comps, customizable inputs, and
-                portable data for internal models.
-              </li>
-              <li>
-                <strong>Walt — Producer/Creative:</strong> Uses data for benchmarking but needs transparent,
-                non-threatening framing.
-              </li>
-            </ul>
-          </section>
-
-          <section className="space-y-3">
-            <h2 className="text-2xl font-semibold text-white">Bottom Line</h2>
+            <h2 className="text-2xl font-semibold text-white">Why This Matters</h2>
             <p className="text-zinc-300">
-              Start small, be flexible, and speak the industry’s language. Release a comps-first, user-controllable product
-              at a lower price to win finance teams. Give users ownership through adjustable analytics so the tool becomes
-              theirs. And swap “AI” for “predictive analysis” so creatives stop fighting the tool and start using the data.
+              In entertainment, adoption happens when tools fit the culture of decision making. This approach makes the product
+              familiar first, useful fast, and trustworthy over time.
+            </p>
+            <p className="text-zinc-300">
+              For me, this project reinforced a product lesson I care about deeply: strong models are not enough. The product
+              has to respect how real people work.
             </p>
           </section>
         </article>

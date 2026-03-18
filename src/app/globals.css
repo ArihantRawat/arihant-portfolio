@@ -78,6 +78,41 @@ a:hover, button:hover {
   box-shadow: 0 0 0 1px rgba(244, 114, 182, 0.25), 0 8px 26px rgba(34, 211, 238, 0.12);
 }
 
+@keyframes driftA {
+  0% { transform: translate3d(-8%, -6%, 0) scale(1); }
+  50% { transform: translate3d(8%, 4%, 0) scale(1.08); }
+  100% { transform: translate3d(-8%, -6%, 0) scale(1); }
+}
+
+@keyframes driftB {
+  0% { transform: translate3d(10%, 8%, 0) scale(1.02); }
+  50% { transform: translate3d(-6%, -8%, 0) scale(1.1); }
+  100% { transform: translate3d(10%, 8%, 0) scale(1.02); }
+}
+
+.gradient-blob {
+  position: absolute;
+  width: 34rem;
+  height: 34rem;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.18;
+}
+
+.blob-a {
+  top: -8rem;
+  left: -6rem;
+  background: radial-gradient(circle, #60a5fa 0%, #a78bfa 45%, transparent 70%);
+  animation: driftA 20s ease-in-out infinite;
+}
+
+.blob-b {
+  right: -8rem;
+  bottom: -10rem;
+  background: radial-gradient(circle, #22d3ee 0%, #f472b6 45%, transparent 72%);
+  animation: driftB 24s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;

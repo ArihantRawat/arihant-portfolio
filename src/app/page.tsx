@@ -75,8 +75,8 @@ const skills = [
 
 const marketPositioning = [
   "I connect product strategy with technical execution so teams move from idea to shipped outcomes faster.",
-  "I present work in a Problem → Approach → Impact format that US recruiters and hiring managers can scan quickly.",
-  "I balance startup speed with enterprise-quality decision making and cross-functional communication.",
+  "I like turning complex systems into simple product experiences people can actually use.",
+  "I balance startup speed with enterprise quality and clear cross-functional communication.",
 ];
 
 function ParticleBackground() {
@@ -177,6 +177,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 selection:bg-fuchsia-500/30">
       <ParticleBackground />
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="gradient-blob blob-a" />
+        <div className="gradient-blob blob-b" />
+      </div>
       <header className="sticky top-0 z-30 border-b border-zinc-800/70 bg-zinc-950/90 backdrop-blur">
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-4">
           <a href="#top" className="text-sm font-semibold tracking-[0.2em] text-zinc-300">
@@ -251,15 +255,15 @@ export default function Home() {
             <h1 className="text-4xl font-bold leading-tight text-white md:text-6xl">
               Arihant Rawat
               <span className="mt-2 block bg-gradient-to-r from-cyan-300 via-fuchsia-300 to-violet-300 bg-clip-text text-2xl text-transparent md:text-3xl">
-                Building user-loved products with product judgment and hands-on technical execution.
+                I build products that are useful, simple, and fast to ship.
               </span>
             </h1>
             <p className="max-w-2xl text-lg text-zinc-300">
-              Product-minded engineer with startup + enterprise experience, now at USC Marshall (MBA). I turn ambiguous ideas
-              into shipped products through clear prioritization, technical depth, and measurable execution.
+              I am a product developer with startup and enterprise experience, currently doing my MBA at USC Marshall. I enjoy
+              taking messy problems, clarifying them, and shipping solid product outcomes.
             </p>
             <p className="max-w-2xl text-sm text-zinc-400">
-              Looking for Product, Technical PM, and product-focused engineering roles in the US.
+              From Delhi to Bangalore to Los Angeles, I have worked across different teams and product cultures.
             </p>
             <div className="flex flex-wrap gap-3">
               <a className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:scale-[1.03] hover:bg-zinc-200" href="#projects">
@@ -295,8 +299,12 @@ export default function Home() {
         <section id="about" className="space-y-4">
           <h2 className="text-2xl font-semibold text-white md:text-3xl">About Me</h2>
           <p className="max-w-4xl text-zinc-300">
-            I’m a product-driven technologist pursuing my MBA at USC Marshall, with prior experience at Salesforce and Cult.fit.
-            My edge is bridging user understanding, business priorities, and technical delivery.
+            I am a product developer who enjoys building at the intersection of users, business, and engineering. I care about
+            clear thinking, fast learning loops, and shipping work that people actually find useful.
+          </p>
+          <p className="max-w-4xl text-zinc-300">
+            I am strongest when the problem is ambiguous. I can break it down, align teams, and move from idea to execution
+            without losing focus on quality.
           </p>
           <div className="grid gap-4 md:grid-cols-3">
             {marketPositioning.map((point) => (
@@ -328,7 +336,8 @@ export default function Home() {
               <span className="absolute -left-[33px] top-7 h-3 w-3 rounded-full bg-cyan-300" />
               <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">Oct 2023 – Jul 2025 • Bangalore, India</p>
               <h3 className="mt-2 text-xl font-semibold text-white">Salesforce</h3>
-              <p className="mt-1 text-sm text-zinc-300">Senior Product Developer / Senior Software Developer (MTS)</p>
+              <p className="mt-1 text-sm text-zinc-300">Senior Product Developer (MTS)</p>
+              <a className="mt-2 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200" href="https://www.salesforce.com/" target="_blank" rel="noreferrer">Visit Salesforce</a>
               <p className="mt-3 text-zinc-300">
                 Built enterprise APIs and UI workflows across Context Service and Data Cloud initiatives, partnering with
                 design, operations, and product stakeholders across clouds.
@@ -339,7 +348,8 @@ export default function Home() {
               <span className="absolute -left-[33px] top-7 h-3 w-3 rounded-full bg-fuchsia-300" />
               <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">Jul 2021 – Oct 2023 • Bangalore, India</p>
               <h3 className="mt-2 text-xl font-semibold text-white">Cult.fit</h3>
-              <p className="mt-1 text-sm text-zinc-300">Product Developer → Senior Product / Software Developer</p>
+              <p className="mt-1 text-sm text-zinc-300">Product Developer to Senior Product Developer</p>
+              <a className="mt-2 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200" href="https://www.cult.fit/" target="_blank" rel="noreferrer">Visit Cult.fit</a>
               <p className="mt-3 text-zinc-300">
                 Led app-side delivery across multiple consumer products, collaborated on roadmap priorities, and shipped in
                 fast startup cycles with strong cross-functional execution.
@@ -353,23 +363,25 @@ export default function Home() {
           <div className="grid gap-5 md:grid-cols-2">
             <article className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
               <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">Los Angeles, CA • Expected May 2027</p>
-              <h3 className="mt-2 text-lg font-semibold text-white">University of Southern California (USC) — Marshall School of Business</h3>
+              <h3 className="mt-2 text-lg font-semibold text-white">University of Southern California (USC), Marshall School of Business</h3>
               <p className="mt-2 text-zinc-300">MBA (STEM)</p>
               <p className="mt-2 text-sm text-zinc-400">Dean’s Merit Scholarship (100%) • Prediger Endowed Scholarship • GMAT FE 705</p>
+              <a className="mt-2 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200" href="https://www.marshall.usc.edu/" target="_blank" rel="noreferrer">Visit USC Marshall</a>
             </article>
 
             <article className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
               <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">Delhi, India • May 2021</p>
-              <h3 className="mt-2 text-lg font-semibold text-white">NSIT (now NSUT) — Netaji Subhas University of Technology</h3>
+              <h3 className="mt-2 text-lg font-semibold text-white">NSIT (now NSUT), Netaji Subhas University of Technology</h3>
               <p className="mt-2 text-zinc-300">B.E. in Information Technology (Computer Science)</p>
               <p className="mt-2 text-sm text-zinc-400">First Class Distinction (CGPA 8.6/10.0)</p>
+              <a className="mt-2 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200" href="https://www.nsut.ac.in/" target="_blank" rel="noreferrer">Visit NSUT</a>
             </article>
           </div>
         </section>
 
         <section id="projects" className="space-y-6">
           <div className="flex items-center justify-between gap-4">
-            <h2 className="text-2xl font-semibold text-white md:text-3xl">Projects (Problem → Build → Impact)</h2>
+            <h2 className="text-2xl font-semibold text-white md:text-3xl">Projects</h2>
             <a
               className="text-sm font-semibold text-cyan-300 hover:text-cyan-200"
               href="https://github.com/ArihantRawat"
@@ -442,7 +454,7 @@ export default function Home() {
           </div>
           <article className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
             <p className="text-xs uppercase tracking-[0.15em] text-zinc-400">March 2026 • 8 min read</p>
-            <h3 className="mt-2 text-2xl font-semibold text-white">Operation Water — How Cinelytic Can Flow Into the Industry</h3>
+            <h3 className="mt-2 text-2xl font-semibold text-white">Operation Water: How Cinelytic Can Fit Into the Industry</h3>
             <p className="mt-3 text-zinc-300">
               A research-backed GTM and product strategy memo: launch a comps-first tier, make analytics controllable, and
               frame the product as predictive analysis (not AI replacement) to improve trust and adoption.
