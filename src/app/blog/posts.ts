@@ -17,57 +17,34 @@ export const blogPosts: BlogPost[] = [
     slug: "operation-water-cinelytic",
     title: "Operation Water: How Cinelytic Can Fit Into the Industry",
     summary:
-      "How we reframed an AI-heavy analytics product into a workflow-first decision-support experience that creative and business teams can trust.",
+      "A project where I worked on reframing Cinelytic from an AI-heavy pitch into a practical decision-support workflow people could actually trust and use.",
     readTime: "9 min read",
     date: "March 2026",
     content: [
       {
-        heading: "Context",
+        heading: "What I worked on",
         paragraphs: [
-          "Cinelytic had strong analytical depth and compelling model outputs, but broad adoption remained lower than expected. Product teams were seeing curiosity during demos, followed by hesitation in day-to-day use.",
-          "The hesitation was not about whether forecasting mattered. It was about how the product fit inside existing workflows where financial logic, creative judgment, and stakeholder alignment all happen together.",
+          "In this project, my role was to help close the gap between a technically strong platform and real day-to-day product usage. Teams liked the concept, but adoption stalled because outputs felt hard to trust and hard to plug into existing decision meetings.",
+          "I focused on turning that feedback into product direction: less black-box presentation, more controllable workflows, and clearer framing for cross-functional stakeholders.",
         ],
       },
       {
-        heading: "Core Problem We Identified",
+        heading: "How I approached it",
         paragraphs: [
-          "The product often felt 'AI-first' in presentation, while users needed 'decision-first' experiences. Teams wanted guidance they could interrogate, tune, and defend in internal meetings.",
-          "Without visible assumptions and easy scenario control, users interpreted outputs as a black box. That reduced confidence, even when the numbers were directionally useful.",
+          "I drove a research-heavy sprint with users across strategy, finance, and creative functions, then mapped their decision patterns against how the product currently behaved.",
+          "From there, I translated findings into concrete UX and product principles—especially around assumptions visibility, what-if controls, and confidence-building interaction design.",
         ],
         bullets: [
-          "Trust gap: recommendations felt opaque",
-          "Control gap: teams could not quickly tune assumptions",
-          "Workflow gap: insights were not packaged for planning rituals",
+          "Interviewed stakeholders across multiple teams and company contexts",
+          "Identified trust, control, and workflow-friction as the core blockers",
+          "Proposed a comps-first and scenario-first product flow",
         ],
       },
       {
-        heading: "Research and Validation",
+        heading: "What changed",
         paragraphs: [
-          "We ran a focused discovery sprint across key personas to map where confidence dropped and what artifacts were actually needed to move decisions forward.",
-        ],
-        bullets: [
-          "10 stakeholder interviews across finance, strategy, and creative roles",
-          "Signals gathered from 12 companies and adjacent forecasting workflows",
-          "Secondary analysis on AI adoption behavior in high-judgment teams",
-        ],
-      },
-      {
-        heading: "Product Direction",
-        paragraphs: [
-          "We recommended repositioning Cinelytic as a predictive decision-support platform, not an AI replacement layer. The entry point should feel familiar (comps-style and scenario workflows), while still exposing the predictive depth underneath.",
-          "The strategy focused on progressive confidence: let users start with known references, then layer advanced predictive scenarios when they are ready.",
-        ],
-        bullets: [
-          "Comps-first onboarding to lower initial friction",
-          "Modular controls for assumptions and what-if simulations",
-          "Clear model rationale and comparison views for stakeholder alignment",
-        ],
-      },
-      {
-        heading: "Expected Outcome",
-        paragraphs: [
-          "This direction improves activation and repeat usage by aligning with how teams already make calls under uncertainty. It also supports better cross-functional conversations, because outputs become easier to explain and debate.",
-          "The goal was not to make AI louder. It was to make decisions faster, clearer, and more collaborative.",
+          "The final recommendation was to position Cinelytic as predictive decision support, not 'AI deciding for you'. That shift made the product feel more collaborative and easier to defend in internal conversations.",
+          "This work was a good example of how I like to build: start with user behavior, clarify the product narrative, and ship toward confidence and adoption—not just feature depth.",
         ],
       },
     ],
@@ -76,33 +53,33 @@ export const blogPosts: BlogPost[] = [
     slug: "achieving-your-health-goals-with-cult-transform",
     title: "Achieving Your Health Goals with Cult Transform",
     summary:
-      "A structured, coach-supported transformation journey that blends personalized nutrition, training consistency, and accountability for sustainable results.",
+      "How I contributed to shaping user-facing transformation journeys around accountability, personalization, and long-term habit consistency.",
     readTime: "5 min read",
     date: "March 2026",
     sourceUrl: "https://blog.cult.fit/posts/achieving-your-health-goals-with-cult-transform",
     content: [
       {
-        heading: "What the Program Emphasizes",
+        heading: "What I did",
         paragraphs: [
-          "Cult Transform positions fitness as a guided lifestyle shift, not a short-term challenge. The approach combines coaching, personalized plans, and progress checkpoints so people can build routines that hold up beyond the initial motivation window.",
-          "The article highlights that visible changes come from consistency across food, movement, sleep, and recovery—not one extreme intervention.",
+          "On this side of the Cult.fit experience, I worked on making transformation programs feel structured but realistic for users with messy schedules. The key was reducing friction in how users understand their plan and stay accountable week to week.",
+          "I focused on product flows that connect goal setting, coaching touchpoints, and progress reflection into one continuous user journey rather than disconnected features.",
         ],
       },
       {
-        heading: "Why It Works",
+        heading: "Where I added product value",
         paragraphs: [
-          "The value proposition is clarity plus accountability: users know what to do each week, why it matters, and how to course-correct when life gets messy.",
+          "A lot of my contribution was in translating broad health goals into concrete app behavior: what the user should see first, where they might drop off, and how to re-engage them without overwhelming them.",
         ],
         bullets: [
-          "Personalized guidance based on goals and baseline",
-          "Regular monitoring and feedback loops",
-          "Sustainable behavior focus over crash tactics",
+          "Worked on clearer progression and milestone visibility",
+          "Helped align coaching/accountability touchpoints with in-app moments",
+          "Pushed for consistency-first behavior over extreme short-term tactics",
         ],
       },
       {
-        heading: "Takeaway",
+        heading: "What I learned",
         paragraphs: [
-          "For anyone trying to hit health goals, the message is simple: systems beat willpower. A guided framework can reduce decision fatigue and improve follow-through over time.",
+          "Fitness product outcomes are often won in tiny daily decisions, not one big feature. This project reinforced my approach of building systems that help users stay consistent, especially after their initial motivation drops.",
         ],
       },
     ],
@@ -111,33 +88,33 @@ export const blogPosts: BlogPost[] = [
     slug: "flutter",
     title: "Flutter: Building Cross-Platform Experiences Faster",
     summary:
-      "A practical look at Flutter’s value for product teams: one codebase, rapid UI iteration, and consistent app quality across platforms.",
+      "My perspective on using Flutter to move faster on product experiments while keeping a consistent and polished experience across platforms.",
     readTime: "4 min read",
     date: "March 2026",
     sourceUrl: "https://blog.cult.fit/posts/flutter",
     content: [
       {
-        heading: "What Flutter Enables",
+        heading: "What I did with Flutter",
         paragraphs: [
-          "The post frames Flutter as a speed and consistency layer for teams shipping to multiple platforms. Instead of splitting efforts early, teams can move faster with a unified development experience while preserving polished UI behavior.",
-          "This shortens feedback cycles between product, design, and engineering—especially useful when experimenting with flows and refining UX details.",
+          "I used Flutter in product environments where speed-to-iteration mattered. My focus was on shipping improvements quickly, testing user response early, and avoiding platform drift in core journeys.",
+          "Instead of treating it as only an engineering choice, I approached it as a product acceleration tool—faster idea validation, tighter design-feedback loops, and fewer handoff delays.",
         ],
       },
       {
-        heading: "Product Impact",
+        heading: "How it helped product execution",
         paragraphs: [
-          "For product organizations, the real win is iteration velocity. Teams can validate ideas quickly, maintain design consistency, and reduce duplicated effort.",
+          "The biggest gain for me was execution clarity: one codebase made prioritization easier and reduced context switching when we were moving quickly across experiments.",
         ],
         bullets: [
-          "Faster prototypes and feature rollouts",
-          "Shared UI language across iOS and Android",
-          "Lower coordination overhead for multi-platform delivery",
+          "Shipped and iterated features faster across iOS/Android",
+          "Maintained UI consistency while still moving quickly",
+          "Improved collaboration across product, design, and engineering",
         ],
       },
       {
-        heading: "Takeaway",
+        heading: "My takeaway",
         paragraphs: [
-          "Flutter is most useful when teams prioritize speed-to-learning and cohesive user experience across devices. It helps convert product ideas into testable reality with less fragmentation.",
+          "Flutter worked best when we used it to learn faster from users, not just to save engineering effort. The real win was cycle time—turning ideas into usable product behavior quickly and confidently.",
         ],
       },
     ],

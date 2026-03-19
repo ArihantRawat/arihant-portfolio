@@ -16,6 +16,7 @@ a { color: var(--text); text-decoration: none; }
 .site-shell, .blog-shell { min-height: 100vh; background: radial-gradient(circle at 20% 0%, #1b1228, #0a0a0a 58%); position: relative; }
 .container { width: min(1120px, 92vw); margin: 0 auto; position: relative; z-index: 2; }
 .main-space { padding: 7rem 0 2rem; }
+.content-hidden { visibility: hidden; }
 .blog-space { padding: 6.5rem 0 3rem; }
 .section-gap { margin-top: 6.5rem; }
 .bottom-space { padding-bottom: 5rem; }

@@ -56,15 +56,15 @@ const projects: Project[] = [
 ];
 
 const skills = [
-  "🚀 Product Development",
+  "🛠️ Product Development",
   "💻 Software Development",
   "📱 App Development",
-  "🧱 Full Stack Development",
-  "🧭 Product Strategy",
+  "🌐 Full Stack Development",
+  "🎯 Product Strategy",
   "🗺️ Roadmapping",
   "🤝 Cross-functional Leadership",
-  "🔍 User Research",
-  "📊 SQL + Analytics",
+  "🔎 User Research",
+  "🗄️ SQL + Analytics",
   "☕ Java",
   "🔷 TypeScript",
   "🐍 Python",
@@ -73,11 +73,11 @@ const skills = [
   "▲ Next.js",
   "🦋 Flutter",
   "🔌 REST API Design",
-  "🧠 AI Product Prototyping",
-  "🗣️ NLP",
+  "🤖 AI Product Prototyping",
+  "🧠 NLP",
   "🖼️ Image Processing",
-  "🧪 Classification Models",
-  "🤖 OpenClaw Workflows",
+  "📈 Classification Models",
+  "🦾 OpenClaw Workflows",
   "🧩 LLM Integration in Products",
 ];
 
@@ -108,7 +108,8 @@ function Counter({ end, suffix, label }: { end: number; suffix: string; label: s
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [showPreloader, setShowPreloader] = useState(false);
+  const [showPreloader, setShowPreloader] = useState(true);
+  const [introResolved, setIntroResolved] = useState(false);
   const [particles, setParticles] = useState<Array<{ id: number; left: number; top: number; size: number; opacity: number }>>([]);
   const name = "Arihant Rawat";
   const letters = useMemo(() => name.split(""), [name]);
@@ -122,6 +123,7 @@ export default function Home() {
     const seen = sessionStorage.getItem("ar-intro-seen") === "1";
     setShowPreloader(!seen);
     if (!seen) sessionStorage.setItem("ar-intro-seen", "1");
+    setIntroResolved(true);
 
     const count = window.innerWidth < 768 ? 50 : 90;
     const generated = Array.from({ length: count }).map((_, i) => ({
@@ -278,7 +280,7 @@ export default function Home() {
         )}
       </header>
 
-      <main id="top" className="container main-space">
+      <main id="top" className={`container main-space ${!introResolved || showPreloader ? "content-hidden" : ""}`}>
         <section className="hero reveal-section">
           <div>
             <p className="badge reveal-item">PRODUCT DEVELOPER</p>
