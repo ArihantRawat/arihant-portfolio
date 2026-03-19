@@ -43,6 +43,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 ) : null}
               </section>
             ))}
+
+            {post.sourceUrl ? (
+              <section className="blog-section">
+                <h3>Read the Original Post</h3>
+                <a className="blog-source-link" href={post.sourceUrl} target="_blank" rel="noreferrer">
+                  {post.sourceUrl}
+                </a>
+              </section>
+            ) : null}
           </div>
         </article>
       </div>
