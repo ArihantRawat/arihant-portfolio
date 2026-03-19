@@ -125,7 +125,7 @@ export default function Home() {
     if (!seen) sessionStorage.setItem("ar-intro-seen", "1");
     setIntroResolved(true);
 
-    const count = window.innerWidth < 768 ? 50 : 90;
+    const count = window.innerWidth < 768 ? 28 : 56;
     const generated = Array.from({ length: count }).map((_, i) => ({
       id: i,
       left: Math.random() * 100,
@@ -189,15 +189,17 @@ export default function Home() {
 
   useGSAP(() => {
     if (showPreloader) {
-      gsap.fromTo(".name-letter", { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.05, ease: "power3.out" });
-      const tl = gsap.timeline();
-      tl.fromTo(".load-bar", { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.35, ease: "power1.inOut" })
-        .to(".load-bar", { y: -8, autoAlpha: 0, duration: 0.4, ease: "power1.inOut" })
-        .to(preloaderRef.current, { yPercent: -100, autoAlpha: 0, duration: 0.7, delay: 1, ease: "power1.inOut" });
+      gsap.fromTo(".name-letter", { y: 32, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.045, ease: "power3.out" });
+      const tl = gsap.timeline({
+        onComplete: () => setShowPreloader(false),
+      });
+      tl.fromTo(".load-bar", { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.28, ease: "power1.inOut" })
+        .to(".load-bar", { y: -8, autoAlpha: 0, duration: 0.3, ease: "power1.inOut" })
+        .to(preloaderRef.current, { yPercent: -100, autoAlpha: 0, duration: 0.5, delay: 0.55, ease: "power1.inOut" });
     }
 
-    gsap.fromTo(".hero-line", { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.1, duration: 0.6, ease: "power3.out", delay: showPreloader ? 1.1 : 0.2 });
-    gsap.fromTo(".hero-bio", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, delay: showPreloader ? 1.45 : 0.45, ease: "power1.inOut" });
+    gsap.fromTo(".hero-line", { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.08, duration: 0.45, ease: "power3.out", delay: showPreloader ? 0.1 : 0.12 });
+    gsap.fromTo(".hero-bio", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, delay: showPreloader ? 0.2 : 0.2, ease: "power1.inOut" });
 
     gsap.utils.toArray<HTMLElement>(".particle").forEach((particle) => {
       gsap.to(particle, {
