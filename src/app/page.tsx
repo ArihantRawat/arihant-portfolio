@@ -55,30 +55,36 @@ const projects: Project[] = [
   },
 ];
 
-const skills = [
-  "🛠️ Product Development",
-  "💻 Software Development",
-  "📱 App Development",
-  "🌐 Full Stack Development",
-  "🎯 Product Strategy",
-  "🗺️ Roadmapping",
-  "🤝 Cross-functional Leadership",
-  "🔎 User Research",
-  "🗄️ SQL + Analytics",
-  "☕ Java",
-  "🔷 TypeScript",
-  "🐍 Python",
-  "🟨 JavaScript",
-  "⚛️ React",
-  "▲ Next.js",
-  "🦋 Flutter",
-  "🔌 REST API Design",
-  "🤖 AI Product Prototyping",
-  "🧠 NLP",
-  "🖼️ Image Processing",
-  "📈 Classification Models",
-  "🦾 OpenClaw Workflows",
-  "🧩 LLM Integration in Products",
+type Skill = {
+  name: string;
+  icon?: string;
+  logoUrl?: string;
+};
+
+const skills: Skill[] = [
+  { name: "Product Development", icon: "🛠️" },
+  { name: "Software Development", icon: "💻" },
+  { name: "App Development", icon: "📱" },
+  { name: "Full Stack Development", icon: "🌐" },
+  { name: "Product Strategy", icon: "🎯" },
+  { name: "Roadmapping", icon: "🗺️" },
+  { name: "Cross-functional Leadership", icon: "🤝" },
+  { name: "User Research", icon: "🔎" },
+  { name: "SQL + Analytics", icon: "🗄️" },
+  { name: "Java", logoUrl: "https://cdn.simpleicons.org/java" },
+  { name: "TypeScript", logoUrl: "https://cdn.simpleicons.org/typescript" },
+  { name: "Python", logoUrl: "https://cdn.simpleicons.org/python" },
+  { name: "JavaScript", logoUrl: "https://cdn.simpleicons.org/javascript" },
+  { name: "React", logoUrl: "https://cdn.simpleicons.org/react" },
+  { name: "Next.js", logoUrl: "https://cdn.simpleicons.org/nextdotjs/FFFFFF" },
+  { name: "Flutter", logoUrl: "https://cdn.simpleicons.org/flutter" },
+  { name: "REST API Design", icon: "🔌" },
+  { name: "AI Product Prototyping", icon: "🤖" },
+  { name: "NLP", icon: "🧠" },
+  { name: "Image Processing", icon: "🖼️" },
+  { name: "Classification Models", icon: "📈" },
+  { name: "OpenClaw Workflows", icon: "🦾" },
+  { name: "LLM Integration in Products", icon: "🧩" },
 ];
 
 function Counter({ end, suffix, label }: { end: number; suffix: string; label: string }) {
@@ -315,7 +321,18 @@ export default function Home() {
 
         <section id="skills" className="reveal-section section-gap">
           <h2 className="section-title reveal-item">Skills</h2>
-          <div className="chips reveal-item">{skills.map((s) => <span key={s}>{s}</span>)}</div>
+          <div className="chips reveal-item">
+            {skills.map((skill) => (
+              <span key={skill.name} className="skill-chip">
+                {skill.logoUrl ? (
+                  <img className="skill-logo" src={skill.logoUrl} alt={`${skill.name} logo`} loading="lazy" />
+                ) : (
+                  <span className="skill-emoji" aria-hidden="true">{skill.icon}</span>
+                )}
+                <span>{skill.name}</span>
+              </span>
+            ))}
+          </div>
         </section>
 
         <section id="experience" className="reveal-section section-gap">

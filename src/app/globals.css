@@ -96,7 +96,27 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #d9d9d9; }
 .edu-grid, .project-grid { display: grid; grid-template-columns: 1fr; gap: .85rem; }
 .contact-grid { display: grid; grid-template-columns: 1fr; gap: .7rem; }
 .chips { display: flex; flex-wrap: wrap; gap: .55rem; }
-.chips span { border: 1px solid #2a2a2a; color: #d8d8d8; border-radius: 999px; padding: .42rem .8rem; font-size: .9rem; background: rgba(255,255,255,.02); }
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  border: 1px solid #2a2a2a;
+  color: #d8d8d8;
+  border-radius: 999px;
+  padding: .42rem .8rem;
+  font-size: .9rem;
+  background: rgba(255,255,255,.02);
+}
+.skill-logo {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.skill-emoji {
+  line-height: 1;
+  font-size: 1rem;
+}
 
 .particle-field { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
 .particle { position: absolute; display: block; border-radius: 999px; background: var(--accent); box-shadow: 0 0 8px rgba(168,85,247,.35); }
