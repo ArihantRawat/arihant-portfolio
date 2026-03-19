@@ -62,6 +62,12 @@ type Skill = {
 };
 
 const skills: Skill[] = [
+  { name: "OpenClaw Workflows", icon: "🦾" },
+  { name: "AI Product Prototyping", icon: "🤖" },
+  { name: "LLM Integration in Products", icon: "🧩" },
+  { name: "Cursor", logoUrl: "https://www.cursor.com/favicon.ico" },
+  { name: "Lovable", logoUrl: "https://lovable.dev/favicon.ico" },
+  { name: "Base44", logoUrl: "https://base44.com/favicon.ico" },
   { name: "Product Development", icon: "🛠️" },
   { name: "Software Development", icon: "💻" },
   { name: "App Development", icon: "📱" },
@@ -71,7 +77,7 @@ const skills: Skill[] = [
   { name: "Cross-functional Leadership", icon: "🤝" },
   { name: "User Research", icon: "🔎" },
   { name: "SQL + Analytics", icon: "🗄️" },
-  { name: "Java", logoUrl: "https://cdn.simpleicons.org/java" },
+  { name: "Java", logoUrl: "https://cdn.simpleicons.org/openjdk" },
   { name: "TypeScript", logoUrl: "https://cdn.simpleicons.org/typescript" },
   { name: "Python", logoUrl: "https://cdn.simpleicons.org/python" },
   { name: "JavaScript", logoUrl: "https://cdn.simpleicons.org/javascript" },
@@ -79,12 +85,9 @@ const skills: Skill[] = [
   { name: "Next.js", logoUrl: "https://cdn.simpleicons.org/nextdotjs/FFFFFF" },
   { name: "Flutter", logoUrl: "https://cdn.simpleicons.org/flutter" },
   { name: "REST API Design", icon: "🔌" },
-  { name: "AI Product Prototyping", icon: "🤖" },
   { name: "NLP", icon: "🧠" },
   { name: "Image Processing", icon: "🖼️" },
   { name: "Classification Models", icon: "📈" },
-  { name: "OpenClaw Workflows", icon: "🦾" },
-  { name: "LLM Integration in Products", icon: "🧩" },
 ];
 
 function Counter({ end, suffix, label }: { end: number; suffix: string; label: string }) {
