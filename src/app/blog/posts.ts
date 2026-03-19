@@ -119,4 +119,39 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "aurora-design",
+    title: "Aurora Design: Building a Design System That Scales",
+    summary:
+      "How I approached design-system thinking to improve consistency, speed up product delivery, and reduce UI decision friction across teams.",
+    readTime: "5 min read",
+    date: "March 2026",
+    sourceUrl: "https://blog.cult.fit/posts/aurora-design",
+    content: [
+      {
+        heading: "What I worked on",
+        paragraphs: [
+          "For this initiative, I focused on making product UI decisions more reusable and less ad-hoc. The core idea was to create a consistent design language that helps teams ship faster without compromising user experience quality.",
+          "I worked on bridging product needs with design structure—so common components, patterns, and interaction rules could be used confidently across multiple user journeys.",
+        ],
+      },
+      {
+        heading: "How I contributed",
+        paragraphs: [
+          "My role was to bring product clarity into the system effort: where standardization helps velocity, where flexibility is needed, and how teams can adopt patterns without slowing execution.",
+        ],
+        bullets: [
+          "Defined reusable patterns for recurring user flows",
+          "Helped align design consistency with real product priorities",
+          "Reduced back-and-forth during implementation by improving shared UI vocabulary",
+        ],
+      },
+      {
+        heading: "Why this mattered",
+        paragraphs: [
+          "Beyond visual consistency, the biggest win was execution speed. A good design system reduces ambiguity, improves collaboration, and lets teams focus more on solving user problems than re-deciding basic UI structure every sprint.",
+        ],
+      },
+    ],
+  },
 ];
