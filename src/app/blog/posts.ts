@@ -53,33 +53,29 @@ export const blogPosts: BlogPost[] = [
     slug: "achieving-your-health-goals-with-cult-transform",
     title: "Achieving Your Health Goals with Cult Transform",
     summary:
-      "How I contributed to shaping user-facing transformation journeys around accountability, personalization, and long-term habit consistency.",
+      "A firsthand look at building Cult Transform—prioritizing personalization, expert guidance, and sustainable habits over quick fixes.",
     readTime: "5 min read",
     date: "March 2026",
     sourceUrl: "https://blog.cult.fit/posts/achieving-your-health-goals-with-cult-transform",
     content: [
       {
-        heading: "What I did",
+        heading: "Why We Built Cult Transform",
         paragraphs: [
-          "On this side of the Cult.fit experience, I worked on making transformation programs feel structured but realistic for users with messy schedules. The key was reducing friction in how users understand their plan and stay accountable week to week.",
-          "I focused on product flows that connect goal setting, coaching touchpoints, and progress reflection into one continuous user journey rather than disconnected features.",
-        ],
-      },
-      {
-        heading: "Where I added product value",
-        paragraphs: [
-          "A lot of my contribution was in translating broad health goals into concrete app behavior: what the user should see first, where they might drop off, and how to re-engage them without overwhelming them.",
-        ],
-        bullets: [
-          "Worked on clearer progression and milestone visibility",
-          "Helped align coaching/accountability touchpoints with in-app moments",
-          "Pushed for consistency-first behavior over extreme short-term tactics",
-        ],
-      },
-      {
-        heading: "What I learned",
-        paragraphs: [
-          "Fitness product outcomes are often won in tiny daily decisions, not one big feature. This project reinforced my approach of building systems that help users stay consistent, especially after their initial motivation drops.",
+          "As someone who worked on building Cult Transform, I got to see a side of fitness that most people don’t usually think about.",
+          "Before this, I always believed fitness was just about eating right and working out regularly. But while working on this project, I realized the real challenge is not starting. It’s staying consistent.",
+          "We spoke to a lot of people during the process, and one thing was clear. Most people already know what they should be doing. The problem is that typical fitness plans don’t fit into real life. They feel too strict, too overwhelming, or simply not sustainable.",
+          "That’s exactly the problem we wanted to solve with Cult Transform.",
+          "Instead of creating another rigid program, the idea was to build something that adapts to people, not the other way around. Something that focuses on small, practical changes that can actually become part of your daily routine.",
+          "One of the key things we focused on was personalization. Everyone has a different lifestyle, different habits, and different challenges. So it didn’t make sense to give everyone the same plan. Cult Transform is designed to guide you based on where you are and help you move forward step by step.",
+          "Another important part of the product is guidance. We made sure that users are not left guessing what to do next. The program connects you with experts who understand your journey and help you make better decisions along the way.",
+          "When it came to nutrition, we were very clear about one thing. We did not want to create strict meal plans that people would eventually quit. Instead, the goal was to help users understand food better, so they can make smarter choices on their own. This makes the results more sustainable in the long run.",
+          "We also wanted to shift the focus away from just weight loss. While that can be a goal, it is not the only measure of progress. Building healthy habits, improving energy levels, sleeping better, and feeling stronger are just as important.",
+          "Another big decision we made was to avoid quick fixes completely. No crash diets, no extreme routines, and no shortcuts. Everything in Cult Transform is designed to be realistic and sustainable, because that’s what actually works.",
+          "And something that mattered a lot to us while building this was creating a judgement-free experience. People should feel supported, not pressured. Progress looks different for everyone, and that’s completely okay.",
+          "Working on Cult Transform changed the way I personally look at fitness. It’s no longer about doing everything perfectly. It’s about doing the right things consistently, in a way that fits your life.",
+          "If you have ever struggled to stay on track or felt like nothing really works long term, this is exactly what we built Cult Transform for.",
+          "Not just to help you start, but to help you keep going.",
+          "For the original post, see here: https://blog.cult.fit/posts/achieving-your-health-goals-with-cult-transform",
         ],
       },
     ],
@@ -94,27 +90,47 @@ export const blogPosts: BlogPost[] = [
     sourceUrl: "https://blog.cult.fit/posts/flutter",
     content: [
       {
-        heading: "What I did with Flutter",
+        heading: "Why Performance Became the Priority",
         paragraphs: [
-          "I used Flutter in product environments where speed-to-iteration mattered. My focus was on shipping improvements quickly, testing user response early, and avoiding platform drift in core journeys.",
-          "Instead of treating it as only an engineering choice, I approached it as a product acceleration tool—faster idea validation, tighter design-feedback loops, and fewer handoff delays.",
+          "While working on the Cult app, one thing became very clear to us. User experience is everything.",
+          "When your entire product lives on a screen, even small delays or glitches can completely break the experience. People don’t wait around. If something feels slow or unresponsive, they simply leave. (Cult.fit Blog)",
+          "That’s exactly the challenge we were facing.",
         ],
       },
       {
-        heading: "How it helped product execution",
+        heading: "Where React Native Fell Short",
         paragraphs: [
-          "The biggest gain for me was execution clarity: one codebase made prioritization easier and reduced context switching when we were moving quickly across experiments.",
-        ],
-        bullets: [
-          "Shipped and iterated features faster across iOS/Android",
-          "Maintained UI consistency while still moving quickly",
-          "Improved collaboration across product, design, and engineering",
+          "For a long time, we were using React Native to power our mobile app. It helped us get started quickly and build a strong foundation. But as we grew and started focusing more on performance and design, we began to see some limitations.",
+          "One of the biggest issues was how React Native handled communication between layers. There was a constant back and forth between the JavaScript side and the native side, which started becoming a bottleneck. Over time, this led to delays, especially on lower-end devices. Even simple interactions like switching tabs could feel slow. (Cult.fit Blog)",
+          "At the same time, our design team was working on something new—a completely fresh design system called Aurora. It was more dynamic, more visual, and needed stronger performance support from the app.",
+          "That’s when we started asking an important question. Can our current tech actually support the experience we want to build?",
         ],
       },
       {
-        heading: "My takeaway",
+        heading: "Exploring Flutter",
         paragraphs: [
-          "Flutter worked best when we used it to learn faster from users, not just to save engineering effort. The real win was cycle time—turning ideas into usable product behavior quickly and confidently.",
+          "This led us to explore Flutter.",
+          "Flutter gave us a different way to think about building the app. Instead of relying heavily on bridges between layers, it allowed us to create smoother and more consistent experiences directly. This meant better performance, faster interactions, and more control over how things look and feel.",
+          "But the decision was not instant. We spent a lot of time testing. We built prototypes, compared performance, and checked how things worked across devices. We had multiple discussions across teams, going back and forth before making the call.",
+          "Eventually, it became clear. If we wanted to truly improve the user experience and support our new design system, moving to Flutter was the right step.",
+        ],
+      },
+      {
+        heading: "Making the Shift",
+        paragraphs: [
+          "So we made the shift.",
+          "This was not just a tech change. It was a product decision—a decision to invest in speed, smoothness, and consistency for our users.",
+          "With Flutter, we were able to bring our design ideas to life in a much better way. Animations felt smoother, interactions became faster, and the overall experience improved significantly.",
+        ],
+      },
+      {
+        heading: "What I Learned",
+        paragraphs: [
+          "Looking back, this transition taught me something important.",
+          "Technology choices are not just about what works today. They are about what helps you build better experiences for the future.",
+          "And for us, Flutter became that foundation.",
+          "It helped us move closer to what we always wanted to build—an app that feels fast, smooth, and enjoyable to use, every single time.",
+          "For the original post, see here: https://blog.cult.fit/posts/flutter?utm_source=chatgpt.com",
         ],
       },
     ],
