@@ -217,7 +217,7 @@ const PROJECTS: Project[] = [
     name: "OffGrid",
     repo: "ArihantRawat/OffGrid",
     description:
-      "Flutter playground I use to prototype mobile product ideas quickly with a focus on fast iteration and frictionless onboarding.",
+      "OffGrid is a travel app that uses your personal taste to recommend places that match your vibe, not just what’s popular.",
     whatIBuilt: ["App shell + navigation", "Core user journeys", "Release-ready CI-friendly structure"],
     techStack: ["Flutter", "Dart", "Mobile UI"],
     link: "https://github.com/ArihantRawat/OffGrid",
