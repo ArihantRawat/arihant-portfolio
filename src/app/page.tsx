@@ -326,10 +326,12 @@ export default function HomePage() {
   useEffect(() => {
     const updateCursor = (event: MouseEvent) => {
       if (cursorDotRef.current) {
-        cursorDotRef.current.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
+        cursorDotRef.current.style.left = `${event.clientX}px`;
+        cursorDotRef.current.style.top = `${event.clientY}px`;
       }
       if (cursorRingRef.current) {
-        cursorRingRef.current.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
+        cursorRingRef.current.style.left = `${event.clientX}px`;
+        cursorRingRef.current.style.top = `${event.clientY}px`;
       }
     };
 

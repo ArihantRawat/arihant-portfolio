@@ -165,7 +165,7 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #e1e1e1; line-height: 1.62; }
 
 .cursor-dot, .cursor-ring { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 80; border-radius: 999px; transform: translate(-50%, -50%); }
 .cursor-dot { width: 10px; height: 10px; background: var(--accent); box-shadow: 0 0 12px rgba(168,85,247,.75); }
-.cursor-ring { width: 30px; height: 30px; border: 1px solid rgba(168,85,247,.9); }
+.cursor-ring { width: 30px; height: 30px; border: 1px solid rgba(168,85,247,.9); transition: left .08s linear, top .08s linear; }
 
 .blog-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
 .blog-home { color: #d7d7d7; }
