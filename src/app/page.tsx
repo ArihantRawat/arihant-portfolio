@@ -253,6 +253,7 @@ const createParticles = (): Particle[] =>
 
 export default function HomePage() {
   const [isReady, setIsReady] = useState(false);
+  const [shouldAnimate, setShouldAnimate] = useState(true);
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [particles, setParticles] = useState<Particle[]>([]);
   const progressRef = useRef<HTMLDivElement>(null);
@@ -260,8 +261,25 @@ export default function HomePage() {
   const cursorRingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const animationKey = "home-animation-played";
+    const hasPlayed = window.sessionStorage.getItem(animationKey) === "1";
+
+    const clearAnimationKey = () => window.sessionStorage.removeItem(animationKey);
+    window.addEventListener("beforeunload", clearAnimationKey);
+
+    if (hasPlayed) {
+      setShouldAnimate(false);
+      setIsReady(true);
+      return () => window.removeEventListener("beforeunload", clearAnimationKey);
+    }
+
+    window.sessionStorage.setItem(animationKey, "1");
     const timer = setTimeout(() => setIsReady(true), 1000);
-    return () => clearTimeout(timer);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("beforeunload", clearAnimationKey);
+    };
   }, []);
 
   useEffect(() => {
@@ -284,6 +302,12 @@ export default function HomePage() {
 
   useEffect(() => {
     const items = Array.from(document.querySelectorAll<HTMLElement>(".reveal-item"));
+
+    if (!shouldAnimate) {
+      items.forEach((item) => item.classList.add("in-view"));
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -297,7 +321,7 @@ export default function HomePage() {
 
     items.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
-  }, []);
+  }, [shouldAnimate]);
 
   useEffect(() => {
     const updateCursor = (event: MouseEvent) => {
