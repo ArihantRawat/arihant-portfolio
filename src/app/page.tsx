@@ -324,19 +324,49 @@ export default function HomePage() {
   }, [shouldAnimate]);
 
   useEffect(() => {
+    let rafId = 0;
+    let targetX = 0;
+    let targetY = 0;
+    let ringX = 0;
+    let ringY = 0;
+    let initialized = false;
+
+    const animateRing = () => {
+      if (!cursorRingRef.current) return;
+      ringX += (targetX - ringX) * 0.18;
+      ringY += (targetY - ringY) * 0.18;
+      cursorRingRef.current.style.left = `${ringX}px`;
+      cursorRingRef.current.style.top = `${ringY}px`;
+      rafId = window.requestAnimationFrame(animateRing);
+    };
+
     const updateCursor = (event: MouseEvent) => {
-      if (cursorDotRef.current) {
-        cursorDotRef.current.style.left = `${event.clientX}px`;
-        cursorDotRef.current.style.top = `${event.clientY}px`;
+      targetX = event.clientX;
+      targetY = event.clientY;
+
+      if (!initialized) {
+        ringX = targetX;
+        ringY = targetY;
+        initialized = true;
+        if (cursorRingRef.current) {
+          cursorRingRef.current.style.left = `${ringX}px`;
+          cursorRingRef.current.style.top = `${ringY}px`;
+        }
       }
-      if (cursorRingRef.current) {
-        cursorRingRef.current.style.left = `${event.clientX}px`;
-        cursorRingRef.current.style.top = `${event.clientY}px`;
+
+      if (cursorDotRef.current) {
+        cursorDotRef.current.style.left = `${targetX}px`;
+        cursorDotRef.current.style.top = `${targetY}px`;
       }
     };
 
+    rafId = window.requestAnimationFrame(animateRing);
     window.addEventListener("mousemove", updateCursor);
-    return () => window.removeEventListener("mousemove", updateCursor);
+
+    return () => {
+      window.removeEventListener("mousemove", updateCursor);
+      window.cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const handleContactClick = useCallback(() => {
