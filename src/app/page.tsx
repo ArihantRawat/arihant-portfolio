@@ -22,6 +22,7 @@ type TimelineItem = {
   timeframe: string;
   location: string;
   description: string;
+  details?: string[];
   links: ExternalLink[];
 };
 
@@ -106,7 +107,13 @@ const EXPERIENCES: TimelineItem[] = [
     timeframe: "Oct 2023 - Jul 2025",
     location: "Bangalore, India",
     description:
-      "Built enterprise APIs and product workflows across Context Service and Data Cloud with cross-functional teams.",
+      "Full-stack owner for Content Services inside Industries Cloud, partnering closely with Data Cloud to scale it from internal tooling to a customer-facing product.",
+    details: [
+      "At Salesforce, I joined the Industries Cloud team and worked on a product called Content Services. We initially built it as an internal tool to simplify how teams access and manage data across backend systems, reducing latency and complexity while providing a simple interface to map and control data flows. The product gained strong adoption internally and was later turned into a paid product with API-based usage.",
+      "I worked as a full stack developer, contributing to backend APIs, frontend development, and system design. I also collaborated closely with the Data Cloud team to integrate it into our platform, which became a key feature for growth.",
+      "Alongside development, I mentored junior engineers and interns, and regularly gave demos and presentations.",
+      "As AI started gaining momentum, I took initiative in exploring how it could fit into our systems and became the go-to person on the team for it. I worked on early implementations of Salesforce’s agentic AI and helped the team adopt new tools like Cursor, improving how we built and experimented with AI-driven features.",
+    ],
     links: [
       { label: "Official site", href: "https://www.salesforce.com/" },
       { label: "Wikipedia", href: "https://en.wikipedia.org/wiki/Salesforce" },
@@ -118,7 +125,13 @@ const EXPERIENCES: TimelineItem[] = [
     timeframe: "Jul 2021 - Oct 2023",
     location: "Bangalore, India",
     description:
-      "Shipped user-facing app features across multiple products, worked closely with product and operations, and contributed during a high-growth phase as Cult.fit scaled into a unicorn startup.",
+      "App-and-backend lead for Cult.fit’s Digital Verticals team, scaling multiple consumer products during and after COVID.",
+    details: [
+      "At Cult.fit, I started right after college as an app developer and joined the Digital Verticals team during COVID, where we were building digital health and fitness products like online workouts, weight loss programs, and fitness plans. Around the same time, we were migrating our app from React Native to Flutter, and since I was one of the few engineers familiar with Flutter, I ended up working on most of the core parts of the app. This included building key components, shaping the overall architecture, and helping onboard new engineers to the framework.",
+      "Over time, my role expanded beyond app development into backend work and product-focused initiatives. I worked closely with data science teams on building data platforms, setting up funnels, and running A/B experiments. Because I understood both the technical systems and product needs, I often acted as a bridge between engineering, product, and data teams.",
+      "Being in a startup environment also meant working across functions. I collaborated with design, operations, and even supported testing and customer issues when needed.",
+      "After about 1.5 years, I became the app lead for the Digital Verticals team, managing a portfolio of six products, owning their architecture, and leading development of multiple products from scratch.",
+    ],
     links: [
       { label: "Official site", href: "https://www.cult.fit/" },
       { label: "Wikipedia", href: "https://en.wikipedia.org/wiki/Cure.fit" },
@@ -153,40 +166,74 @@ const EDUCATION: TimelineItem[] = [
 
 const PROJECTS: Project[] = [
   {
-    name: "OffGrid",
-    repo: "ArihantRawat/OffGrid",
+    name: "Venue Intelligence Discovery",
+    repo: "ArihantRawat/VenueIntelligenceDiscovery",
     description:
-      "Mobile app built to test real user behavior quickly. Focused on fast iteration, clean onboarding flow, and practical MVP delivery.",
-    whatIBuilt: ["Flutter app foundation", "Core user journeys", "Release-ready mobile structure"],
-    techStack: ["Flutter", "Dart", "Mobile UI"],
-    link: "https://github.com/ArihantRawat/OffGrid",
+      "Multi-agent intelligence stack built for the Tixr Case Competition to score 24K+ global venues for expansion across EMEA, LATAM, and Southeast Asia.",
+    whatIBuilt: [
+      "Layered orchestrator that coordinates venue, ticketing, event, and market agents and deduplicates their signals",
+      "Normalized schema plus Excel workbook with win probability, premium fit, and priority scoring",
+      "CLI + pipeline scripts that can run offline normalization or live API enrichment when keys are provided",
+    ],
+    techStack: ["Python", "LangChain Agents", "Pandas", "REST / Graph APIs"],
+    link: "https://github.com/ArihantRawat/VenueIntelligenceDiscovery",
   },
   {
-    name: "To-Do-List-V1",
-    repo: "ArihantRawat/To-Do-List-V1",
+    name: "Video Captioning",
+    repo: "ArihantRawat/Video_Captioning",
     description:
-      "Productivity web app designed for simple daily use with frictionless task flows and clear state updates.",
-    whatIBuilt: ["Task CRUD flow", "Responsive interaction patterns", "State handling"],
-    techStack: ["JavaScript", "HTML/CSS", "Frontend Logic"],
-    link: "https://github.com/ArihantRawat/To-Do-List-V1",
-  },
-  {
-    name: "Sarcasm-Detector",
-    repo: "ArihantRawat/Sarcasm-Detector",
-    description:
-      "AI/NLP project for text classification exploring how model performance changes with preprocessing and feature choices.",
-    whatIBuilt: ["Text preprocessing pipeline", "Training and evaluation workflow", "Reusable prediction path"],
-    techStack: ["Python", "NLP", "Classification Models"],
-    link: "https://github.com/ArihantRawat/Sarcasm-Detector",
+      "Sequence-to-sequence system that turns short video clips into natural-language captions using CNN encoders and LSTM decoders.",
+    whatIBuilt: [
+      "Frame extraction, cleaning, and mapping utilities for curating training datasets",
+      "Seq2Seq training scripts plus saved encoder/decoder checkpoints for quick experimentation",
+      "Inference notebooks that visualize attention maps and generate captions on unseen clips",
+    ],
+    techStack: ["Python", "TensorFlow / Keras", "OpenCV", "NumPy"],
+    link: "https://github.com/ArihantRawat/Video_Captioning",
   },
   {
     name: "Image Captioning",
     repo: "ArihantRawat/Image-Captioning",
     description:
-      "Computer vision project to generate natural language from images by combining vision features with language output quality.",
-    whatIBuilt: ["Caption generation pipeline", "Experiment notebooks", "Model output evaluation"],
-    techStack: ["Python", "Image Processing", "Deep Learning"],
+      "Vision-language playground that pairs CNN feature extractors with language models to narrate what’s happening inside an image.",
+    whatIBuilt: [
+      "Reusable caption generation pipeline with configurable encoders and decoders",
+      "Experiment notebooks that compare BLEU scores across architectures",
+      "Evaluation harness for quickly validating captions on curated test sets",
+    ],
+    techStack: ["Python", "PyTorch", "Computer Vision"],
     link: "https://github.com/ArihantRawat/Image-Captioning",
+  },
+  {
+    name: "Sarcasm Detector",
+    repo: "ArihantRawat/Sarcasm-Detector",
+    description:
+      "NLP classifier that labels headlines as sarcastic or literal by combining traditional feature engineering with modern embeddings.",
+    whatIBuilt: [
+      "Data cleaning and balancing scripts for multiple headline datasets",
+      "Model zoo ranging from TF-IDF + Logistic Regression to deeper neural nets",
+      "Evaluation notebook with precision/recall tracking and exportable models",
+    ],
+    techStack: ["Python", "scikit-learn", "NLP"],
+    link: "https://github.com/ArihantRawat/Sarcasm-Detector",
+  },
+  {
+    name: "OffGrid",
+    repo: "ArihantRawat/OffGrid",
+    description:
+      "Flutter playground I use to prototype mobile product ideas quickly with a focus on fast iteration and frictionless onboarding.",
+    whatIBuilt: ["App shell + navigation", "Core user journeys", "Release-ready CI-friendly structure"],
+    techStack: ["Flutter", "Dart", "Mobile UI"],
+    link: "https://github.com/ArihantRawat/OffGrid",
+  },
+  {
+    name: "To-Do List V1",
+    repo: "ArihantRawat/To-Do-List-V1",
+    description:
+      "Lightweight productivity web app with instant CRUD interactions and a clean responsive layout.",
+    whatIBuilt: ["Task management logic", "Responsive interaction patterns", "Vanilla JS state handling"],
+    techStack: ["JavaScript", "HTML/CSS"],
+    link: "https://github.com/ArihantRawat/To-Do-List-V1",
   },
 ];
 
@@ -405,6 +452,11 @@ export default function HomePage() {
                 <h3>{experience.title}</h3>
                 <p>{experience.subtitle}</p>
                 <p className="muted">{experience.description}</p>
+                {experience.details?.map((detail) => (
+                  <p key={detail} className="muted">
+                    {detail}
+                  </p>
+                ))}
                 <div className="link-row">
                   {experience.links.map((link) => (
                     <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
