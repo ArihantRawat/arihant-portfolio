@@ -427,7 +427,7 @@ export default function HomePage() {
         <section id="about" className="reveal-section section-gap">
           <h2 className="section-title reveal-item">About Me</h2>
           {ABOUT_PARAGRAPHS.map((paragraph) => (
-            <p key={paragraph} className="reveal-item">
+            <p key={paragraph} className="reveal-item about-copy">
               {paragraph}
             </p>
           ))}
@@ -484,9 +484,10 @@ export default function HomePage() {
 
         <section id="education" className="reveal-section section-gap">
           <h2 className="section-title reveal-item">Education</h2>
-          <div className="edu-grid">
+          <div className="timeline">
             {EDUCATION.map((edu) => (
-              <article className="card reveal-item" key={edu.title}>
+              <article className="card timeline-card reveal-item" key={edu.title}>
+                <span className="timeline-dot" />
                 <p className="muted">
                   {edu.location} • {edu.timeframe}
                 </p>

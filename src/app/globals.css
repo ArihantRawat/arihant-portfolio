@@ -52,7 +52,7 @@ a:hover { color: #e7d8ff; }
 .stat-label { color: var(--muted); font-size: .82rem; margin: .15rem 0 0; }
 
 .section-title { font-family: Anton, Impact, sans-serif; letter-spacing: .03em; font-size: clamp(1.8rem, 5vw, 3rem); margin: 0 0 1rem; }
-section p { max-width: 72ch; }
+.about-copy { max-width: 96ch; }
 .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
 .card {
   position: relative;
@@ -111,6 +111,7 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #e1e1e1; line-height: 1.62; }
 .timeline { position: relative; margin-left: .5rem; padding-left: 1.2rem; }
 .timeline::before { content: ""; position: absolute; left: 0; top: .5rem; bottom: .5rem; width: 2px; background: linear-gradient(var(--accent), #2a2a2a); }
 .timeline-card { position: relative; }
+.timeline-card p { max-width: none; }
 .timeline-dot { position: absolute; width: 10px; height: 10px; border-radius: 999px; background: var(--accent); left: -1.52rem; top: 1.2rem; box-shadow: 0 0 14px rgba(168,85,247,.55); }
 
 .edu-grid, .project-grid { display: grid; grid-template-columns: 1fr; gap: .85rem; }
