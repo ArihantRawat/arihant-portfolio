@@ -283,6 +283,23 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
+    const items = Array.from(document.querySelectorAll<HTMLElement>(".reveal-item"));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const updateCursor = (event: MouseEvent) => {
       if (cursorDotRef.current) {
         cursorDotRef.current.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
@@ -332,7 +349,7 @@ export default function HomePage() {
         <div className="preloader">
           <h1 className="preloader-name">
             {"Arihant Rawat".split("").map((letter, idx) => (
-              <span key={`${letter}-${idx}`} className="name-letter">
+              <span key={`${letter}-${idx}`} className="name-letter" style={{ animationDelay: `${idx * 0.04}s` }}>
                 {letter === " " ? "\u00A0" : letter}
               </span>
             ))}

@@ -135,12 +135,22 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #d9d9d9; }
 }
 
 .particle-field { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
-.particle { position: absolute; display: block; border-radius: 999px; background: var(--accent); box-shadow: 0 0 8px rgba(168,85,247,.35); }
+.particle { position: absolute; display: block; border-radius: 999px; background: var(--accent); box-shadow: 0 0 8px rgba(168,85,247,.35); animation: floatParticle 8s ease-in-out infinite; }
 
-.preloader { position: fixed; inset: 0; z-index: 60; background: #0a0a0a; display: grid; place-content: center; gap: 1rem; }
+.preloader { position: fixed; inset: 0; z-index: 60; background: #0a0a0a; display: grid; place-content: center; gap: 1rem; animation: fadeOutPreloader .45s ease 1.05s forwards; }
 .preloader-name { margin: 0; font-family: Anton, Impact, sans-serif; font-size: clamp(2.2rem, 10vw, 6rem); letter-spacing: .03em; }
-.name-letter { display: inline-block; opacity: 0; }
-.load-bar { width: min(300px, 70vw); height: 6px; border-radius: 999px; background: var(--accent); justify-self: center; }
+.name-letter { display: inline-block; opacity: 0; animation: letterIn .45s ease forwards; }
+.load-bar { width: min(300px, 70vw); height: 6px; border-radius: 999px; background: var(--accent); justify-self: center; animation: loadSweep 1s ease forwards; }
+
+.reveal-item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.reveal-item.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 .progress-wrap { position: fixed; right: 10px; top: 0; height: 100vh; width: 4px; background: #1f1f1f; z-index: 45; border-radius: 999px; }
 .progress-bar { width: 100%; background: var(--accent); transition: height .1s linear; border-radius: 999px; }
@@ -220,6 +230,25 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #d9d9d9; }
   text-decoration: underline;
   text-underline-offset: 3px;
   word-break: break-word;
+}
+
+@keyframes letterIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes loadSweep {
+  from { transform: scaleX(0.15); transform-origin: left; opacity: .6; }
+  to { transform: scaleX(1); transform-origin: left; opacity: 1; }
+}
+
+@keyframes floatParticle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes fadeOutPreloader {
+  to { opacity: 0; visibility: hidden; }
 }
 
 @keyframes borderSweep {
