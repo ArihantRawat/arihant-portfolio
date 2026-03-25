@@ -52,7 +52,8 @@ a:hover { color: #e7d8ff; }
 .stat-label { color: var(--muted); font-size: .82rem; margin: .15rem 0 0; }
 
 .section-title { font-family: Anton, Impact, sans-serif; letter-spacing: .03em; font-size: clamp(1.8rem, 5vw, 3rem); margin: 0 0 1rem; }
-.about-copy { max-width: 96ch; }
+.about-section { width: 100%; }
+.about-copy { max-width: none; width: 100%; display: block; text-align: justify; }
 .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
 .card {
   position: relative;

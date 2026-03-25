@@ -424,7 +424,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="about" className="reveal-section section-gap">
+        <section id="about" className="reveal-section section-gap about-section">
           <h2 className="section-title reveal-item">About Me</h2>
           {ABOUT_PARAGRAPHS.map((paragraph) => (
             <p key={paragraph} className="reveal-item about-copy">
