@@ -21,7 +21,7 @@ type TimelineItem = {
   subtitle: string;
   timeframe: string;
   location: string;
-  description: string;
+  description?: string;
   details?: string[];
   links: ExternalLink[];
 };
@@ -106,8 +106,6 @@ const EXPERIENCES: TimelineItem[] = [
     subtitle: "Senior Product Developer (MTS)",
     timeframe: "Oct 2023 - Jul 2025",
     location: "Bangalore, India",
-    description:
-      "Full-stack owner for Content Services inside Industries Cloud, partnering closely with Data Cloud to scale it from internal tooling to a customer-facing product.",
     details: [
       "At Salesforce, I joined the Industries Cloud team and worked on a product called Content Services. We initially built it as an internal tool to simplify how teams access and manage data across backend systems, reducing latency and complexity while providing a simple interface to map and control data flows. The product gained strong adoption internally and was later turned into a paid product with API-based usage.",
       "I worked as a full stack developer, contributing to backend APIs, frontend development, and system design. I also collaborated closely with the Data Cloud team to integrate it into our platform, which became a key feature for growth.",
@@ -124,8 +122,6 @@ const EXPERIENCES: TimelineItem[] = [
     subtitle: "Product Developer to Senior Product Developer",
     timeframe: "Jul 2021 - Oct 2023",
     location: "Bangalore, India",
-    description:
-      "App-and-backend lead for Cult.fit’s Digital Verticals team, scaling multiple consumer products during and after COVID.",
     details: [
       "At Cult.fit, I started right after college as an app developer and joined the Digital Verticals team during COVID, where we were building digital health and fitness products like online workouts, weight loss programs, and fitness plans. Around the same time, we were migrating our app from React Native to Flutter, and since I was one of the few engineers familiar with Flutter, I ended up working on most of the core parts of the app. This included building key components, shaping the overall architecture, and helping onboard new engineers to the framework.",
       "Over time, my role expanded beyond app development into backend work and product-focused initiatives. I worked closely with data science teams on building data platforms, setting up funnels, and running A/B experiments. Because I understood both the technical systems and product needs, I often acted as a bridge between engineering, product, and data teams.",
@@ -451,7 +447,7 @@ export default function HomePage() {
                 </p>
                 <h3>{experience.title}</h3>
                 <p>{experience.subtitle}</p>
-                <p className="muted">{experience.description}</p>
+                {experience.description && <p className="muted">{experience.description}</p>}
                 {experience.details?.map((detail) => (
                   <p key={detail} className="muted">
                     {detail}
