@@ -87,7 +87,7 @@ const SKILLS: SkillBadge[] = [
   { label: "Cross-functional Leadership", emoji: "🤝" },
   { label: "User Research", emoji: "🔎" },
   { label: "SQL + Analytics", emoji: "🗄️" },
-  { label: "Java", iconSrc: "https://cdn.simpleicons.org/openjdk", iconAlt: "Java" },
+  { label: "Java", iconSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", iconAlt: "Java" },
   { label: "TypeScript", iconSrc: "https://cdn.simpleicons.org/typescript", iconAlt: "TypeScript" },
   { label: "Python", iconSrc: "https://cdn.simpleicons.org/python", iconAlt: "Python" },
   { label: "JavaScript", iconSrc: "https://cdn.simpleicons.org/javascript", iconAlt: "JavaScript" },
@@ -388,17 +388,17 @@ export default function HomePage() {
       <main id="top" className={`container main-space ${isReady ? "" : "content-hidden"}`}>
         <section className="hero reveal-section">
           <div>
-            <p className="badge">PRODUCT DEVELOPER</p>
-            <h1 className="hero-title">
+            <p className="badge reveal-item">PRODUCT DEVELOPER</p>
+            <h1 className="hero-title reveal-item">
               <span className="hero-line accent">BUILDING GOOD TECH</span>
               <span className="hero-line">FOR REAL USERS</span>
             </h1>
-            <p className="hero-bio">
+            <p className="hero-bio reveal-item">
               I am Arihant Rawat. I build user-centric products from idea to launch, with experience across startups and
               enterprise teams. I am driven to build in the tech space, working on problems that matter and turning ideas into
               real, shipped outcomes.
             </p>
-            <div className="hero-actions">
+            <div className="hero-actions reveal-item">
               <button type="button" className="btn-neon" onClick={handleContactClick}>
                 CONTACT ME
               </button>
@@ -408,10 +408,10 @@ export default function HomePage() {
             </div>
           </div>
           <div className="hero-right">
-            <div className="photo-wrap">
+            <div className="photo-wrap reveal-item">
               <Image src="/images/arihant-headshot.jpg" alt="Arihant Rawat" width={720} height={900} priority />
             </div>
-            <div className="stats">
+            <div className="stats reveal-item">
               {HERO_STATS.map((stat) => (
                 <div className="stat-card" key={stat.label}>
                   <p className="stat-number">
@@ -425,7 +425,7 @@ export default function HomePage() {
         </section>
 
         <section id="about" className="reveal-section section-gap">
-          <h2 className="section-title">About Me</h2>
+          <h2 className="section-title reveal-item">About Me</h2>
           {ABOUT_PARAGRAPHS.map((paragraph) => (
             <p key={paragraph} className="reveal-item">
               {paragraph}
@@ -434,7 +434,7 @@ export default function HomePage() {
         </section>
 
         <section id="skills" className="reveal-section section-gap">
-          <h2 className="section-title">Skills</h2>
+          <h2 className="section-title reveal-item">Skills</h2>
           <div className="chips">
             {SKILLS.map((skill) => (
               <span className="skill-chip" key={skill.label}>
@@ -454,10 +454,10 @@ export default function HomePage() {
         </section>
 
         <section id="experience" className="reveal-section section-gap">
-          <h2 className="section-title">Experience</h2>
+          <h2 className="section-title reveal-item">Experience</h2>
           <div className="timeline">
             {EXPERIENCES.map((experience) => (
-              <article className="card timeline-card" key={experience.title}>
+              <article className="card timeline-card reveal-item" key={experience.title}>
                 <span className="timeline-dot" />
                 <p className="muted">
                   {experience.timeframe} • {experience.location}
@@ -483,10 +483,10 @@ export default function HomePage() {
         </section>
 
         <section id="education" className="reveal-section section-gap">
-          <h2 className="section-title">Education</h2>
+          <h2 className="section-title reveal-item">Education</h2>
           <div className="edu-grid">
             {EDUCATION.map((edu) => (
-              <article className="card" key={edu.title}>
+              <article className="card reveal-item" key={edu.title}>
                 <p className="muted">
                   {edu.location} • {edu.timeframe}
                 </p>
@@ -507,14 +507,14 @@ export default function HomePage() {
 
         <section id="projects" className="reveal-section section-gap">
           <div className="section-head">
-            <h2 className="section-title">Projects</h2>
+            <h2 className="section-title reveal-item">Projects</h2>
             <a href="https://github.com/ArihantRawat" target="_blank" rel="noreferrer">
               GitHub
             </a>
           </div>
           <div className="project-grid">
             {PROJECTS.map((project) => (
-              <article className="card" key={project.name}>
+              <article className="card reveal-item" key={project.name}>
                 <h3>{project.name}</h3>
                 <p className="muted">{project.repo}</p>
                 <p>{project.description}</p>
@@ -539,10 +539,10 @@ export default function HomePage() {
         </section>
 
         <section id="contact" className="reveal-section section-gap bottom-space">
-          <h2 className="section-title">Contact Me</h2>
+          <h2 className="section-title reveal-item">Contact Me</h2>
           <div className="contact-grid">
             {CONTACT_LINKS.map((link) => (
-              <a key={link.label} className="card" href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined}>
+              <a key={link.label} className="card reveal-item" href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined}>
                 {link.label}
               </a>
             ))}
