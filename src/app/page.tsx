@@ -33,6 +33,7 @@ type Project = {
   whatIBuilt: string[];
   techStack: string[];
   link: string;
+  website?: string;
 };
 
 type ContactLink = {
@@ -130,7 +131,7 @@ const EXPERIENCES: TimelineItem[] = [
     ],
     links: [
       { label: "Official site", href: "https://www.cult.fit/" },
-      { label: "Wikipedia", href: "https://en.wikipedia.org/wiki/Cure.fit" },
+      { label: "Tracxn", href: "https://tracxn.com/d/companies/cultfit/__-Wg3Ms2LDV2m_0_AEbIvAhRvY6C13zfasKWCh86DEW4" },
     ],
   },
 ];
@@ -173,6 +174,7 @@ const PROJECTS: Project[] = [
     ],
     techStack: ["Python", "LangChain Agents", "Pandas", "REST / Graph APIs"],
     link: "https://github.com/ArihantRawat/VenueIntelligenceDiscovery",
+    website: "https://mehakjotsingh.github.io/tixrCaseComp/",
   },
   {
     name: "Video Captioning",
@@ -221,6 +223,7 @@ const PROJECTS: Project[] = [
     whatIBuilt: ["App shell + navigation", "Core user journeys", "Release-ready CI-friendly structure"],
     techStack: ["Flutter", "Dart", "Mobile UI"],
     link: "https://github.com/ArihantRawat/OffGrid",
+    website: "https://offgridla.lovable.app",
   },
   {
     name: "To-Do List V1",
@@ -587,9 +590,16 @@ export default function HomePage() {
                     <li key={stack}>{stack}</li>
                   ))}
                 </ul>
-                <a href={project.link} target="_blank" rel="noreferrer">
-                  Open repository
-                </a>
+                <div className="link-row">
+                  <a href={project.link} target="_blank" rel="noreferrer">
+                    Open repository
+                  </a>
+                  {project.website && (
+                    <a href={project.website} target="_blank" rel="noreferrer">
+                      Open website
+                    </a>
+                  )}
+                </div>
               </article>
             ))}
           </div>
