@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Arihant Rawat | Technical PM + SWE",
+  title: "Arihant Rawat's Portfolio",
   description:
     "Portfolio of Arihant Rawat — product-driven technologist with experience building and scaling products at Salesforce and Cult.fit.",
 };
