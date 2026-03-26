@@ -17,13 +17,14 @@ export const blogPosts: BlogPost[] = [
     slug: "operation-water-cinelytic",
     title: "Operation Water: How Cinelytic Can Fit Into the Industry",
     summary:
-      "Insights from helping Cinelytic earn trust inside studios by meeting teams where they already work.",
+      "Helping Cinelytic grow adoption by building trust, starting with familiar workflows, and positioning data as a partner not a replacement.",
     readTime: "9 min read",
     date: "March 2026",
     content: [
       {
         heading: "Seeing adoption up close",
         paragraphs: [
+          "Helping Cinelytic grow adoption by building trust, starting with familiar workflows, and positioning data as a partner not a replacement became the core theme of this project.",
           "As part of my college consulting project, I had the opportunity to work closely with Cinelytic (https://www.cinelytic.com), a platform that helps entertainment companies make better decisions using data.",
           "This project gave me a chance to look at the industry from a completely different perspective. Instead of just thinking about technology, we had to understand how real people in studios make decisions, what challenges they face, and why certain tools are or are not adopted.",
           "What made it even more interesting was this. The problem was not that the entertainment industry lacks data. The real problem is how that data is used, and more importantly, whether people trust it.",
