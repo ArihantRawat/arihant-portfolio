@@ -93,8 +93,9 @@ a:hover { color: #e7d8ff; }
 .card a { color: var(--accent); }
 .link-row {
   display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   margin-top: 0.6rem;
 }
 .link-row a {

@@ -532,15 +532,7 @@ export default function HomePage() {
               >
                 Resume
               </a>
-              <a
-                className="btn-ghost"
-                href={IPAD_PORTFOLIO_URL}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => handleIpadSiteClick("hero")}
-              >
-                Explore in another way
-              </a>
+
             </div>
           </div>
           <div className="hero-right">
