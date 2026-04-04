@@ -227,13 +227,18 @@ const PROJECTS: Project[] = [
     website: "https://offgridla.lovable.app",
   },
   {
-    name: "To-Do List V1",
-    repo: "ArihantRawat/To-Do-List-V1",
+    name: "iPad Portfolio Experience",
+    repo: "ArihantRawat/arihant-ipad-site",
     description:
-      "Lightweight productivity web app with instant CRUD interactions and a clean responsive layout.",
-    whatIBuilt: ["Task management logic", "Responsive interaction patterns", "Vanilla JS state handling"],
-    techStack: ["JavaScript", "HTML/CSS"],
-    link: "https://github.com/ArihantRawat/To-Do-List-V1",
+      "An interactive iPad-style portfolio that reimagines personal storytelling with a realistic iOS-inspired UI and app-based navigation.",
+    whatIBuilt: [
+      "Designed and shipped a full iPad-like interface with home screen, dock interactions, lockscreen flow, and app-style windows",
+      "Built smooth transitions, gestures, and responsive orientation handling to mimic native tablet behavior",
+      "Structured portfolio content into modular app sections (work, projects, education, contact) and added deploy-ready static export",
+    ],
+    techStack: ["Next.js", "React", "TypeScript", "Framer Motion"],
+    link: "https://github.com/ArihantRawat/arihant-ipad-site",
+    website: "https://arihantrawat.github.io/arihant-ipad-site/",
   },
 ];
 
