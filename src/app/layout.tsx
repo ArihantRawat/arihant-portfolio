@@ -29,7 +29,7 @@ export default function RootLayout({
       <body suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-K2D2R4RQB2"
+          src="https://www.googletagmanager.com/gtag/js?id=GT-MJM99SGW"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -37,7 +37,8 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-K2D2R4RQB2');
+            gtag('config', 'GT-MJM99SGW');
+            gtag('config', 'G-K2D2R4RQB2', { send_page_view: false });
           `}
         </Script>
         {children}
