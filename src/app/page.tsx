@@ -387,7 +387,7 @@ export default function HomePage() {
     el?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
-  const handleIpadSiteClick = useCallback((location: "top_nav" | "mobile_menu" | "projects") => {
+  const handleIpadSiteClick = useCallback((location: "top_nav" | "mobile_menu" | "hero" | "projects") => {
     trackEvent("ipad_site_visit_click", {
       location,
       label: "explore_in_another_way",
@@ -526,6 +526,15 @@ export default function HomePage() {
                 onClick={() => trackEvent("resume_download", { file: "arihant-rawat-pm.pdf", location: "hero" })}
               >
                 Resume
+              </a>
+              <a
+                className="btn-ghost"
+                href={IPAD_PORTFOLIO_URL}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => handleIpadSiteClick("hero")}
+              >
+                Explore in another way
               </a>
             </div>
           </div>
