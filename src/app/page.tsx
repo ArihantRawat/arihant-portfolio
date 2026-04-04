@@ -388,7 +388,7 @@ export default function HomePage() {
   }, []);
 
   const handleIpadSiteClick = useCallback((location: "top_nav" | "mobile_menu" | "hero" | "projects") => {
-    trackEvent("ipad_site_visit_click", {
+    trackEvent("opened_ipad_website", {
       location,
       label: "explore_in_another_way",
       destination: "arihant-ipad-site",
@@ -437,39 +437,44 @@ export default function HomePage() {
 
       <header className="top-nav">
         <nav className="container nav-inner">
-          <Link href="#top" className="logo">
-            AR
-          </Link>
-          <div className="desktop-links">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                prefetch={false}
-                onClick={() => trackEvent("nav_click", { label: link.label, href: link.href, menu: "desktop" })}
-              >
-                {link.label}
-              </Link>
-            ))}
+          <div className="nav-left">
+            <button
+              className="menu-btn"
+              onClick={() => {
+                trackEvent("menu_toggle", { menu: "mobile", action: showMobileNav ? "close" : "open" });
+                setShowMobileNav((prev) => !prev);
+              }}
+            >
+              Menu
+            </button>
+            <div className="desktop-links">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  prefetch={false}
+                  onClick={() => trackEvent("nav_click", { label: link.label, href: link.href, menu: "desktop" })}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </div>
-          <a
-            className="nav-explore-link"
-            href={IPAD_PORTFOLIO_URL}
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => handleIpadSiteClick("top_nav")}
-          >
-            Explore in another way
-          </a>
-          <button
-            className="menu-btn"
-            onClick={() => {
-              trackEvent("menu_toggle", { menu: "mobile", action: showMobileNav ? "close" : "open" });
-              setShowMobileNav((prev) => !prev);
-            }}
-          >
-            Menu
-          </button>
+
+          <div className="nav-right">
+            <a
+              className="nav-explore-link"
+              href={IPAD_PORTFOLIO_URL}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => handleIpadSiteClick("top_nav")}
+            >
+              Explore in another way
+            </a>
+            <Link href="#top" className="logo">
+              AR
+            </Link>
+          </div>
         </nav>
         {showMobileNav && (
           <div className="mobile-links">
