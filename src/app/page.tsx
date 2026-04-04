@@ -51,7 +51,8 @@ type Particle = {
   opacity: number;
 };
 
-const IPAD_PORTFOLIO_URL = "https://arihantrawat.github.io/arihant-ipad-site/";
+const IPAD_PORTFOLIO_URL =
+  "https://arihantrawat.github.io/arihant-ipad-site/?utm_source=portfolio&utm_medium=button&utm_campaign=explore_another_way";
 
 const NAV_LINKS = [
   { href: "#about", label: "About" },
@@ -386,6 +387,14 @@ export default function HomePage() {
     el?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
+  const handleIpadSiteClick = useCallback((location: "top_nav" | "mobile_menu" | "projects") => {
+    trackEvent("ipad_site_visit_click", {
+      location,
+      label: "explore_in_another_way",
+      destination: "arihant-ipad-site",
+    });
+  }, []);
+
   return (
     <div className="site-shell">
       <div className="cursor-dot" ref={cursorDotRef} aria-hidden />
@@ -448,7 +457,7 @@ export default function HomePage() {
             href={IPAD_PORTFOLIO_URL}
             target="_blank"
             rel="noreferrer"
-            onClick={() => trackEvent("ipad_site_visit_click", { location: "top_nav", label: "explore_in_another_way" })}
+            onClick={() => handleIpadSiteClick("top_nav")}
           >
             Explore in another way
           </a>
@@ -482,7 +491,7 @@ export default function HomePage() {
               target="_blank"
               rel="noreferrer"
               onClick={() => {
-                trackEvent("ipad_site_visit_click", { location: "mobile_menu", label: "explore_in_another_way" });
+                handleIpadSiteClick("mobile_menu");
                 setShowMobileNav(false);
               }}
             >
@@ -675,7 +684,12 @@ export default function HomePage() {
                       href={project.website}
                       target="_blank"
                       rel="noreferrer"
-                      onClick={() => trackEvent("project_click", { type: "website", project: project.name, href: project.website })}
+                      onClick={() => {
+                        trackEvent("project_click", { type: "website", project: project.name, href: project.website });
+                        if (project.website?.includes("arihant-ipad-site")) {
+                          handleIpadSiteClick("projects");
+                        }
+                      }}
                     >
                       Open website
                     </a>
