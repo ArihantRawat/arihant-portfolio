@@ -51,6 +51,8 @@ type Particle = {
   opacity: number;
 };
 
+const IPAD_PORTFOLIO_URL = "https://arihantrawat.github.io/arihant-ipad-site/";
+
 const NAV_LINKS = [
   { href: "#about", label: "About" },
   { href: "#skills", label: "Skills" },
@@ -441,6 +443,15 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
+          <a
+            className="nav-explore-link"
+            href={IPAD_PORTFOLIO_URL}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => trackEvent("ipad_site_visit_click", { location: "top_nav", label: "explore_in_another_way" })}
+          >
+            Explore in another way
+          </a>
           <button
             className="menu-btn"
             onClick={() => {
@@ -466,6 +477,17 @@ export default function HomePage() {
                 {link.label}
               </Link>
             ))}
+            <a
+              href={IPAD_PORTFOLIO_URL}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => {
+                trackEvent("ipad_site_visit_click", { location: "mobile_menu", label: "explore_in_another_way" });
+                setShowMobileNav(false);
+              }}
+            >
+              Explore in another way
+            </a>
           </div>
         )}
       </header>
