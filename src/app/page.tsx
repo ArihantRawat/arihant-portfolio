@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { trackEvent } from "../lib/analytics";
 
 type SkillBadge = {
   label: string;
@@ -373,6 +374,7 @@ export default function HomePage() {
   }, []);
 
   const handleContactClick = useCallback(() => {
+    trackEvent("cta_click", { cta: "contact_me", location: "hero" });
     const el = document.querySelector("#contact");
     el?.scrollIntoView({ behavior: "smooth" });
   }, []);
@@ -424,19 +426,38 @@ export default function HomePage() {
           </Link>
           <div className="desktop-links">
             {NAV_LINKS.map((link) => (
-              <Link key={link.href} href={link.href} prefetch={false}>
+              <Link
+                key={link.href}
+                href={link.href}
+                prefetch={false}
+                onClick={() => trackEvent("nav_click", { label: link.label, href: link.href, menu: "desktop" })}
+              >
                 {link.label}
               </Link>
             ))}
           </div>
-          <button className="menu-btn" onClick={() => setShowMobileNav((prev) => !prev)}>
+          <button
+            className="menu-btn"
+            onClick={() => {
+              trackEvent("menu_toggle", { menu: "mobile", action: showMobileNav ? "close" : "open" });
+              setShowMobileNav((prev) => !prev);
+            }}
+          >
             Menu
           </button>
         </nav>
         {showMobileNav && (
           <div className="mobile-links">
             {NAV_LINKS.map((link) => (
-              <Link key={link.href} href={link.href} prefetch={false} onClick={() => setShowMobileNav(false)}>
+              <Link
+                key={link.href}
+                href={link.href}
+                prefetch={false}
+                onClick={() => {
+                  trackEvent("nav_click", { label: link.label, href: link.href, menu: "mobile" });
+                  setShowMobileNav(false);
+                }}
+              >
                 {link.label}
               </Link>
             ))}
@@ -461,7 +482,13 @@ export default function HomePage() {
               <button type="button" className="btn-neon" onClick={handleContactClick}>
                 CONTACT ME
               </button>
-              <a className="btn-ghost" href="/resume/arihant-rawat-pm.pdf" target="_blank" rel="noreferrer">
+              <a
+                className="btn-ghost"
+                href="/resume/arihant-rawat-pm.pdf"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackEvent("resume_download", { file: "arihant-rawat-pm.pdf", location: "hero" })}
+              >
                 Resume
               </a>
             </div>
@@ -531,7 +558,13 @@ export default function HomePage() {
                 ))}
                 <div className="link-row">
                   {experience.links.map((link) => (
-                    <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => trackEvent("outbound_click", { section: "experience", label: link.label, href: link.href })}
+                    >
                       {link.label}
                     </a>
                   ))}
@@ -555,7 +588,13 @@ export default function HomePage() {
                 <p className="muted">{edu.description}</p>
                 <div className="link-row">
                   {edu.links.map((link) => (
-                    <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => trackEvent("outbound_click", { section: "education", label: link.label, href: link.href })}
+                    >
                       {link.label}
                     </a>
                   ))}
@@ -568,7 +607,12 @@ export default function HomePage() {
         <section id="projects" className="reveal-section section-gap">
           <div className="section-head">
             <h2 className="section-title reveal-item">Projects</h2>
-            <a href="https://github.com/ArihantRawat" target="_blank" rel="noreferrer">
+            <a
+              href="https://github.com/ArihantRawat"
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => trackEvent("outbound_click", { section: "projects", label: "GitHub", href: "https://github.com/ArihantRawat" })}
+            >
               GitHub
             </a>
           </div>
@@ -591,11 +635,21 @@ export default function HomePage() {
                   ))}
                 </ul>
                 <div className="link-row">
-                  <a href={project.link} target="_blank" rel="noreferrer">
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => trackEvent("project_click", { type: "repository", project: project.name, href: project.link })}
+                  >
                     Open repository
                   </a>
                   {project.website && (
-                    <a href={project.website} target="_blank" rel="noreferrer">
+                    <a
+                      href={project.website}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => trackEvent("project_click", { type: "website", project: project.name, href: project.website })}
+                    >
                       Open website
                     </a>
                   )}
@@ -609,7 +663,13 @@ export default function HomePage() {
           <h2 className="section-title reveal-item">Contact Me</h2>
           <div className="contact-grid">
             {CONTACT_LINKS.map((link) => (
-              <a key={link.label} className="card reveal-item" href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined}>
+              <a
+                key={link.label}
+                className="card reveal-item"
+                href={link.href}
+                target={link.href.startsWith("http") ? "_blank" : undefined}
+                onClick={() => trackEvent("contact_click", { label: link.label, href: link.href })}
+              >
                 {link.label}
               </a>
             ))}

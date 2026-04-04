@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { blogPosts } from "../posts";
+import { TrackPageEvent, TrackedAnchor } from "../../../components/analytics";
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({ slug: post.slug }));
@@ -14,6 +15,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <main className="blog-shell">
+      <TrackPageEvent eventName="blog_post_view" params={{ slug: post.slug, title: post.title }} />
       <div className="container blog-space">
         <div className="blog-header">
           <Link className="blog-home" href="/blog">
@@ -47,9 +49,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {post.sourceUrl ? (
               <section className="blog-section">
                 <h3>Read the Original Post</h3>
-                <a className="blog-source-link" href={post.sourceUrl} target="_blank" rel="noreferrer">
+                <TrackedAnchor
+                  className="blog-source-link"
+                  href={post.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  eventName="blog_source_click"
+                  eventParams={{ slug: post.slug, title: post.title, href: post.sourceUrl }}
+                >
                   {post.sourceUrl}
-                </a>
+                </TrackedAnchor>
               </section>
             ) : null}
           </div>
