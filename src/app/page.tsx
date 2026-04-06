@@ -438,6 +438,19 @@ export default function HomePage() {
       <header className="top-nav">
         <nav className="container nav-inner">
           <div className="nav-left">
+            <a
+              className="nav-explore-link"
+              href={IPAD_PORTFOLIO_URL}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => handleIpadSiteClick("top_nav")}
+            >
+              Explore in another way
+            </a>
+
+          </div>
+
+          <div className="nav-right">
             <button
               className="menu-btn"
               onClick={() => {
@@ -459,21 +472,6 @@ export default function HomePage() {
                 </Link>
               ))}
             </div>
-          </div>
-
-          <div className="nav-right">
-            <a
-              className="nav-explore-link"
-              href={IPAD_PORTFOLIO_URL}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => handleIpadSiteClick("top_nav")}
-            >
-              Explore in another way
-            </a>
-            <Link href="#top" className="logo">
-              AR
-            </Link>
           </div>
         </nav>
         {showMobileNav && (
