@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
+import GAAttribution from "@/components/ga-attribution";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -36,11 +38,15 @@ export default function RootLayout({
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
             gtag('js', new Date());
             gtag('config', 'GT-MJM99SGW');
             gtag('config', 'G-K2D2R4RQB2', { send_page_view: false });
           `}
         </Script>
+        <Suspense fallback={null}>
+          <GAAttribution />
+        </Suspense>
         {children}
       </body>
     </html>
