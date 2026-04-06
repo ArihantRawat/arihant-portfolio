@@ -112,7 +112,7 @@ const EXPERIENCES: TimelineItem[] = [
     timeframe: "Oct 2023 - Jul 2025",
     location: "Bangalore, India",
     details: [
-      "At Salesforce, I joined the Industries Cloud team and worked on a product called Content Services. We initially built it as an internal tool to simplify how teams access and manage data across backend systems, reducing latency and complexity while providing a simple interface to map and control data flows. The product gained strong adoption internally and was later turned into a paid product with API-based usage.",
+      "At Salesforce, I joined the Industries Cloud team and worked on a product called Context Service. We initially built it as an internal tool to simplify how teams access and manage data across backend systems, reducing latency and complexity while providing a simple interface to map and control data flows. The product gained strong adoption internally and was later turned into a paid product with API-based usage.",
       "I worked as a full stack developer, contributing to backend APIs, frontend development, and system design. I also collaborated closely with the Data Cloud team to integrate it into our platform, which became a key feature for growth.",
       "Alongside development, I mentored junior engineers and interns, and regularly gave demos and presentations.",
       "As AI started gaining momentum, I took initiative in exploring how it could fit into our systems and became the go-to person on the team for it. I worked on early implementations of Salesforce’s agentic AI and helped the team adopt new tools like Cursor, improving how we built and experimented with AI-driven features.",
