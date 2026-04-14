@@ -511,10 +511,6 @@ export default function PortfolioAvatarAssistant() {
   }, [isOpen]);
 
   const sectionState = SECTION_STATES[currentSection];
-
-  if (!isVisible) {
-    return null;
-  }
   const effectiveMood = interactionMood ?? ambientMood ?? (isOpen ? "helpful" : sectionState.mood);
   const promptList = useMemo(
     () =>
@@ -535,6 +531,10 @@ export default function PortfolioAvatarAssistant() {
         ? getDockedPosition(viewport.width, viewport.height)
         : getRoamingPosition(currentSection, viewport.width, viewport.height, scrollProgress, contentRight)
       : { x: 0, y: 0, side: "right" as const, bubblePlacement: "above" as const, showCloud: false };
+
+  if (!isVisible) {
+    return null;
+  }
 
   const askQuestion = (question: string) => {
     const trimmed = question.trim();
