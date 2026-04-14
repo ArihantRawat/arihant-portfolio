@@ -536,11 +536,28 @@ export default function PortfolioAvatarAssistant() {
     return null;
   }
 
-  const askQuestion = (question: string) => {
+  const handleToggle = (nextOpen: boolean, source: "avatar_button" | "close_button") => {
+    setIsOpen(nextOpen);
+    trackEvent("avatar_toggle", {
+      state: nextOpen ? "open" : "closed",
+      section: currentSection,
+      mood: effectiveMood,
+      source,
+    });
+  };
+
+  const askQuestion = (question: string, source: "quick_prompt" | "input_submit" = "input_submit") => {
     const trimmed = question.trim();
     if (!trimmed) return;
 
     setShowQuickPrompts(false);
+
+    trackEvent("avatar_chat_interaction", {
+      action: "question_submitted",
+      source,
+      section: currentSection,
+      question_length: trimmed.length,
+    });
 
     const match = findAnswer(trimmed);
     const userMessage: ChatMessage = {
@@ -586,7 +603,12 @@ export default function PortfolioAvatarAssistant() {
               <h3>Ask Yuki</h3>
             </div>
           </div>
-          <button type="button" className="portfolio-avatar-close" onClick={() => setIsOpen(false)} aria-label="Close assistant">
+          <button
+            type="button"
+            className="portfolio-avatar-close"
+            onClick={() => handleToggle(false, "close_button")}
+            aria-label="Close assistant"
+          >
             ×
           </button>
         </div>
@@ -596,7 +618,18 @@ export default function PortfolioAvatarAssistant() {
           <span className="portfolio-avatar-status-copy">{sectionState.hint}</span>
         </div>
 
-        <div ref={messagesContainerRef} className="portfolio-avatar-messages">
+        <div
+          ref={messagesContainerRef}
+          className="portfolio-avatar-messages"
+          onScroll={(event) => {
+            const target = event.currentTarget;
+            trackEvent("avatar_chat_interaction", {
+              action: "messages_scrolled",
+              section: currentSection,
+              scroll_top: Math.round(target.scrollTop),
+            });
+          }}
+        >
           {messages.map((message) => {
             const isExternal = Boolean(message.ctaHref?.startsWith("http"));
             const isAsset = Boolean(message.ctaHref?.startsWith("/resume/"));
@@ -611,6 +644,14 @@ export default function PortfolioAvatarAssistant() {
                     href={message.ctaHref}
                     target={isExternal || isAsset ? "_blank" : undefined}
                     rel={isExternal || isAsset ? "noreferrer" : undefined}
+                    onClick={() => {
+                      trackEvent("avatar_chat_interaction", {
+                        action: "cta_clicked",
+                        section: currentSection,
+                        cta_label: message.ctaLabel,
+                        cta_href: message.ctaHref,
+                      });
+                    }}
                   >
                     {message.ctaLabel}
                   </a>
@@ -624,7 +665,18 @@ export default function PortfolioAvatarAssistant() {
         {showQuickPrompts && input.trim().length === 0 && (
           <div className="portfolio-avatar-prompts">
             {promptList.map((prompt) => (
-              <button key={prompt} type="button" onClick={() => askQuestion(prompt)}>
+              <button
+                key={prompt}
+                type="button"
+                onClick={() => {
+                  trackEvent("avatar_chat_interaction", {
+                    action: "quick_prompt_clicked",
+                    section: currentSection,
+                    prompt,
+                  });
+                  askQuestion(prompt, "quick_prompt");
+                }}
+              >
                 {prompt}
               </button>
             ))}
@@ -635,11 +687,17 @@ export default function PortfolioAvatarAssistant() {
           className="portfolio-avatar-form"
           onSubmit={(event) => {
             event.preventDefault();
-            askQuestion(input);
+            askQuestion(input, "input_submit");
           }}
         >
           <input
             value={input}
+            onFocus={() => {
+              trackEvent("avatar_chat_interaction", {
+                action: "input_focused",
+                section: currentSection,
+              });
+            }}
             onChange={(event) => {
               const nextValue = event.target.value;
               setInput(nextValue);
@@ -666,13 +724,12 @@ export default function PortfolioAvatarAssistant() {
           type="button"
           className="portfolio-avatar-fab"
           onClick={() => {
-            const next = !isOpen;
-            setIsOpen(next);
-            trackEvent("avatar_toggle", {
-              state: next ? "open" : "closed",
+            trackEvent("avatar_chat_interaction", {
+              action: "avatar_clicked",
               section: currentSection,
               mood: effectiveMood,
             });
+            handleToggle(true, "avatar_button");
           }}
           aria-expanded={isOpen}
           aria-controls="portfolio-avatar-panel"
