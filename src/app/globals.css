@@ -380,6 +380,10 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #e1e1e1; line-height: 1.62; }
   gap: 0;
 }
 
+.portfolio-avatar.open {
+  pointer-events: auto;
+}
+
 .portfolio-avatar.side-right {
   align-items: flex-end;
 }
@@ -428,15 +432,17 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #e1e1e1; line-height: 1.62; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: flex-end;
   border: 0;
+  padding: 0;
   background: transparent;
   color: #fff;
   cursor: pointer;
 }
 
 .portfolio-avatar-panel {
-  width: min(360px, calc(100vw - 24px));
-  max-height: min(60vh, 460px);
+  width: min(392px, calc(100vw - 24px));
+  max-height: min(72vh, 620px);
   overflow: hidden;
   display: none;
   flex-direction: column;
@@ -516,7 +522,7 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #e1e1e1; line-height: 1.62; }
   display: flex;
   flex-wrap: wrap;
   gap: 0.48rem;
-  padding: 0.66rem 0.95rem 0;
+  padding: 0.66rem 0.95rem 0.72rem;
 }
 
 .portfolio-avatar-status-pill {
@@ -540,14 +546,29 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #e1e1e1; line-height: 1.62; }
 
 .portfolio-avatar-messages {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: 0.62rem;
-  margin: 0.78rem 0.95rem 0.8rem;
+  margin: 0 0.95rem 0.8rem;
   padding: 0.82rem;
   border: 1px solid rgba(255,255,255,.06);
   border-radius: 16px;
   background: rgba(255,255,255,.02);
-  min-height: 140px;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(192,132,252,.3) transparent;
+}
+
+.portfolio-avatar-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.portfolio-avatar-messages::-webkit-scrollbar-thumb {
+  background: rgba(192,132,252,.28);
+  border-radius: 999px;
 }
 
 .portfolio-avatar-message {
@@ -756,7 +777,21 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #e1e1e1; line-height: 1.62; }
   }
 
   .portfolio-avatar-panel {
-    width: min(calc(100vw - 20px), 360px);
+    width: min(calc(100vw - 20px), 392px);
+    max-height: min(76vh, 560px);
+  }
+
+  .portfolio-avatar-panel-header,
+  .portfolio-avatar-status-row,
+  .portfolio-avatar-prompts,
+  .portfolio-avatar-form {
+    padding-left: 0.82rem;
+    padding-right: 0.82rem;
+  }
+
+  .portfolio-avatar-messages {
+    margin-left: 0.82rem;
+    margin-right: 0.82rem;
   }
 }
 

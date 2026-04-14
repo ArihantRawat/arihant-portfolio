@@ -258,9 +258,10 @@ function getRoamingPosition(
 }
 
 function getDockedPosition(viewportWidth: number, viewportHeight: number): PositionState {
-  const margin = viewportWidth < 768 ? 10 : 18;
-  const panelWidth = viewportWidth < 768 ? viewportWidth - margin * 2 : Math.min(392, viewportWidth - 32);
-  const panelHeight = viewportWidth < 768 ? Math.min(Math.round(viewportHeight * 0.58), 480) : Math.min(Math.round(viewportHeight * 0.68), 560);
+  const isMobile = viewportWidth < 768;
+  const margin = isMobile ? 10 : 18;
+  const panelWidth = isMobile ? viewportWidth - margin * 2 : Math.min(392, viewportWidth - 32);
+  const panelHeight = isMobile ? Math.min(Math.round(viewportHeight * 0.64), 520) : Math.min(Math.round(viewportHeight * 0.72), 620);
 
   return {
     x: Math.max(margin, viewportWidth - panelWidth - margin),
@@ -321,6 +322,7 @@ export default function PortfolioAvatarAssistant() {
   ]);
   const messageIdRef = useRef(2);
   const previousSectionRef = useRef<SectionId>("top");
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const interactionTimeoutRef = useRef<number | null>(null);
 
@@ -338,7 +340,9 @@ export default function PortfolioAvatarAssistant() {
   }, []);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = messagesContainerRef.current;
+    if (!container) return;
+    container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
   }, [messages, isOpen]);
 
   useEffect(() => {
@@ -554,7 +558,7 @@ export default function PortfolioAvatarAssistant() {
           <span className="portfolio-avatar-status-copy">{sectionState.hint}</span>
         </div>
 
-        <div className="portfolio-avatar-messages">
+        <div ref={messagesContainerRef} className="portfolio-avatar-messages">
           {messages.map((message) => {
             const isExternal = Boolean(message.ctaHref?.startsWith("http"));
             const isAsset = Boolean(message.ctaHref?.startsWith("/resume/"));
@@ -619,25 +623,28 @@ export default function PortfolioAvatarAssistant() {
         </div>
       )}
 
-      <button
-        type="button"
-        className="portfolio-avatar-fab"
-        onClick={() => {
-          const next = !isOpen;
-          setIsOpen(next);
-          trackEvent("avatar_toggle", {
-            state: next ? "open" : "closed",
-            section: currentSection,
-            mood: effectiveMood,
-          });
-        }}
-        aria-expanded={isOpen}
-        aria-controls="portfolio-avatar-panel"
-      >
-        <div className="portfolio-avatar-penguin-anchor">
-          <PenguinCompanion mood={effectiveMood} />
-        </div>
-      </button>
+      {!isOpen && (
+        <button
+          type="button"
+          className="portfolio-avatar-fab"
+          onClick={() => {
+            const next = !isOpen;
+            setIsOpen(next);
+            trackEvent("avatar_toggle", {
+              state: next ? "open" : "closed",
+              section: currentSection,
+              mood: effectiveMood,
+            });
+          }}
+          aria-expanded={isOpen}
+          aria-controls="portfolio-avatar-panel"
+          aria-label="Open assistant"
+        >
+          <div className="portfolio-avatar-penguin-anchor">
+            <PenguinCompanion mood={effectiveMood} />
+          </div>
+        </button>
+      )}
     </div>
   );
 }
