@@ -18,8 +18,11 @@ type ChatMessage = {
   ctaHref?: string;
 };
 
+type CompanionMood = "idle" | "wave" | "curious" | "thinking" | "excited" | "helpful" | "celebrate" | "pointing";
+
 type SectionState = {
   label: string;
+  mood: CompanionMood;
   hint: string;
   quickPrompt: string;
   cloudLines: string[];
@@ -37,68 +40,76 @@ const ANSWERS: AnswerEntry[] = [
   {
     match: ["who are you", "about", "tell me about arihant", "introduce", "background", "overview"],
     answer:
-      "Arihant Rawat is a product-minded technologist with experience at Salesforce and Cult.fit, and he is currently pursuing an MBA at USC Marshall.",
+      "Arihant Rawat is a product-minded technologist with experience at Salesforce and Cult.fit, and he is currently pursuing an MBA at USC Marshall. He tends to work where product thinking, engineering depth, and execution all meet.",
     ctaLabel: "Jump to About",
     ctaHref: "#about",
   },
   {
     match: ["experience", "salesforce", "cult", "work history", "career"],
     answer:
-      "His experience spans enterprise and startup-style environments, especially Salesforce and Cult.fit, where he worked across product, engineering, and execution.",
+      "His experience spans enterprise and startup-style environments. At Salesforce, he worked on Industries Cloud and Context Service. At Cult.fit, he helped build core app experiences, partnered closely with product and data teams, and eventually led app development across multiple products.",
     ctaLabel: "See Experience",
     ctaHref: "#experience",
   },
   {
     match: ["project", "projects", "portfolio work", "what has he built"],
     answer:
-      "Arihant’s projects range from AI and intelligence systems to product experiences, including Venue Intelligence Discovery, OffGrid, and an iPad-style portfolio.",
+      "Arihant’s projects range from AI and intelligence systems to product experiences. Highlights include Venue Intelligence Discovery, OffGrid, and an iPad-style portfolio experience, alongside multiple machine learning projects in captioning and NLP.",
     ctaLabel: "Open Projects",
     ctaHref: "#projects",
   },
   {
     match: ["skills", "tech stack", "what tools", "what does he know"],
     answer:
-      "He works across product development, software, AI prototyping, analytics, and app development, with tools like TypeScript, Python, React, Next.js, Flutter, and REST APIs.",
+      "He works across product development, full stack software, AI product prototyping, LLM integrations, analytics, and app development. On the technical side, the site highlights TypeScript, Python, Java, React, Next.js, Flutter, REST APIs, NLP, and image processing.",
     ctaLabel: "See Skills",
     ctaHref: "#skills",
   },
   {
     match: ["education", "usc", "mba", "nsit", "nsut", "school"],
     answer:
-      "He is currently an MBA candidate at USC Marshall and previously studied Information Technology at NSIT, now NSUT, in Delhi.",
+      "He is currently an MBA candidate at USC Marshall and previously studied Information Technology at NSIT, now NSUT, in Delhi. The portfolio also notes major scholarships and academic distinctions.",
     ctaLabel: "See Education",
     ctaHref: "#education",
   },
   {
     match: ["contact", "email", "linkedin", "reach", "phone"],
     answer:
-      "You can reach Arihant through email, LinkedIn, or phone from the contact section. LinkedIn or email is usually the cleanest first move.",
+      "You can reach Arihant through email, LinkedIn, or phone from the contact section. For professional outreach, LinkedIn or email is probably the best first move.",
     ctaLabel: "Contact Arihant",
     ctaHref: "#contact",
   },
   {
     match: ["resume", "cv"],
     answer:
-      "Yes, there is a resume link right in the hero section if you want the formal version alongside the site story.",
+      "Yes, there is a resume link right in the hero section. The site itself already tells a strong story, but the PDF is there if you want the formal version.",
     ctaLabel: "View Resume",
     ctaHref: "/resume/arihant-rawat-pm.pdf",
   },
   {
     match: ["ipad", "another way", "interactive"],
     answer:
-      "There is also an iPad-style portfolio experience linked from this site if you want a more playful interactive version.",
+      "There is also an iPad-style portfolio experience linked from this site. It is a more playful, interactive way to explore the same story.",
     ctaLabel: "Open iPad Portfolio",
     ctaHref:
       "https://arihantrawat.github.io/arihant-ipad-site/?utm_source=portfolio&utm_medium=avatar&utm_campaign=explore_another_way",
   },
+  {
+    match: ["why mba", "why usc", "what is he doing now"],
+    answer:
+      "Right now Arihant is at USC Marshall pursuing an MBA, which fits the overall arc of product, technology, and business leadership that runs through the rest of the site.",
+    ctaLabel: "See Education",
+    ctaHref: "#education",
+  },
 ];
 
 const DEFAULT_REPLY =
-  "I can help with Arihant’s background, experience, projects, skills, education, resume, and contact info.";
+  "I can help with Arihant’s background, experience, projects, skills, education, resume, and contact info. Try asking something like ‘What did he do at Salesforce?’ or ‘What projects has he built?’";
 
 const SECTION_STATES = {
   top: {
     label: "Overview",
+    mood: "wave",
     hint: "I can give you the quick summary while you explore.",
     quickPrompt: "Give me a quick overview of Arihant.",
     cloudLines: [
@@ -109,6 +120,7 @@ const SECTION_STATES = {
   },
   about: {
     label: "About",
+    mood: "curious",
     hint: "This section is the personal story behind the resume.",
     quickPrompt: "What is Arihant’s background?",
     cloudLines: [
@@ -119,6 +131,7 @@ const SECTION_STATES = {
   },
   skills: {
     label: "Skills",
+    mood: "thinking",
     hint: "Here I can translate the skill list into a cleaner summary.",
     quickPrompt: "What are Arihant’s strongest skills?",
     cloudLines: [
@@ -129,6 +142,7 @@ const SECTION_STATES = {
   },
   experience: {
     label: "Experience",
+    mood: "helpful",
     hint: "This is where the Salesforce and Cult.fit story really lands.",
     quickPrompt: "What did Arihant do at Salesforce?",
     cloudLines: [
@@ -139,6 +153,7 @@ const SECTION_STATES = {
   },
   education: {
     label: "Education",
+    mood: "curious",
     hint: "This section covers USC Marshall and his engineering background.",
     quickPrompt: "Tell me about Arihant’s education.",
     cloudLines: [
@@ -149,6 +164,7 @@ const SECTION_STATES = {
   },
   projects: {
     label: "Projects",
+    mood: "excited",
     hint: "Projects are the fastest way to see how he actually builds.",
     quickPrompt: "What projects has Arihant built?",
     cloudLines: [
@@ -159,6 +175,7 @@ const SECTION_STATES = {
   },
   contact: {
     label: "Contact",
+    mood: "pointing",
     hint: "If you like what you see, this is the clean handoff point.",
     quickPrompt: "How can I contact Arihant?",
     cloudLines: [
@@ -254,16 +271,47 @@ function getDockedPosition(viewportWidth: number, viewportHeight: number): Posit
   };
 }
 
+function PenguinCompanion({ mood }: { mood: CompanionMood }) {
+  return (
+    <div className={`penguin-stage mood-${mood}`} aria-hidden>
+      <svg className="penguin-svg" viewBox="0 0 170 190" focusable="false">
+        <ellipse className="penguin-shadow" cx="85" cy="172" rx="38" ry="10" />
+        <ellipse className="penguin-aura" cx="85" cy="104" rx="56" ry="68" />
+        <g className="penguin-character">
+          <rect className="penguin-pack" x="38" y="88" width="16" height="40" rx="8" />
+          <ellipse className="penguin-body" cx="85" cy="104" rx="42" ry="54" />
+          <ellipse className="penguin-belly" cx="85" cy="114" rx="27" ry="36" />
+          <ellipse className="penguin-wing penguin-wing-left" cx="48" cy="108" rx="13" ry="31" />
+          <ellipse className="penguin-wing penguin-wing-right" cx="122" cy="108" rx="13" ry="31" />
+          <circle className="penguin-helmet-ring" cx="85" cy="68" r="38" />
+          <circle className="penguin-helmet-glass" cx="85" cy="68" r="33" />
+          <g className="penguin-head">
+            <ellipse className="penguin-face" cx="85" cy="68" rx="31" ry="28" />
+            <ellipse className="penguin-eye" cx="73" cy="63" rx="8.5" ry="10.5" />
+            <ellipse className="penguin-eye" cx="97" cy="63" rx="8.5" ry="10.5" />
+            <circle className="penguin-pupil penguin-pupil-left" cx="73" cy="64" r="3.7" />
+            <circle className="penguin-pupil penguin-pupil-right" cx="97" cy="64" r="3.7" />
+            <path className="penguin-beak" d="M78 74 Q85 82 92 74 Q85 88 78 74Z" />
+          </g>
+          <ellipse className="penguin-foot penguin-foot-left" cx="73" cy="156" rx="11" ry="6.5" />
+          <ellipse className="penguin-foot penguin-foot-right" cx="97" cy="156" rx="11" ry="6.5" />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 export default function PortfolioAvatarAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [showQuickPrompts, setShowQuickPrompts] = useState(true);
   const [currentSection, setCurrentSection] = useState<SectionId>("top");
   const [cloudLineIndex, setCloudLineIndex] = useState(0);
-  const previousSectionRef = useRef<SectionId>("top");
   const [scrollProgress, setScrollProgress] = useState(0);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const [contentRight, setContentRight] = useState(0);
+  const [interactionMood, setInteractionMood] = useState<CompanionMood | null>(null);
+  const [ambientMood, setAmbientMood] = useState<CompanionMood | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 1,
@@ -272,6 +320,9 @@ export default function PortfolioAvatarAssistant() {
     },
   ]);
   const messageIdRef = useRef(2);
+  const previousSectionRef = useRef<SectionId>("top");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const interactionTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     const updateViewport = () => {
@@ -285,6 +336,10 @@ export default function PortfolioAvatarAssistant() {
     window.addEventListener("resize", updateViewport);
     return () => window.removeEventListener("resize", updateViewport);
   }, []);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isOpen]);
 
   useEffect(() => {
     const updateScrollProgress = () => {
@@ -357,7 +412,68 @@ export default function PortfolioAvatarAssistant() {
     return () => window.clearInterval(interval);
   }, [currentSection, isOpen]);
 
+  useEffect(() => {
+    const handleDocumentClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (!target?.closest("a, button")) return;
+
+      if (interactionTimeoutRef.current) {
+        window.clearTimeout(interactionTimeoutRef.current);
+      }
+
+      setInteractionMood("celebrate");
+      interactionTimeoutRef.current = window.setTimeout(() => {
+        setInteractionMood(null);
+      }, 900);
+    };
+
+    document.addEventListener("click", handleDocumentClick, true);
+
+    return () => {
+      document.removeEventListener("click", handleDocumentClick, true);
+      if (interactionTimeoutRef.current) {
+        window.clearTimeout(interactionTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      setAmbientMood(null);
+      return;
+    }
+
+    let triggerTimeout: number | null = null;
+    let clearTimeoutId: number | null = null;
+
+    const queueMoment = () => {
+      const delay = 4200 + Math.random() * 2600;
+      triggerTimeout = window.setTimeout(() => {
+        const moods: CompanionMood[] = ["wave", "curious", "thinking", "excited"];
+        const nextMood = moods[Math.floor(Math.random() * moods.length)];
+        setAmbientMood(nextMood);
+
+        clearTimeoutId = window.setTimeout(() => {
+          setAmbientMood(null);
+          queueMoment();
+        }, nextMood === "wave" ? 1350 : 1050);
+      }, delay);
+    };
+
+    queueMoment();
+
+    return () => {
+      if (triggerTimeout) {
+        window.clearTimeout(triggerTimeout);
+      }
+      if (clearTimeoutId) {
+        window.clearTimeout(clearTimeoutId);
+      }
+    };
+  }, [isOpen]);
+
   const sectionState = SECTION_STATES[currentSection];
+  const effectiveMood = interactionMood ?? ambientMood ?? (isOpen ? "helpful" : sectionState.mood);
   const promptList = useMemo(
     () =>
       Array.from(
@@ -413,13 +529,20 @@ export default function PortfolioAvatarAssistant() {
   return (
     <div
       className={`portfolio-avatar ${isOpen ? "open docked" : "roaming"} side-${position.side} bubble-${position.bubblePlacement}`}
+      data-section={currentSection}
+      data-mood={effectiveMood}
       style={{ transform: `translate3d(${position.x}px, ${position.y}px, 0)` }}
     >
       <aside id="portfolio-avatar-panel" className="portfolio-avatar-panel" aria-live="polite">
         <div className="portfolio-avatar-panel-header">
-          <div>
-            <p className="portfolio-avatar-eyebrow">Portfolio companion</p>
-            <h3>Ask Yuki</h3>
+          <div className="portfolio-avatar-panel-title-wrap">
+            <div className="portfolio-avatar-panel-avatar" aria-hidden>
+              <PenguinCompanion mood={effectiveMood} />
+            </div>
+            <div>
+              <p className="portfolio-avatar-eyebrow">Portfolio companion</p>
+              <h3>Ask Yuki</h3>
+            </div>
           </div>
           <button type="button" className="portfolio-avatar-close" onClick={() => setIsOpen(false)} aria-label="Close assistant">
             ×
@@ -453,6 +576,7 @@ export default function PortfolioAvatarAssistant() {
               </div>
             );
           })}
+          <div ref={messagesEndRef} />
         </div>
 
         {showQuickPrompts && input.trim().length === 0 && (
@@ -504,15 +628,14 @@ export default function PortfolioAvatarAssistant() {
           trackEvent("avatar_toggle", {
             state: next ? "open" : "closed",
             section: currentSection,
+            mood: effectiveMood,
           });
         }}
         aria-expanded={isOpen}
         aria-controls="portfolio-avatar-panel"
       >
-        <div className="portfolio-avatar-penguin-anchor" aria-hidden>
-          <div className="penguin-stage">
-            <div className="penguin-placeholder">🐧</div>
-          </div>
+        <div className="portfolio-avatar-penguin-anchor">
+          <PenguinCompanion mood={effectiveMood} />
         </div>
       </button>
     </div>
