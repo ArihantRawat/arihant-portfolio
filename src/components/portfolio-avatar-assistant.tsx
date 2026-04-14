@@ -304,6 +304,7 @@ function PenguinCompanion({ mood }: { mood: CompanionMood }) {
 
 export default function PortfolioAvatarAssistant() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [input, setInput] = useState("");
   const [showQuickPrompts, setShowQuickPrompts] = useState(true);
   const [currentSection, setCurrentSection] = useState<SectionId>("top");
@@ -325,6 +326,34 @@ export default function PortfolioAvatarAssistant() {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const interactionTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    let frameId = 0;
+    let revealTimeout: number | null = null;
+
+    const waitForLanding = () => {
+      const mainContent = document.querySelector<HTMLElement>("main.container");
+      const preloader = document.querySelector<HTMLElement>(".preloader");
+      const mainReady = !mainContent || !mainContent.classList.contains("content-hidden");
+      const preloaderGone = !preloader;
+
+      if (mainReady && preloaderGone) {
+        revealTimeout = window.setTimeout(() => setIsVisible(true), 260);
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(waitForLanding);
+    };
+
+    waitForLanding();
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      if (revealTimeout) {
+        window.clearTimeout(revealTimeout);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const updateViewport = () => {
@@ -442,6 +471,11 @@ export default function PortfolioAvatarAssistant() {
   }, []);
 
   useEffect(() => {
+    if (!isVisible || isOpen) {
+      setAmbientMood(null);
+      return;
+    }
+
     if (isOpen) {
       setAmbientMood(null);
       return;
@@ -477,6 +511,10 @@ export default function PortfolioAvatarAssistant() {
   }, [isOpen]);
 
   const sectionState = SECTION_STATES[currentSection];
+
+  if (!isVisible) {
+    return null;
+  }
   const effectiveMood = interactionMood ?? ambientMood ?? (isOpen ? "helpful" : sectionState.mood);
   const promptList = useMemo(
     () =>

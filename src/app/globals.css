@@ -442,6 +442,7 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #e1e1e1; line-height: 1.62; }
 
 .portfolio-avatar-panel {
   width: min(392px, calc(100vw - 24px));
+  height: min(72vh, 620px);
   max-height: min(72vh, 620px);
   overflow: hidden;
   display: none;
@@ -538,10 +539,13 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #e1e1e1; line-height: 1.62; }
 }
 
 .portfolio-avatar-status-copy {
+  display: block;
+  flex: 1 1 100%;
+  width: 100%;
+  max-width: none;
   color: #d8d8de;
   font-size: 0.78rem;
   line-height: 1.4;
-  max-width: 25ch;
 }
 
 .portfolio-avatar-messages {
@@ -778,6 +782,7 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #e1e1e1; line-height: 1.62; }
 
   .portfolio-avatar-panel {
     width: min(calc(100vw - 20px), 392px);
+    height: min(76vh, 560px);
     max-height: min(76vh, 560px);
   }
 
