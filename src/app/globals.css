@@ -510,6 +510,12 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #e1e1e1; line-height: 1.62; }
   border: 1px solid rgba(168,85,247,.22);
 }
 
+.portfolio-avatar-message.user {
+  align-self: flex-end;
+  background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
+  border: 1px solid rgba(255,255,255,.09);
+}
+
 .portfolio-avatar-message-label {
   display: block;
   margin-bottom: 0.28rem;
@@ -518,6 +524,66 @@ ul { margin: .1rem 0 .7rem 1.1rem; color: #e1e1e1; line-height: 1.62; }
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+.portfolio-avatar-message.user .portfolio-avatar-message-label {
+  color: #d4d4d8;
+}
+
+.portfolio-avatar-inline-cta {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.55rem;
+  padding: 0.34rem 0.62rem;
+  border-radius: 999px;
+  border: 1px solid rgba(243,232,255,.14);
+  background: rgba(243,232,255,.06);
+  color: #f5eaff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.portfolio-avatar-inline-cta:hover {
+  background: rgba(243,232,255,.1);
+}
+
+.portfolio-avatar-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0 0.95rem 0.88rem;
+}
+
+.portfolio-avatar-prompts button,
+.portfolio-avatar-form button {
+  border: 1px solid rgba(168,85,247,.28);
+  background: rgba(168,85,247,.1);
+  color: #f3e8ff;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.portfolio-avatar-prompts button {
+  padding: 0.44rem 0.72rem;
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+
+.portfolio-avatar-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.55rem;
+  padding: 0 0.95rem 0.95rem;
+}
+
+.portfolio-avatar-form input {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255,255,255,.06);
+  color: #fff;
+  padding: 0.76rem 0.86rem;
 }
 
 .portfolio-avatar-penguin-anchor {
