@@ -83,7 +83,7 @@ const SKILLS: SkillBadge[] = [
   { label: "LLM Integration in Products", emoji: "🧩" },
   { label: "Cursor", iconSrc: "https://www.cursor.com/favicon.ico", iconAlt: "Cursor" },
   { label: "Lovable", iconSrc: "https://lovable.dev/favicon.ico", iconAlt: "Lovable" },
-  { label: "Base44", emoji: "🟪" },
+  { label: "Base44", iconSrc: "/images/base44-logo.png", iconAlt: "Base44" },
   { label: "Product Development", emoji: "🛠️" },
   { label: "Software Development", emoji: "💻" },
   { label: "App Development", emoji: "📱" },
