@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import PortfolioAvatarAssistant from "@/components/portfolio-avatar-assistant";
 import { trackEvent } from "../lib/analytics";
 
 type SkillBadge = {
@@ -723,6 +724,7 @@ export default function HomePage() {
       </main>
 
       <footer className="site-footer">Designed and built by Arihant Rawat</footer>
+      <PortfolioAvatarAssistant />
     </div>
   );
 }

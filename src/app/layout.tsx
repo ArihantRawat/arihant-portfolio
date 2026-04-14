@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import GAAttribution from "@/components/ga-attribution";
-import PortfolioAvatarAssistant from "@/components/portfolio-avatar-assistant";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -49,7 +48,6 @@ export default function RootLayout({
           <GAAttribution />
         </Suspense>
         {children}
-        <PortfolioAvatarAssistant />
       </body>
     </html>
   );
