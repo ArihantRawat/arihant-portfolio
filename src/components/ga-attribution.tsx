@@ -79,23 +79,33 @@ export default function GAAttribution() {
   }, [pathname, searchParams]);
 
   useEffect(() => {
-    const attr = getAttribution();
+    const storageKey = "ar_first_touch_attribution";
+    const fallbackAttribution = {
+      ...getAttribution(),
+      landing_page: window.location.pathname,
+      recorded_at: Date.now(),
+    };
+
+    let firstTouch = fallbackAttribution;
+
+    try {
+      const stored = window.localStorage.getItem(storageKey);
+      if (stored) {
+        firstTouch = JSON.parse(stored) as typeof fallbackAttribution;
+      } else {
+        window.localStorage.setItem(storageKey, JSON.stringify(fallbackAttribution));
+        trackEvent("first_touch_attribution", fallbackAttribution);
+      }
+    } catch {
+      trackEvent("first_touch_attribution", fallbackAttribution);
+    }
 
     if (typeof window.gtag === "function") {
       window.gtag("set", "user_properties", {
-        first_touch_type: attr.traffic_type,
-        first_touch_source: attr.source_hint,
-        first_touch_referrer: attr.referrer_host || "none",
+        first_touch_type: firstTouch.traffic_type,
+        first_touch_source: firstTouch.source_hint,
+        first_touch_referrer: firstTouch.referrer_host || "none",
       });
-    }
-
-    const key = "ar_first_touch_tracked";
-    if (!sessionStorage.getItem(key)) {
-      trackEvent("first_touch_attribution", {
-        ...attr,
-        landing_page: window.location.pathname,
-      });
-      sessionStorage.setItem(key, "1");
     }
   }, []);
 

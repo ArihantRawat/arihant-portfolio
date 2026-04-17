@@ -38,7 +38,7 @@ Open: `http://localhost:3000`
 2. In Netlify: **Add new site → Import from GitHub**.
 3. Build settings (auto-detected for Next.js):
    - Build command: `npm run build`
-   - Publish directory: `.next`
+   - Publish directory: `out`
 4. Deploy.
 
 ## Suggested domain (when ready)

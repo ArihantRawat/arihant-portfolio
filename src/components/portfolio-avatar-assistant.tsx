@@ -322,10 +322,12 @@ export default function PortfolioAvatarAssistant() {
     },
   ]);
   const messageIdRef = useRef(2);
-  const previousSectionRef = useRef<SectionId>("top");
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const interactionTimeoutRef = useRef<number | null>(null);
+  const suppressScrollTrackingRef = useRef(false);
+  const scrollTrackingResetRef = useRef<number | null>(null);
+  const lastScrollTrackRef = useRef(0);
 
   useEffect(() => {
     let frameId = 0;
@@ -371,7 +373,25 @@ export default function PortfolioAvatarAssistant() {
   useEffect(() => {
     const container = messagesContainerRef.current;
     if (!container) return;
+    suppressScrollTrackingRef.current = true;
     container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
+
+    if (scrollTrackingResetRef.current) {
+      window.clearTimeout(scrollTrackingResetRef.current);
+    }
+
+    scrollTrackingResetRef.current = window.setTimeout(() => {
+      suppressScrollTrackingRef.current = false;
+      scrollTrackingResetRef.current = null;
+    }, 450);
+
+    return () => {
+      if (scrollTrackingResetRef.current) {
+        window.clearTimeout(scrollTrackingResetRef.current);
+        scrollTrackingResetRef.current = null;
+      }
+      suppressScrollTrackingRef.current = false;
+    };
   }, [messages, isOpen]);
 
   useEffect(() => {
@@ -430,11 +450,14 @@ export default function PortfolioAvatarAssistant() {
   }, []);
 
   useEffect(() => {
-    if (previousSectionRef.current !== currentSection) {
-      previousSectionRef.current = currentSection;
+    const resetFrame = window.requestAnimationFrame(() => {
       setCloudLineIndex(0);
-    }
+    });
 
+    return () => window.cancelAnimationFrame(resetFrame);
+  }, [currentSection]);
+
+  useEffect(() => {
     const lines = SECTION_STATES[currentSection].cloudLines;
     if (lines.length <= 1 || isOpen) return;
 
@@ -472,13 +495,10 @@ export default function PortfolioAvatarAssistant() {
 
   useEffect(() => {
     if (!isVisible || isOpen) {
-      setAmbientMood(null);
-      return;
-    }
-
-    if (isOpen) {
-      setAmbientMood(null);
-      return;
+      const resetFrame = window.requestAnimationFrame(() => {
+        setAmbientMood(null);
+      });
+      return () => window.cancelAnimationFrame(resetFrame);
     }
 
     let triggerTimeout: number | null = null;
@@ -508,7 +528,7 @@ export default function PortfolioAvatarAssistant() {
         window.clearTimeout(clearTimeoutId);
       }
     };
-  }, [isOpen]);
+  }, [isOpen, isVisible]);
 
   const sectionState = SECTION_STATES[currentSection];
   const effectiveMood = interactionMood ?? ambientMood ?? (isOpen ? "helpful" : sectionState.mood);
@@ -622,6 +642,16 @@ export default function PortfolioAvatarAssistant() {
           ref={messagesContainerRef}
           className="portfolio-avatar-messages"
           onScroll={(event) => {
+            if (suppressScrollTrackingRef.current) {
+              return;
+            }
+
+            const now = Date.now();
+            if (now - lastScrollTrackRef.current < 1200) {
+              return;
+            }
+
+            lastScrollTrackRef.current = now;
             const target = event.currentTarget;
             trackEvent("avatar_chat_interaction", {
               action: "messages_scrolled",

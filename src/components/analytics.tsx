@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link, { type LinkProps } from "next/link";
 import { trackEvent, type AnalyticsParams } from "../lib/analytics";
 
 type TrackPageEventProps = {
@@ -24,6 +25,24 @@ type TrackedAnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
 export function TrackedAnchor({ eventName, eventParams = {}, onClick, ...props }: TrackedAnchorProps) {
   return (
     <a
+      {...props}
+      onClick={(event) => {
+        trackEvent(eventName, eventParams);
+        onClick?.(event);
+      }}
+    />
+  );
+}
+
+type TrackedLinkProps = LinkProps &
+  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
+    eventName: string;
+    eventParams?: AnalyticsParams;
+  };
+
+export function TrackedLink({ eventName, eventParams = {}, onClick, ...props }: TrackedLinkProps) {
+  return (
+    <Link
       {...props}
       onClick={(event) => {
         trackEvent(eventName, eventParams);

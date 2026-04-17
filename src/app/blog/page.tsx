@@ -1,17 +1,19 @@
-"use client";
-
-import Link from "next/link";
 import { blogPosts } from "./posts";
-import { trackEvent } from "../../lib/analytics";
+import { TrackedLink } from "../../components/analytics";
 
 export default function BlogPage() {
   return (
     <main className="blog-shell">
       <div className="container blog-space">
         <div className="blog-header">
-          <Link className="blog-home" href="/" onClick={() => trackEvent("nav_click", { label: "Home", href: "/", menu: "blog" })}>
+          <TrackedLink
+            className="blog-home"
+            href="/"
+            eventName="nav_click"
+            eventParams={{ label: "Home", href: "/", menu: "blog" }}
+          >
             ← Home
-          </Link>
+          </TrackedLink>
           <span className="blog-pill">Blog</span>
         </div>
 
@@ -22,16 +24,19 @@ export default function BlogPage() {
 
         <div className="blog-grid">
           {blogPosts.map((post) => (
-            <Link
+            <TrackedLink
               key={post.slug}
               href={`/blog/${post.slug}`}
               className="blog-card small"
-              onClick={() => trackEvent("blog_card_click", { slug: post.slug, title: post.title })}
+              eventName="blog_card_click"
+              eventParams={{ slug: post.slug, title: post.title }}
             >
-              <p className="muted">{post.date} • {post.readTime}</p>
+              <p className="muted">
+                {post.date} • {post.readTime}
+              </p>
               <h2>{post.title}</h2>
               <p className="blog-excerpt">{post.summary}</p>
-            </Link>
+            </TrackedLink>
           ))}
         </div>
       </div>

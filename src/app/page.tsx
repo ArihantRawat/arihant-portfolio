@@ -28,15 +28,29 @@ type TimelineItem = {
   links: ExternalLink[];
 };
 
-type Project = {
+type ProjectLink = {
+  label: string;
+  href: string;
+  kind: "repository" | "website";
+};
+
+type ProjectSignal = {
+  label: string;
+  value: string;
+  note: string;
+};
+
+type PortfolioProject = {
   name: string;
   repo: string;
-  description: string;
+  cardSummary: string;
+  modalSummary: string;
   whatIBuilt: string[];
+  signals: ProjectSignal[];
   techStack: string[];
-  link: string;
-  website?: string;
+  links: ProjectLink[];
 };
+
 
 type ContactLink = {
   label: string;
@@ -50,6 +64,11 @@ type Particle = {
   size: string;
   delay: string;
   opacity: number;
+};
+
+type HomeAnimationState = {
+  isReady: boolean;
+  shouldAnimate: boolean;
 };
 
 const IPAD_PORTFOLIO_URL =
@@ -67,7 +86,7 @@ const NAV_LINKS = [
 
 const HERO_STATS = [
   { label: "Years of Experience", value: "4+" },
-  { label: "Completed Projects", value: "7+" },
+  { label: "Public Repos", value: "14" },
   { label: "Hours", value: "10K+" },
 ];
 
@@ -166,83 +185,135 @@ const EDUCATION: TimelineItem[] = [
   },
 ];
 
-const PROJECTS: Project[] = [
+const PROJECTS: PortfolioProject[] = [
   {
-    name: "Venue Intelligence Discovery",
-    repo: "ArihantRawat/VenueIntelligenceDiscovery",
-    description:
-      "Multi-agent intelligence stack built for the Tixr Case Competition to score 24K+ global venues for expansion across EMEA, LATAM, and Southeast Asia.",
+    name: "ExpertMind",
+    repo: "ArihantRawat/ExpertMind",
+    cardSummary:
+      "ExpertMind explores how teams can capture critical expertise before it becomes a bottleneck or walks out the door. It combines knowledge-risk visibility with guided AI interviews to turn tacit context into reusable team memory.",
+    modalSummary:
+      "ExpertMind is built around a very practical product problem: how teams lose context when experts leave, silo knowledge, or become bottlenecks. The concept combines knowledge-risk visibility, guided knowledge capture, and AI-assisted interviews to make expert context reusable.",
     whatIBuilt: [
-      "Layered orchestrator that coordinates venue, ticketing, event, and market agents and deduplicates their signals",
-      "Normalized schema plus Excel workbook with win probability, premium fit, and priority scoring",
-      "CLI + pipeline scripts that can run offline normalization or live API enrichment when keys are provided",
+      "Product concept around knowledge risk, expertise visibility, and team memory",
+      "Interview-driven capture flow with an AI interviewer named Vera",
+      "Dashboard ideas for spotting single points of failure and missing context",
     ],
-    techStack: ["Python", "LangChain Agents", "Pandas", "REST / Graph APIs"],
-    link: "https://github.com/ArihantRawat/VenueIntelligenceDiscovery",
-    website: "https://mehakjotsingh.github.io/tixrCaseComp/",
+    signals: [
+      { label: "Focus", value: "Knowledge capture", note: "Designed around preserving tacit expertise before it is lost" },
+      { label: "Core flow", value: "AI interviews", note: "Uses guided capture rather than passive documentation alone" },
+      { label: "Product angle", value: "Team memory", note: "Meant to reduce knowledge bottlenecks across organizations" },
+    ],
+    techStack: ["Product Design", "AI Workflow Thinking", "Knowledge Systems"],
+    links: [{ label: "Open repository", href: "https://github.com/ArihantRawat/ExpertMind", kind: "repository" }],
   },
   {
-    name: "Video Captioning",
-    repo: "ArihantRawat/Video_Captioning",
-    description:
-      "Sequence-to-sequence system that turns short video clips into natural-language captions using CNN encoders and LSTM decoders.",
+    name: "Knowledge Graph Pro",
+    repo: "ArihantRawat/knowledge-graph-pro",
+    cardSummary:
+      "Knowledge Graph Pro pulls signals from tools like Slack, Jira, GitHub, and Notion into one graph-style workspace. It makes fragmented work activity easier to browse, connect, and reuse as shared organizational context.",
+    modalSummary:
+      "Knowledge Graph Pro tackles the systems side of organizational memory. It pulls signals from tools like Slack, Jira, Confluence, Gmail, GitHub, Zoom, Notion, and Figma into one graph-oriented product with persistent integrations and source-level filtering.",
     whatIBuilt: [
-      "Frame extraction, cleaning, and mapping utilities for curating training datasets",
-      "Seq2Seq training scripts plus saved encoder/decoder checkpoints for quick experimentation",
-      "Inference notebooks that visualize attention maps and generate captions on unseen clips",
+      "A multi-source graph interface with integration setup and source filtering",
+      "Persistent connector flows so the graph can be re-used beyond a one-off demo",
+      "A product story that turns disconnected tooling activity into shared context",
     ],
-    techStack: ["Python", "TensorFlow / Keras", "OpenCV", "NumPy"],
-    link: "https://github.com/ArihantRawat/Video_Captioning",
-  },
-  {
-    name: "Image Captioning",
-    repo: "ArihantRawat/Image-Captioning",
-    description:
-      "Vision-language playground that pairs CNN feature extractors with language models to narrate what’s happening inside an image.",
-    whatIBuilt: [
-      "Reusable caption generation pipeline with configurable encoders and decoders",
-      "Experiment notebooks that compare BLEU scores across architectures",
-      "Evaluation harness for quickly validating captions on curated test sets",
+    signals: [
+      { label: "Connected sources", value: "11", note: "Slack, Jira, Confluence, Gmail, Notion, GitHub, Zoom, Figma, and more" },
+      { label: "System type", value: "Knowledge graph", note: "Built to unify fragmented work signals into one view" },
+      { label: "Persistence", value: "Integrated", note: "Includes reconnect-friendly auth and saved integration state" },
     ],
-    techStack: ["Python", "PyTorch", "Computer Vision"],
-    link: "https://github.com/ArihantRawat/Image-Captioning",
-  },
-  {
-    name: "Sarcasm Detector",
-    repo: "ArihantRawat/Sarcasm-Detector",
-    description:
-      "NLP classifier that labels headlines as sarcastic or literal by combining traditional feature engineering with modern embeddings.",
-    whatIBuilt: [
-      "Data cleaning and balancing scripts for multiple headline datasets",
-      "Model zoo ranging from TF-IDF + Logistic Regression to deeper neural nets",
-      "Evaluation notebook with precision/recall tracking and exportable models",
-    ],
-    techStack: ["Python", "scikit-learn", "NLP"],
-    link: "https://github.com/ArihantRawat/Sarcasm-Detector",
+    techStack: ["HTML", "Node.js", "Vanilla JavaScript", "OAuth Connectors"],
+    links: [{ label: "Open repository", href: "https://github.com/ArihantRawat/knowledge-graph-pro", kind: "repository" }],
   },
   {
     name: "OffGrid",
     repo: "ArihantRawat/OffGrid",
-    description:
-      "OffGrid is a travel app that uses your personal taste to recommend places that match your vibe, not just what’s popular.",
-    whatIBuilt: ["App shell + navigation", "Core user journeys", "Release-ready CI-friendly structure"],
-    techStack: ["Flutter", "Dart", "Mobile UI"],
-    link: "https://github.com/ArihantRawat/OffGrid",
-    website: "https://offgridla.lovable.app",
+    cardSummary:
+      "OffGrid is a taste-based travel product built around mood, vibe, and personal preference rather than generic rankings. The experience pairs a mobile-first discovery flow with a stronger concept layer around brand and destination storytelling.",
+    modalSummary:
+      "OffGrid is the most consumer-facing project in the set. Instead of generic top-10 travel recommendations, it frames discovery around personal taste, mood, and energy. The project pairs a Flutter codebase with a more polished public concept site to express both product logic and brand direction.",
+    whatIBuilt: [
+      "Mobile-first navigation and app shell for travel discovery journeys",
+      "Preference-led recommendation thinking centered on vibe over popularity",
+      "A live concept site that extends the product story beyond the repo",
+    ],
+    signals: [
+      { label: "Positioning", value: "Taste-based", note: "Recommendations are shaped by vibe instead of generic rankings" },
+      { label: "Experience", value: "Mobile-first", note: "Structured around app-style flows and travel use cases" },
+      { label: "Shipping", value: "Code + concept", note: "Pairs the app repo with a more expressive live concept site" },
+    ],
+    techStack: ["Flutter", "Dart", "Mobile UI", "Consumer Product Design"],
+    links: [
+      { label: "Open repository", href: "https://github.com/ArihantRawat/OffGrid", kind: "repository" },
+      { label: "Open website", href: "https://offgridla.lovable.app", kind: "website" },
+    ],
+  },
+  {
+    name: "Video Captioning",
+    repo: "ArihantRawat/Video_Captioning",
+    cardSummary:
+      "Video Captioning is an ML project focused on turning short video clips into natural-language descriptions. It covers the full workflow from preprocessing and frame extraction to training and inference.",
+    modalSummary:
+      "This project explores video understanding through sequence-to-sequence modeling. It covers the full path from preprocessing and frame extraction to training and inference, making it more than just a notebook experiment.",
+    whatIBuilt: [
+      "Frame extraction and dataset-preparation utilities for video pipelines",
+      "Training scripts and saved checkpoints for caption generation experiments",
+      "Inference notebooks that generate captions on unseen clips",
+    ],
+    signals: [
+      { label: "Domain", value: "Video understanding", note: "Focused on learning from temporal visual inputs" },
+      { label: "Approach", value: "Seq2Seq", note: "Uses encoder-decoder style learning for caption output" },
+      { label: "Workflow", value: "End-to-end", note: "Includes prep, training, and inference stages" },
+    ],
+    techStack: ["Python", "TensorFlow", "OpenCV", "NumPy"],
+    links: [{ label: "Open repository", href: "https://github.com/ArihantRawat/Video_Captioning", kind: "repository" }],
+  },
+  {
+    name: "Venue Intelligence Discovery",
+    repo: "ArihantRawat/VenueIntelligenceDiscovery",
+    cardSummary:
+      "Venue Intelligence Discovery is a multi-agent workflow for comparing venues, markets, and ticketing signals at scale. It helps turn expansion research into clearer scoring and prioritization decisions.",
+    modalSummary:
+      "Venue Intelligence Discovery was built for the Tixr case competition and pushes more into orchestration and scoring logic. It combines venue, market, and ticketing signals into one pipeline so expansion prioritization becomes easier to compare and act on.",
+    whatIBuilt: [
+      "Multi-agent orchestration across venue, event, market, and ticketing signals",
+      "Normalized scoring outputs for win probability, fit, and prioritization",
+      "Both offline normalization and live API-enrichment paths",
+    ],
+    signals: [
+      { label: "Coverage", value: "24K+ venues", note: "Designed to operate at a large geographic and venue scale" },
+      { label: "Use case", value: "Expansion analysis", note: "Prioritizes where to focus next using comparable scoring" },
+      { label: "Workflow", value: "Agentic", note: "Coordinates multiple research and enrichment steps together" },
+    ],
+    techStack: ["Python", "LangChain Agents", "Pandas", "Graph APIs"],
+    links: [
+      { label: "Open repository", href: "https://github.com/ArihantRawat/VenueIntelligenceDiscovery", kind: "repository" },
+      { label: "Open website", href: "https://mehakjotsingh.github.io/tixrCaseComp/", kind: "website" },
+    ],
   },
   {
     name: "iPad Portfolio Experience",
     repo: "ArihantRawat/arihant-ipad-site",
-    description:
-      "An interactive iPad-style portfolio that reimagines personal storytelling with a realistic iOS-inspired UI and app-based navigation.",
+    cardSummary:
+      "iPad Portfolio Experience reimagines a personal site as a tactile tablet-style product with windows, a dock, and gesture-like transitions. It makes the portfolio feel closer to an app demo than a standard scrolling website.",
+    modalSummary:
+      "This project pushes most directly into interaction design. It reframes a portfolio as an iPad-style product with a home screen, dock, app windows, and more tactile navigation patterns, which makes it feel like a product demo instead of a static resume site.",
     whatIBuilt: [
-      "Designed and shipped a full iPad-like interface with home screen, dock interactions, lockscreen flow, and app-style windows",
-      "Built smooth transitions, gestures, and responsive orientation handling to mimic native tablet behavior",
-      "Structured portfolio content into modular app sections (work, projects, education, contact) and added deploy-ready static export",
+      "Home screen, dock interactions, app windows, and lockscreen-inspired moments",
+      "Responsive motion and gesture-like transitions tuned for a tablet feel",
+      "A more immersive storytelling structure for work, projects, and contact",
+    ],
+    signals: [
+      { label: "Format", value: "Interactive portfolio", note: "Tells the story as a product experience instead of a standard site" },
+      { label: "Motion", value: "Device-inspired", note: "Transitions are tuned to feel more native and tactile" },
+      { label: "Delivery", value: "Static export", note: "Ships as a deployable interactive experience" },
     ],
     techStack: ["Next.js", "React", "TypeScript", "Framer Motion"],
-    link: "https://github.com/ArihantRawat/arihant-ipad-site",
-    website: "https://arihantrawat.github.io/arihant-ipad-site/",
+    links: [
+      { label: "Open repository", href: "https://github.com/ArihantRawat/arihant-ipad-site", kind: "repository" },
+      { label: "Open website", href: "https://arihantrawat.github.io/arihant-ipad-site/", kind: "website" },
+    ],
   },
 ];
 
@@ -254,21 +325,22 @@ const CONTACT_LINKS: ContactLink[] = [
 
 const PARTICLE_COUNT = 28;
 
-const createParticles = (): Particle[] =>
-  Array.from({ length: PARTICLE_COUNT }).map((_, idx) => ({
+const PARTICLES: Particle[] = Array.from({ length: PARTICLE_COUNT }).map((_, idx) => ({
     id: idx,
-    left: `${Math.random() * 100}%`,
-    top: `${Math.random() * 100}%`,
-    size: `${6 + Math.random() * 8}px`,
-    delay: `${Math.random() * 4}s`,
-    opacity: 0.15 + Math.random() * 0.35,
+    left: `${(11 + idx * 17) % 100}%`,
+    top: `${(7 + idx * 29) % 100}%`,
+    size: `${6 + (idx % 5) * 2}px`,
+    delay: `${(idx % 6) * 0.45}s`,
+    opacity: 0.16 + (idx % 4) * 0.07,
   }));
 
 export default function HomePage() {
-  const [isReady, setIsReady] = useState(false);
-  const [shouldAnimate, setShouldAnimate] = useState(true);
+  const [animationState, setAnimationState] = useState<HomeAnimationState>({
+    isReady: false,
+    shouldAnimate: true,
+  });
   const [showMobileNav, setShowMobileNav] = useState(false);
-  const [particles, setParticles] = useState<Particle[]>([]);
+  const [selectedProject, setSelectedProject] = useState<PortfolioProject | null>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const cursorDotRef = useRef<HTMLDivElement>(null);
   const cursorRingRef = useRef<HTMLDivElement>(null);
@@ -281,22 +353,25 @@ export default function HomePage() {
     window.addEventListener("beforeunload", clearAnimationKey);
 
     if (hasPlayed) {
-      setShouldAnimate(false);
-      setIsReady(true);
-      return () => window.removeEventListener("beforeunload", clearAnimationKey);
+      const readyFrame = window.requestAnimationFrame(() => {
+        setAnimationState({ isReady: true, shouldAnimate: false });
+      });
+
+      return () => {
+        window.cancelAnimationFrame(readyFrame);
+        window.removeEventListener("beforeunload", clearAnimationKey);
+      };
     }
 
     window.sessionStorage.setItem(animationKey, "1");
-    const timer = setTimeout(() => setIsReady(true), 1000);
+    const timer = window.setTimeout(() => {
+      setAnimationState({ isReady: true, shouldAnimate: true });
+    }, 1000);
 
     return () => {
-      clearTimeout(timer);
+      window.clearTimeout(timer);
       window.removeEventListener("beforeunload", clearAnimationKey);
     };
-  }, []);
-
-  useEffect(() => {
-    setParticles(createParticles());
   }, []);
 
   useEffect(() => {
@@ -316,7 +391,7 @@ export default function HomePage() {
   useEffect(() => {
     const items = Array.from(document.querySelectorAll<HTMLElement>(".reveal-item"));
 
-    if (!shouldAnimate) {
+    if (!animationState.shouldAnimate) {
       items.forEach((item) => item.classList.add("in-view"));
       return;
     }
@@ -334,7 +409,7 @@ export default function HomePage() {
 
     items.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
-  }, [shouldAnimate]);
+  }, [animationState.shouldAnimate]);
 
   useEffect(() => {
     let rafId = 0;
@@ -396,6 +471,36 @@ export default function HomePage() {
     });
   }, []);
 
+  useEffect(() => {
+    if (!selectedProject) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedProject(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [selectedProject]);
+
+  const handleProjectLinkClick = useCallback(
+    (project: string, type: ProjectLink["kind"], href: string) => {
+      trackEvent("project_click", { type, project, href });
+      if (href.includes("arihant-ipad-site")) {
+        handleIpadSiteClick("projects");
+      }
+    },
+    [handleIpadSiteClick]
+  );
+
   return (
     <div className="site-shell">
       <div className="cursor-dot" ref={cursorDotRef} aria-hidden />
@@ -404,9 +509,9 @@ export default function HomePage() {
         <div className="progress-bar" ref={progressRef} />
       </div>
 
-      {particles.length > 0 && (
+      {PARTICLES.length > 0 && (
         <div className="particle-field" aria-hidden>
-          {particles.map((particle) => (
+          {PARTICLES.map((particle) => (
             <span
               key={particle.id}
               className="particle"
@@ -423,7 +528,7 @@ export default function HomePage() {
         </div>
       )}
 
-      {!isReady && (
+      {!animationState.isReady && (
         <div className="preloader">
           <h1 className="preloader-name">
             {"Arihant Rawat".split("").map((letter, idx) => (
@@ -505,7 +610,7 @@ export default function HomePage() {
         )}
       </header>
 
-      <main id="top" className={`container main-space ${isReady ? "" : "content-hidden"}`}>
+      <main id="top" className={`container main-space ${animationState.isReady ? "" : "content-hidden"}`}>
         <section className="hero reveal-section">
           <div>
             <p className="badge reveal-item">PRODUCT DEVELOPER</p>
@@ -571,8 +676,14 @@ export default function HomePage() {
                   </span>
                 )}
                 {skill.iconSrc && (
-                  // Using <img> to avoid remote image domain configuration for icon favicons
-                  <img className="skill-logo" src={skill.iconSrc} alt={skill.iconAlt ?? skill.label} loading="lazy" />
+                  <Image
+                    className="skill-logo"
+                    src={skill.iconSrc}
+                    alt={skill.iconAlt ?? skill.label}
+                    width={16}
+                    height={16}
+                    unoptimized
+                  />
                 )}
                 <span>{skill.label}</span>
               </span>
@@ -648,60 +759,68 @@ export default function HomePage() {
         <section id="projects" className="reveal-section section-gap">
           <div className="section-head">
             <h2 className="section-title reveal-item">Projects</h2>
-            <a
-              href="https://github.com/ArihantRawat"
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => trackEvent("outbound_click", { section: "projects", label: "GitHub", href: "https://github.com/ArihantRawat" })}
-            >
-              GitHub
-            </a>
           </div>
-          <div className="project-grid">
-            {PROJECTS.map((project) => (
-              <article className="card reveal-item" key={project.name}>
-                <h3>{project.name}</h3>
-                <p className="muted">{project.repo}</p>
-                <p>{project.description}</p>
-                <p className="small-title">What I built</p>
-                <ul>
-                  {project.whatIBuilt.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-                <p className="small-title">Tech stack</p>
-                <ul>
-                  {project.techStack.map((stack) => (
-                    <li key={stack}>{stack}</li>
-                  ))}
-                </ul>
-                <div className="link-row">
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => trackEvent("project_click", { type: "repository", project: project.name, href: project.link })}
+          <div className="projects-shell">
+            <div className="project-gallery">
+              {PROJECTS.map((project) => (
+                <div className="card project-card reveal-item" key={project.name}>
+                  <button
+                    type="button"
+                    className="project-card-trigger"
+                    onClick={() => {
+                      trackEvent("project_card_open", { project: project.name, repo: project.repo });
+                      setSelectedProject(project);
+                    }}
                   >
-                    Open repository
-                  </a>
-                  {project.website && (
-                    <a
-                      href={project.website}
-                      target="_blank"
-                      rel="noreferrer"
+                    <div className="project-card-head">
+                      <h3>{project.name}</h3>
+                    </div>
+                    <p className="project-card-summary">{project.cardSummary}</p>
+                    <div className="project-stack compact">
+                      {project.techStack.slice(0, 3).map((stack) => (
+                        <span key={stack}>{stack}</span>
+                      ))}
+                    </div>
+                  </button>
+                  <div className="project-card-actions">
+                    <button
+                      type="button"
+                      className="project-card-cta"
                       onClick={() => {
-                        trackEvent("project_click", { type: "website", project: project.name, href: project.website });
-                        if (project.website?.includes("arihant-ipad-site")) {
-                          handleIpadSiteClick("projects");
-                        }
+                        trackEvent("project_card_open", { project: project.name, repo: project.repo });
+                        setSelectedProject(project);
                       }}
                     >
-                      Open website
-                    </a>
-                  )}
+                      Click to explore
+                    </button>
+                    {project.links
+                      .filter((link) => link.kind === "repository")
+                      .map((link) => (
+                        <a
+                          key={link.href}
+                          href={link.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() => handleProjectLinkClick(project.name, link.kind, link.href)}
+                        >
+                          Open repository
+                        </a>
+                      ))}
+                  </div>
                 </div>
-              </article>
-            ))}
+              ))}
+            </div>
+
+            <div className="project-footer reveal-item">
+              <a
+                href="https://github.com/ArihantRawat"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackEvent("outbound_click", { section: "projects", label: "GitHub", href: "https://github.com/ArihantRawat" })}
+              >
+                Explore more on GitHub
+              </a>
+            </div>
           </div>
         </section>
 
@@ -722,6 +841,84 @@ export default function HomePage() {
           </div>
         </section>
       </main>
+
+      {selectedProject && (
+        <div
+          className="project-modal-overlay"
+          role="presentation"
+          onClick={() => setSelectedProject(null)}
+        >
+          <div
+            className="project-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="project-modal-head">
+              <div>
+                <p className="project-modal-kicker">Project detail</p>
+                <h3 id="project-modal-title">{selectedProject.name}</h3>
+                <p className="project-repo">{selectedProject.repo}</p>
+              </div>
+              <button
+                type="button"
+                className="project-modal-close"
+                onClick={() => setSelectedProject(null)}
+                aria-label="Close project details"
+              >
+                ×
+              </button>
+            </div>
+
+            <p className="project-modal-summary">{selectedProject.modalSummary}</p>
+
+            <div className="project-signals">
+              {selectedProject.signals.map((signal) => (
+                <div className="project-signal" key={`${selectedProject.name}-${signal.label}`}>
+                  <span className="project-signal-label">{signal.label}</span>
+                  <strong>{signal.value}</strong>
+                  <span>{signal.note}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="project-modal-body">
+              <div>
+                <p className="small-title">What I built</p>
+                <ul>
+                  {selectedProject.whatIBuilt.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <p className="small-title">Tech stack</p>
+                <div className="project-stack">
+                  {selectedProject.techStack.map((stack) => (
+                    <span key={stack}>{stack}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="link-row">
+              {selectedProject.links.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => handleProjectLinkClick(selectedProject.name, link.kind, link.href)}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <footer className="site-footer">Designed and built by Arihant Rawat</footer>
       <PortfolioAvatarAssistant />
