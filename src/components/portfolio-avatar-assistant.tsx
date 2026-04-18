@@ -1,14 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { answerPortfolioQuestion, getSuggestedPromptsForSection } from "@/lib/assistant/engine";
+import { preloadSemanticKnowledge } from "@/lib/assistant/semantic";
+import type { AssistantSection } from "@/lib/assistant/types";
 import { trackEvent } from "@/lib/analytics";
-
-type AnswerEntry = {
-  match: string[];
-  answer: string;
-  ctaLabel?: string;
-  ctaHref?: string;
-};
 
 type ChatMessage = {
   id: number;
@@ -16,6 +12,7 @@ type ChatMessage = {
   text: string;
   ctaLabel?: string;
   ctaHref?: string;
+  matchedKnowledgeIds?: string[];
 };
 
 type CompanionMood = "idle" | "wave" | "curious" | "thinking" | "excited" | "helpful" | "celebrate" | "pointing";
@@ -36,76 +33,6 @@ type PositionState = {
   showCloud: boolean;
 };
 
-const ANSWERS: AnswerEntry[] = [
-  {
-    match: ["who are you", "about", "tell me about arihant", "introduce", "background", "overview"],
-    answer:
-      "Arihant Rawat is a product-minded technologist with experience at Salesforce and Cult.fit, and he is currently pursuing an MBA at USC Marshall. He tends to work where product thinking, engineering depth, and execution all meet.",
-    ctaLabel: "Jump to About",
-    ctaHref: "#about",
-  },
-  {
-    match: ["experience", "salesforce", "cult", "work history", "career"],
-    answer:
-      "His experience spans enterprise and startup-style environments. At Salesforce, he worked on Industries Cloud and Context Service. At Cult.fit, he helped build core app experiences, partnered closely with product and data teams, and eventually led app development across multiple products.",
-    ctaLabel: "See Experience",
-    ctaHref: "#experience",
-  },
-  {
-    match: ["project", "projects", "portfolio work", "what has he built"],
-    answer:
-      "Arihant’s projects range from AI and intelligence systems to product experiences. Highlights include Venue Intelligence Discovery, OffGrid, and an iPad-style portfolio experience, alongside multiple machine learning projects in captioning and NLP.",
-    ctaLabel: "Open Projects",
-    ctaHref: "#projects",
-  },
-  {
-    match: ["skills", "tech stack", "what tools", "what does he know"],
-    answer:
-      "He works across product development, full stack software, AI product prototyping, LLM integrations, analytics, and app development. On the technical side, the site highlights TypeScript, Python, Java, React, Next.js, Flutter, REST APIs, NLP, and image processing.",
-    ctaLabel: "See Skills",
-    ctaHref: "#skills",
-  },
-  {
-    match: ["education", "usc", "mba", "nsit", "nsut", "school"],
-    answer:
-      "He is currently an MBA candidate at USC Marshall and previously studied Information Technology at NSIT, now NSUT, in Delhi. The portfolio also notes major scholarships and academic distinctions.",
-    ctaLabel: "See Education",
-    ctaHref: "#education",
-  },
-  {
-    match: ["contact", "email", "linkedin", "reach", "phone"],
-    answer:
-      "You can reach Arihant through email, LinkedIn, or phone from the contact section. For professional outreach, LinkedIn or email is probably the best first move.",
-    ctaLabel: "Contact Arihant",
-    ctaHref: "#contact",
-  },
-  {
-    match: ["resume", "cv"],
-    answer:
-      "Yes, there is a resume link right in the hero section. The site itself already tells a strong story, but the PDF is there if you want the formal version.",
-    ctaLabel: "View Resume",
-    ctaHref: "/resume/arihant-rawat-pm.pdf",
-  },
-  {
-    match: ["ipad", "another way", "interactive"],
-    answer:
-      "There is also an iPad-style portfolio experience linked from this site. It is a more playful, interactive way to explore the same story.",
-    ctaLabel: "Open iPad Portfolio",
-    ctaHref:
-      "https://arihantrawat.github.io/arihant-ipad-site/?utm_source=portfolio&utm_medium=avatar&utm_campaign=explore_another_way",
-  },
-  {
-    match: ["why mba", "why usc", "what is he doing now"],
-    answer:
-      "Right now Arihant is at USC Marshall pursuing an MBA, which fits the overall arc of product, technology, and business leadership that runs through the rest of the site.",
-    ctaLabel: "See Education",
-    ctaHref: "#education",
-  },
-];
-
-const DEFAULT_REPLY =
-  "I can help with Arihant’s background, experience, projects, skills, education, resume, and contact info. Try asking something like ‘What did he do at Salesforce?’ or ‘What projects has he built?’";
-
 const SECTION_STATES = {
   top: {
     label: "Overview",
@@ -113,7 +40,7 @@ const SECTION_STATES = {
     hint: "I can give you the quick summary while you explore.",
     quickPrompt: "Give me a quick overview of Arihant.",
     cloudLines: [
-      "Hi, I’m Yuki. Want the quick intro?",
+      "Hi, I'm Yuki. Want the quick intro?",
       "Hi, I can give the 20 second version.",
       "Hi, this is the fast overview section.",
     ],
@@ -122,9 +49,9 @@ const SECTION_STATES = {
     label: "About",
     mood: "curious",
     hint: "This section is the personal story behind the resume.",
-    quickPrompt: "What is Arihant’s background?",
+    quickPrompt: "What is Arihant's background?",
     cloudLines: [
-      "Hi, this is Arihant’s story.",
+      "Hi, this is Arihant's story.",
       "Hi, want a short background summary?",
       "Hi, this explains the arc behind the work.",
     ],
@@ -133,7 +60,7 @@ const SECTION_STATES = {
     label: "Skills",
     mood: "thinking",
     hint: "Here I can translate the skill list into a cleaner summary.",
-    quickPrompt: "What are Arihant’s strongest skills?",
+    quickPrompt: "What are Arihant's strongest skills?",
     cloudLines: [
       "Hi, I can group the skill set.",
       "Hi, want the strongest stack only?",
@@ -155,7 +82,7 @@ const SECTION_STATES = {
     label: "Education",
     mood: "curious",
     hint: "This section covers USC Marshall and his engineering background.",
-    quickPrompt: "Tell me about Arihant’s education.",
+    quickPrompt: "Tell me about Arihant's education.",
     cloudLines: [
       "Hi, this is the MBA plus engineering story.",
       "Hi, I can explain the USC chapter.",
@@ -184,20 +111,15 @@ const SECTION_STATES = {
       "Hi, I can suggest the fastest outreach route.",
     ],
   },
-} satisfies Record<string, SectionState>;
+} satisfies Record<AssistantSection, SectionState>;
 
-type SectionId = keyof typeof SECTION_STATES;
+type SectionId = AssistantSection;
 
 const SECTION_IDS = Object.keys(SECTION_STATES).filter((id) => id !== "top") as SectionId[];
 const SECTION_ORDER = Object.keys(SECTION_STATES) as SectionId[];
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
-}
-
-function findAnswer(question: string): AnswerEntry | null {
-  const normalized = question.toLowerCase();
-  return ANSWERS.find((entry) => entry.match.some((token) => normalized.includes(token))) ?? null;
 }
 
 function getRoamingPosition(
@@ -305,8 +227,10 @@ function PenguinCompanion({ mood }: { mood: CompanionMood }) {
 export default function PortfolioAvatarAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isAnswering, setIsAnswering] = useState(false);
   const [input, setInput] = useState("");
   const [showQuickPrompts, setShowQuickPrompts] = useState(true);
+  const [suggestedPrompts, setSuggestedPrompts] = useState(() => getSuggestedPromptsForSection("top"));
   const [currentSection, setCurrentSection] = useState<SectionId>("top");
   const [cloudLineIndex, setCloudLineIndex] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -318,16 +242,16 @@ export default function PortfolioAvatarAssistant() {
     {
       id: 1,
       role: "assistant",
-      text: "Hey, I’m Yuki. I can help you explore Arihant’s work, background, projects, and contact info while you browse.",
+      text: "Hey, I'm Yuki. I can give concise answers about Arihant's background, experience, projects, education, resume, and contact details while you browse.",
     },
   ]);
   const messageIdRef = useRef(2);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const interactionTimeoutRef = useRef<number | null>(null);
   const suppressScrollTrackingRef = useRef(false);
   const scrollTrackingResetRef = useRef<number | null>(null);
-  const lastScrollTrackRef = useRef(0);
+  const hasTrackedChatScrollRef = useRef(false);
+  const recentKnowledgeIdsRef = useRef<string[]>([]);
 
   useEffect(() => {
     let frameId = 0;
@@ -530,20 +454,22 @@ export default function PortfolioAvatarAssistant() {
     };
   }, [isOpen, isVisible]);
 
+  useEffect(() => {
+    if (!isOpen) {
+      hasTrackedChatScrollRef.current = false;
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    void preloadSemanticKnowledge();
+  }, [isVisible]);
+
   const sectionState = SECTION_STATES[currentSection];
   const effectiveMood = interactionMood ?? ambientMood ?? (isOpen ? "helpful" : sectionState.mood);
-  const promptList = useMemo(
-    () =>
-      Array.from(
-        new Set([
-          sectionState.quickPrompt,
-          "What did Arihant do at Salesforce?",
-          "What projects has Arihant built?",
-          "How can I contact Arihant?",
-        ])
-      ).slice(0, 3),
-    [sectionState.quickPrompt]
-  );
+  const promptSeed = messages.length > 1 ? suggestedPrompts : getSuggestedPromptsForSection(currentSection);
+  const promptList = useMemo(() => Array.from(new Set([sectionState.quickPrompt, ...promptSeed])).slice(0, 3), [promptSeed, sectionState.quickPrompt]);
 
   const position =
     viewport.width > 0 && viewport.height > 0
@@ -566,10 +492,11 @@ export default function PortfolioAvatarAssistant() {
     });
   };
 
-  const askQuestion = (question: string, source: "quick_prompt" | "input_submit" = "input_submit") => {
+  const askQuestion = async (question: string, source: "quick_prompt" | "input_submit" = "input_submit") => {
     const trimmed = question.trim();
-    if (!trimmed) return;
+    if (!trimmed || isAnswering) return;
 
+    setIsAnswering(true);
     setShowQuickPrompts(false);
 
     trackEvent("avatar_chat_interaction", {
@@ -579,30 +506,44 @@ export default function PortfolioAvatarAssistant() {
       question_length: trimmed.length,
     });
 
-    const match = findAnswer(trimmed);
     const userMessage: ChatMessage = {
       id: messageIdRef.current++,
       role: "user",
       text: trimmed,
     };
-
-    const assistantMessage: ChatMessage = {
-      id: messageIdRef.current++,
-      role: "assistant",
-      text: match?.answer ?? DEFAULT_REPLY,
-      ctaLabel: match?.ctaLabel,
-      ctaHref: match?.ctaHref,
-    };
-
-    setMessages((current) => [...current, userMessage, assistantMessage]);
+    setMessages((current) => [...current, userMessage]);
     setInput("");
     setIsOpen(true);
 
-    trackEvent("avatar_question", {
-      question: trimmed.slice(0, 120),
-      matched: Boolean(match),
-      section: currentSection,
-    });
+    try {
+      const result = await answerPortfolioQuestion(trimmed, {
+        currentSection,
+        recentKnowledgeIds: recentKnowledgeIdsRef.current,
+      });
+
+      const assistantMessage: ChatMessage = {
+        id: messageIdRef.current++,
+        role: "assistant",
+        text: result.answer,
+        ctaLabel: result.ctaLabel,
+        ctaHref: result.ctaHref,
+        matchedKnowledgeIds: result.matchedKnowledgeIds,
+      };
+
+      setMessages((current) => [...current, assistantMessage]);
+      setSuggestedPrompts(result.suggestedPrompts);
+      recentKnowledgeIdsRef.current = result.matchedKnowledgeIds;
+
+      trackEvent("avatar_question", {
+        question: trimmed.slice(0, 120),
+        matched: result.matchedKnowledgeIds.length > 0,
+        confidence: Number(result.confidence.toFixed(2)),
+        matched_ids: result.matchedKnowledgeIds.join(","),
+        section: currentSection,
+      });
+    } finally {
+      setIsAnswering(false);
+    }
   };
 
   return (
@@ -629,7 +570,7 @@ export default function PortfolioAvatarAssistant() {
             onClick={() => handleToggle(false, "close_button")}
             aria-label="Close assistant"
           >
-            ×
+            x
           </button>
         </div>
 
@@ -642,21 +583,20 @@ export default function PortfolioAvatarAssistant() {
           ref={messagesContainerRef}
           className="portfolio-avatar-messages"
           onScroll={(event) => {
-            if (suppressScrollTrackingRef.current) {
+            if (suppressScrollTrackingRef.current || hasTrackedChatScrollRef.current) {
               return;
             }
 
-            const now = Date.now();
-            if (now - lastScrollTrackRef.current < 1200) {
-              return;
-            }
-
-            lastScrollTrackRef.current = now;
             const target = event.currentTarget;
+            if (target.scrollTop < 96) {
+              return;
+            }
+
+            hasTrackedChatScrollRef.current = true;
             trackEvent("avatar_chat_interaction", {
-              action: "messages_scrolled",
+              action: "messages_scrolled_deep",
               section: currentSection,
-              scroll_top: Math.round(target.scrollTop),
+              scroll_depth_bucket: "96_plus",
             });
           }}
         >
@@ -675,6 +615,13 @@ export default function PortfolioAvatarAssistant() {
                     target={isExternal || isAsset ? "_blank" : undefined}
                     rel={isExternal || isAsset ? "noreferrer" : undefined}
                     onClick={() => {
+                      if (message.ctaHref?.includes("arihant-ipad-site")) {
+                        trackEvent("opened_ipad_website", {
+                          location: "assistant",
+                          label: "explore_in_another_way",
+                          destination: "arihant-ipad-site",
+                        });
+                      }
                       trackEvent("avatar_chat_interaction", {
                         action: "cta_clicked",
                         section: currentSection,
@@ -689,7 +636,6 @@ export default function PortfolioAvatarAssistant() {
               </div>
             );
           })}
-          <div ref={messagesEndRef} />
         </div>
 
         {showQuickPrompts && input.trim().length === 0 && (
@@ -704,8 +650,9 @@ export default function PortfolioAvatarAssistant() {
                     section: currentSection,
                     prompt,
                   });
-                  askQuestion(prompt, "quick_prompt");
+                  void askQuestion(prompt, "quick_prompt");
                 }}
+                disabled={isAnswering}
               >
                 {prompt}
               </button>
@@ -717,11 +664,12 @@ export default function PortfolioAvatarAssistant() {
           className="portfolio-avatar-form"
           onSubmit={(event) => {
             event.preventDefault();
-            askQuestion(input, "input_submit");
+            void askQuestion(input, "input_submit");
           }}
         >
           <input
             value={input}
+            disabled={isAnswering}
             onFocus={() => {
               trackEvent("avatar_chat_interaction", {
                 action: "input_focused",
@@ -735,10 +683,12 @@ export default function PortfolioAvatarAssistant() {
                 setShowQuickPrompts(false);
               }
             }}
-            placeholder="Ask Yuki about projects, experience, USC, resume..."
+            placeholder={isAnswering ? "Yuki is thinking..." : "Ask Yuki about projects, experience, USC, resume..."}
             aria-label="Ask a question about Arihant"
           />
-          <button type="submit">Send</button>
+          <button type="submit" disabled={isAnswering}>
+            {isAnswering ? "..." : "Send"}
+          </button>
         </form>
       </aside>
 
@@ -773,3 +723,6 @@ export default function PortfolioAvatarAssistant() {
     </div>
   );
 }
+
+
+
