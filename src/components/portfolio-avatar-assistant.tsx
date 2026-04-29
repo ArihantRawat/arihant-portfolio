@@ -197,6 +197,9 @@ function getDockedPosition(viewportWidth: number, viewportHeight: number): Posit
 function PenguinCompanion({ mood }: { mood: CompanionMood }) {
   return (
     <div className={`penguin-stage mood-${mood}`} aria-hidden>
+      <span className="penguin-spark spark-one" />
+      <span className="penguin-spark spark-two" />
+      <span className="penguin-spark spark-three" />
       <svg className="penguin-svg" viewBox="0 0 170 190" focusable="false">
         <ellipse className="penguin-shadow" cx="85" cy="172" rx="38" ry="10" />
         <ellipse className="penguin-aura" cx="85" cy="104" rx="56" ry="68" />
@@ -208,6 +211,7 @@ function PenguinCompanion({ mood }: { mood: CompanionMood }) {
           <ellipse className="penguin-wing penguin-wing-right" cx="122" cy="108" rx="13" ry="31" />
           <circle className="penguin-helmet-ring" cx="85" cy="68" r="38" />
           <circle className="penguin-helmet-glass" cx="85" cy="68" r="33" />
+          <path className="penguin-helmet-shine" d="M64 50 C72 38 92 34 105 44" />
           <g className="penguin-head">
             <ellipse className="penguin-face" cx="85" cy="68" rx="31" ry="28" />
             <ellipse className="penguin-eye" cx="73" cy="63" rx="8.5" ry="10.5" />
@@ -607,7 +611,7 @@ export default function PortfolioAvatarAssistant() {
             return (
               <div key={message.id} className={`portfolio-avatar-message ${message.role}`}>
                 <span className="portfolio-avatar-message-label">{message.role === "assistant" ? "Yuki" : "You"}</span>
-                <span>{message.text}</span>
+                <span className="portfolio-avatar-message-text">{message.text}</span>
                 {message.role === "assistant" && message.ctaLabel && message.ctaHref && (
                   <a
                     className="portfolio-avatar-inline-cta"
@@ -636,6 +640,16 @@ export default function PortfolioAvatarAssistant() {
               </div>
             );
           })}
+          {isAnswering && (
+            <div className="portfolio-avatar-message assistant thinking" aria-live="polite">
+              <span className="portfolio-avatar-message-label">Yuki</span>
+              <span className="portfolio-avatar-typing" aria-label="Yuki is thinking">
+                <i />
+                <i />
+                <i />
+              </span>
+            </div>
+          )}
         </div>
 
         {showQuickPrompts && input.trim().length === 0 && (
