@@ -90,6 +90,13 @@ const HERO_STATS = [
   { label: "Hours", value: "10K+" },
 ];
 
+const HERO_PROOFS = [
+  { label: "Enterprise scale", value: "Salesforce Industries Cloud" },
+  { label: "Startup speed", value: "Cult.fit product teams" },
+  { label: "Current lens", value: "USC Marshall MBA" },
+  { label: "Builder focus", value: "AI + product prototypes" },
+];
+
 const ABOUT_PARAGRAPHS = [
   "I’m currently a first-year MBA student at USC Marshall, focused on growing as a product builder in the tech space. I studied engineering at NSIT (now NSUT) and worked at Cult.fit and Salesforce, where I built products across both startup and large-scale environments.",
   "Across these experiences, I’ve learned to combine engineering depth, product thinking, and strong execution to solve real user problems. I enjoy taking ideas from early ambiguity to shipped products that create tangible impact.",
@@ -638,6 +645,14 @@ export default function HomePage() {
               </a>
 
             </div>
+            <div className="hero-proof-grid reveal-item" aria-label="Portfolio highlights">
+              {HERO_PROOFS.map((proof) => (
+                <div className="hero-proof" key={proof.label}>
+                  <span>{proof.label}</span>
+                  <strong>{proof.value}</strong>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="hero-right">
             <div className="photo-wrap reveal-item">
@@ -669,7 +684,7 @@ export default function HomePage() {
           <h2 className="section-title reveal-item">Skills</h2>
           <div className="chips">
             {SKILLS.map((skill) => (
-              <span className="skill-chip" key={skill.label}>
+              <span className="skill-chip reveal-item" key={skill.label}>
                 {skill.emoji && (
                   <span className="skill-emoji" aria-hidden>
                     {skill.emoji}
