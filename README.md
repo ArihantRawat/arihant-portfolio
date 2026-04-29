@@ -1,13 +1,17 @@
-# Arihant Portfolio
+# Arihant Rawat Portfolio
 
-Personal portfolio built with Next.js App Router and exported as a static site.
+Personal portfolio site built with Next.js App Router and exported as a static site.
 
-## What is in the site
+## Overview
 
-- recruiter-friendly landing page with experience, skills, education, projects, and contact
-- blog index plus statically generated blog detail pages
-- floating portfolio assistant (`Yuki`) with frontend-only retrieval and semantic ranking
-- analytics hooks for navigation, project clicks, resume opens, contact actions, and iPad portfolio opens
+The site is designed to present Arihant Rawat's background as a product-minded technologist with experience across startups, enterprise teams, and current MBA work at USC Marshall.
+
+It includes:
+
+- a landing page with about, skills, experience, education, projects, and contact sections
+- a floating portfolio assistant named `Yuki`
+- a small blog with statically generated post pages
+- analytics hooks for navigation, project exploration, resumes, contact actions, and the alternate iPad portfolio experience
 
 ## Stack
 
@@ -15,83 +19,78 @@ Personal portfolio built with Next.js App Router and exported as a static site.
 - React 19
 - TypeScript
 - Tailwind CSS 4
-- static export build (`out/`)
+- static export output through `next build`
 
 ## Local development
+
+Install dependencies and start the dev server:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Default local URL:
+
+```text
+http://localhost:3000
+```
 
 ## Quality checks
+
+Run:
 
 ```bash
 npm run lint
 npm run build
 ```
 
-`npm run build` generates the static export in `out/`.
+The production build generates static output in `out/`.
 
 ## Assistant architecture
 
-The portfolio assistant is fully frontend-only, so it can be deployed on GitHub Pages or any static host.
+`Yuki` is frontend-only. There is no server API or backend retrieval layer.
 
-- structured portfolio knowledge lives in `src/lib/assistant/knowledge.ts`
-- retrieval and answer composition live in `src/lib/assistant/engine.ts`
-- semantic scoring lives in `src/lib/assistant/semantic-core.ts`
-- browser-side semantic work runs in `src/lib/assistant/semantic.worker.ts`
-- semantic index caching uses IndexedDB through `src/lib/assistant/semantic.ts`
+Core files:
 
-There is no backend or server API required for the assistant.
+- `src/components/portfolio-avatar-assistant.tsx`: assistant UI, prompts, roaming behavior, and chat flow
+- `src/lib/assistant/knowledge.ts`: structured portfolio knowledge base
+- `src/lib/assistant/engine.ts`: retrieval logic, scoring, and answer composition
+- `src/lib/assistant/semantic-core.ts`: semantic scoring helpers
+- `src/lib/assistant/semantic.ts`: browser-side semantic loading and IndexedDB caching
+- `src/lib/assistant/semantic.worker.ts`: worker for semantic processing off the main thread
 
-## Deploying
+## Content and entry points
 
-### GitHub Pages
+- homepage: `src/app/page.tsx`
+- global styles: `src/app/globals.css`
+- app layout: `src/app/layout.tsx`
+- blog index and posts: `src/app/blog`
+- headshot image: `public/images/arihant-headshot.jpg`
+- PM resume PDF: `public/resume/arihant-rawat-pm.pdf`
+- SWE resume PDF: `public/resume/arihant-rawat-swe.pdf`
 
-This project is static-export friendly.
+## Deployment
 
-1. Run:
+This project is static-export friendly and can be hosted on GitHub Pages, Netlify, or similar static hosting.
+
+Build the site with:
 
 ```bash
 npm run build
 ```
 
-2. Deploy the contents of `out/` to GitHub Pages.
+Deploy the generated `out/` directory.
 
-### Netlify
+## Analytics
 
-Use these settings:
+Analytics events are routed through `src/lib/analytics.ts`.
 
-- Build command: `npm run build`
-- Publish directory: `out`
+Tracked interactions include:
 
-## Important paths
-
-- headshot: `public/images/arihant-headshot.jpg`
-- resume PDF: `public/resume/arihant-rawat-pm.pdf`
-- homepage: `src/app/page.tsx`
-- portfolio assistant: `src/components/portfolio-avatar-assistant.tsx`
-- blog routes: `src/app/blog`
-
-## Analytics notes
-
-Analytics events are sent through `src/lib/analytics.ts`.
-
-Tracked areas include:
-
-- nav clicks
-- project card opens and project link clicks
-- resume download
-- contact clicks
+- navigation clicks
+- project card opens and outbound project link clicks
+- resume opens
+- contact actions
 - assistant interactions
-- iPad portfolio opens (`explore_in_another_way`)
-
-The iPad portfolio open event is tracked from:
-
-- top nav
-- mobile menu
-- project links
-- assistant CTA
+- opens of the alternate iPad portfolio experience
