@@ -36,6 +36,11 @@ const STOP_WORDS = new Set([
   "what",
   "who",
   "why",
+  "tell",
+  "show",
+  "please",
+  "best",
+  "strongest",
   "with",
   "you",
 ]);
@@ -45,6 +50,7 @@ type DetectedIntent = {
   compare: boolean;
   genericFollowUp: boolean;
   asksForPlural: boolean;
+  asksForBestProject: boolean;
   audience: "recruiter" | "pm" | "founder" | null;
 };
 
@@ -117,6 +123,9 @@ function detectIntent(query: string): DetectedIntent {
     compare: /(compare|difference|different|vs|versus)/.test(normalized),
     genericFollowUp: /^(tell me more|more|expand|go deeper|what about that|what about this|and that|this|that)$/.test(normalized),
     asksForPlural: /(projects|things|examples|highlights|options|best ones|which ones|top projects|best projects)/.test(normalized),
+    asksForBestProject:
+      /(best|strongest|most impressive|most product|most technical|first|one project|which project|standout)/.test(normalized) &&
+      /(project|repo|portfolio work|built|case study|example)/.test(normalized),
     audience: /(recruiter|hiring manager|why hire|candidate|fit for role|good fit)/.test(normalized)
       ? "recruiter"
       : /(product manager|pm role|pm fit|product sense|product thinking)/.test(normalized)
@@ -228,6 +237,10 @@ function scoreKnowledgeItem(
     score += 1.25;
   }
 
+  if (intent.asksForBestProject && item.category === "project" && item.featured) {
+    score += 3;
+  }
+
   if (intent.compare && item.featured) {
     score += 0.75;
   }
@@ -317,7 +330,7 @@ function composeSpecificAnswer(
     ...(sectionHint ? [sectionHint] : []),
   ])
     .slice(0, 5)
-    .join(" ");
+    .join("\n\n");
 }
 
 function composeProjectOverview(projects: PortfolioKnowledgeItem[]) {
@@ -332,7 +345,35 @@ function composeProjectOverview(projects: PortfolioKnowledgeItem[]) {
     "That mix makes the projects section useful because it shows both technical breadth and how he frames ideas as products.",
   ];
 
-  return sentences.join(" ");
+  return sentences.join("\n\n");
+}
+
+function composeBestProjectAnswer(projects: PortfolioKnowledgeItem[], intent: DetectedIntent) {
+  const projectPool = projects.filter((item) => item.category === "project");
+  const audiencePick =
+    intent.audience === "pm"
+      ? projectPool.find((item) => item.id === "offgrid" || item.id === "expertmind")
+      : intent.audience === "founder"
+        ? projectPool.find((item) => item.id === "expertmind" || item.id === "venue-intelligence-discovery")
+        : projectPool.find((item) => item.id === "expertmind" || item.id === "knowledge-graph-pro" || item.id === "offgrid");
+
+  const primary = audiencePick ?? projectPool[0] ?? projects[0];
+  const supporting = projectPool.find((item) => item.id !== primary.id);
+  const reason =
+    intent.audience === "pm"
+      ? "It gives the clearest read on product taste, user framing, and packaging."
+      : intent.audience === "founder"
+        ? "It shows comfort with ambiguity, a concrete pain point, and a shippable product angle."
+        : "It balances a real problem, AI/product thinking, and a clear story a visitor can understand quickly.";
+
+  return unique([
+    `If someone only has time for one project, I would start with ${primary.title}.`,
+    primary.answerSentences[0],
+    reason,
+    supporting ? `${supporting.title} is the next best follow-up because it shows a different side of the same builder profile.` : null,
+  ].filter(Boolean) as string[])
+    .slice(0, 4)
+    .join("\n\n");
 }
 
 function composeComparisonAnswer(items: PortfolioKnowledgeItem[], intent: DetectedIntent) {
@@ -347,7 +388,7 @@ function composeComparisonAnswer(items: PortfolioKnowledgeItem[], intent: Detect
     `${first.title} and ${second.title} are related, but they solve different parts of the problem.`,
     `${first.title} is more focused on ${first.answerSentences[0].replace(/\.$/, "").toLowerCase()}, while ${second.title} leans more into ${second.answerSentences[0].replace(/\.$/, "").toLowerCase()}.`,
     audienceSentence ?? "Together they show a strong pattern in Arihant's work around product framing, information flow, and reusable context.",
-  ].join(" ");
+  ].join("\n\n");
 }
 
 function composeBroadAnswer(topItems: ScoredKnowledgeItem[], context: RetrievalContext, intent: DetectedIntent) {
@@ -356,6 +397,10 @@ function composeBroadAnswer(topItems: ScoredKnowledgeItem[], context: RetrievalC
   }
 
   const category = topItems[0]?.category;
+  if (intent.asksForBestProject && topItems.some((item) => item.category === "project")) {
+    return composeBestProjectAnswer(topItems, intent);
+  }
+
   if (category === "project" && (intent.asksForPlural || topItems.length > 1)) {
     const featuredProjects = topItems.filter((item) => item.category === "project").slice(0, 3);
     return composeProjectOverview(featuredProjects);
@@ -401,7 +446,7 @@ export async function answerPortfolioQuestion(question: string, context: Retriev
 
     return {
       answer:
-        "I can help best with Arihant's background, experience, projects, skills, education, resume, and contact details. If you want, ask about a specific company, project, or section and I will keep it concise.",
+        "I can help best with Arihant's background, experience, projects, skills, education, resume, and contact details.\n\nAsk about a specific company, project, role fit, or section and I will keep it concise.",
       ctaLabel: fallbackItem?.cta?.label,
       ctaHref: fallbackItem?.cta?.href,
       matchedKnowledgeIds: fallbackItem ? [fallbackItem.id] : [],
@@ -417,6 +462,8 @@ export async function answerPortfolioQuestion(question: string, context: Retriev
   const selectedItems =
     intent.compare && confidentItems.length >= 2
       ? confidentItems.slice(0, 2)
+      : intent.asksForBestProject && topItems.some((item) => item.category === "project")
+        ? topItems.filter((item) => item.category === "project").slice(0, 2)
       : intent.asksForPlural && confidentItems[0]?.category === "project"
         ? confidentItems.filter((item) => item.category === "project").slice(0, 3)
         : confidentItems.slice(0, 1);
